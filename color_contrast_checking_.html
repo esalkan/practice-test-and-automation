@@ -68,9 +68,13 @@
 <body>
     <!-- Header -->
     <header class="color-bg-subtle border-bottom color-border-muted">
-        <div class="container-xl p-responsive py-3 d-flex justify-content-between align-items-center">
-            <h1 class="f2 color-fg-default">Color Contrast Checking Example</h1>
-
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+            </small>
+            </p>
         </div>
     </header>
 
@@ -140,7 +144,6 @@
                             <hr>
                             <h3 class="f4 mb-3">Test Me:</h3>
 
-                            <!-- Scenario 1: Good vs Poor Contrast -->
                             <div class="mb-4 px-6">
                                 <h4 class="f5 mb-2">Contrast Comparison</h4>
                                 <div class="contrast-example good-contrast mb-2">This text has good contrast</div>
@@ -459,12 +462,10 @@
     </footer>
 </body>
 <script>
-    // Toggle Dark Mode functionality
     function toggleDarkMode() {
         document.body.classList.toggle('dark-mode');
     }
 
-    // View More Scenarios functionality
     document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
         e.preventDefault();
         const additionalScenarios = document.querySelectorAll('.additional-scenario');
