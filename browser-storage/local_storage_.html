@@ -136,10 +136,83 @@ localStorage.clear();</code></pre>
 
 
                             <script>
+                                function testPerformance() {
+                                        const startTime = performance.now();
+                                        const testSize = 1000; // Test 1000 items
+                                        let addedCount = 0;
+                                        let removedCount = 0;
 
-                                function testDataPersistence() {
-                                    updateResult('Data persistence test not implemented yet.');
-                                }
+                                        // Add items
+                                        for (let i = 0; i < testSize; i++) {
+                                            try {
+                                                localStorage.setItem(`perfTest${i}`, `value${i}`);
+                                                addedCount++;
+                                            } catch (e) {
+                                                console.error("Error adding item:", e);
+                                                break;
+                                            }
+                                        }
+
+                                        // Remove items
+                                        for (let i = 0; i < testSize; i++) {
+                                            if (localStorage.getItem(`perfTest${i}`) !== null) {
+                                                localStorage.removeItem(`perfTest${i}`);
+                                                removedCount++;
+                                            }
+                                        }
+
+                                        const endTime = performance.now();
+                                        const duration = endTime - startTime;
+
+                                        const resultMessage = `
+        <ul class="list-style-none">
+            <li class="mb-1"><strong>Performance test completed:</strong></li>
+            <li class="mb-1">⏱️ Time taken: ${duration.toFixed(2)} milliseconds</li>
+            <li class="mb-1">➕ Items added: ${addedCount}</li>
+            <li class="mb-1">➖ Items removed: ${removedCount}</li>
+            <li class="mb-1">✅ ${addedCount === removedCount ? 'All items successfully added and removed' : 'Some items could not be added or removed'}</li>
+        </ul>
+    `;
+
+                                        updateResult(resultMessage);
+                                        updateItemList();
+                                    }
+
+                                    function updateResult(message) {
+                                        const resultElement = document.getElementById('result');
+                                        resultElement.innerHTML = message;
+                                    }
+
+
+                                    function testDataPersistence() {
+                                            const testKey = 'persistenceTestKey';
+                                            const testValue = 'This value should persist';
+
+                                            // Set the test item
+                                            localStorage.setItem(testKey, testValue);
+
+                                            // Prompt the user to refresh the page
+                                            const message = `
+        <p>A test item has been added to Local Storage.</p>
+        <p>Please refresh the page to test data persistence.</p>
+        <p>After refreshing, click 'Test Data Persistence' again to check if the data persisted.</p>
+    `;
+
+                                            // Check if the item already exists (i.e., page has been refreshed)
+                                            if (localStorage.getItem(testKey) === testValue) {
+                                                const persistedValue = localStorage.getItem(testKey);
+                                                updateResult(`
+            <p>Data persistence test successful!</p>
+            <p>The value "${persistedValue}" was retrieved after page refresh.</p>
+        `);
+                                                // Clean up the test item
+                                                localStorage.removeItem(testKey);
+                                            } else {
+                                                updateResult(message);
+                                            }
+
+                                            updateItemList();
+                                        }
 
                                 function updateExistingItem() {
                                     const key = document.getElementById('keyInput').value;
@@ -159,9 +232,7 @@ localStorage.clear();</code></pre>
                                     }
                                 }
 
-                                function testPerformance() {
-                                    updateResult('Performance test not implemented yet.');
-                                }
+
 
                                 function testInvalidKeys() {
                                     const invalidKeys = [null, undefined, '', {}, [], 123];
@@ -276,9 +347,7 @@ localStorage.clear();</code></pre>
                                     showStoredItems();
                                 }
 
-                                function updateResult(message) {
-                                    document.getElementById('result').textContent = message;
-                                }
+                                
 
                                 function showSuccessBanner() {
                                     const banner = document.getElementById('successBanner');
