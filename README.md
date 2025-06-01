@@ -2,7 +2,7 @@
 
 Ensuring equal access to your application for users with disabilities.
 
-- [ARIA Attributes](accessibility_testing/aria_attributes_.html)
+- [ARIA Attributes](accessibility/aria_attributes_.html)
 - Color Contrast Checking
 - Keyboard Navigation
 
