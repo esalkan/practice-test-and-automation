@@ -32,11 +32,13 @@
             color: white;
             padding: 8px;
             z-index: 100;
+            transition: top 0.3s;
         }
 
         .skip-link:focus {
             top: 0;
         }
+
 
         .focusable:focus {
             outline: 2px solid blue;
@@ -66,6 +68,8 @@
 </head>
 
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Header -->
     <header class="color-bg-subtle border-bottom color-border-muted">
         <div class="container-xl p-responsive py-1">
@@ -189,14 +193,18 @@
                                     document.getElementById('modal').style.display = 'none';
                                 }
 
-                                // Modal dışına tıklandığında kapatma
+                                document.querySelector('.skip-link').addEventListener('click', function (e) {
+                                    e.preventDefault();
+                                    document.querySelector('#main-content').focus();
+                                    document.querySelector('#main-content').scrollIntoView({ behavior: 'smooth' });
+                                });
+
                                 document.getElementById('modal').addEventListener('click', function (e) {
                                     if (e.target === this) {
                                         closeModal();
                                     }
                                 });
 
-                                // Dropdown functionality
                                 const dropdownButton = document.getElementById('dropdownMenuButton');
                                 const dropdownMenu = document.querySelector('.dropdown-menu');
                                 let isDropdownOpen = false;
@@ -214,26 +222,22 @@
                                     dropdownMenu.style.display = isDropdownOpen ? 'block' : 'none';
                                     dropdownButton.setAttribute('aria-expanded', isDropdownOpen);
 
-                                    // Update tabindex of dropdown items
                                     const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
                                     dropdownItems.forEach(item => {
                                         item.setAttribute('tabindex', isDropdownOpen ? '0' : '-1');
                                     });
 
-                                    // Focus on the first item when opened
                                     if (isDropdownOpen) {
                                         dropdownItems[0].focus();
                                     }
                                 }
 
-                                // Close dropdown when clicking outside
                                 document.addEventListener('click', function (e) {
                                     if (!dropdownButton.contains(e.target) && isDropdownOpen) {
                                         toggleDropdown();
                                     }
                                 });
 
-                                // Handle arrow key navigation in dropdown
                                 dropdownMenu.addEventListener('keydown', function (e) {
                                     if (!isDropdownOpen) return;
 
