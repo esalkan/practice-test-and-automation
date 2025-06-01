@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test & Automation - Keyboard Navigation</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #000;
+            color: white;
+            padding: 8px;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        .focusable:focus {
+            outline: 2px solid blue;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 500px;
+            width: 90%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+            </small>
+            </p>
+        </div>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Keyboard Navigation</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Keyboard Navigation</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Keyboard navigation is crucial for accessibility, allowing users to interact with web
+                                content without relying on a mouse. It's essential for users with motor disabilities and
+                                those who prefer keyboard controls.
+                            </p>
+                            <h3 class="f4 mb-2">Key Points:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Ensure all interactive elements are focusable</li>
+                                <li class="ml-4">Provide a logical tab order</li>
+                                <li class="ml-4">Implement skip links for main content</li>
+                                <li class="ml-4">Use appropriate keyboard shortcuts for complex widgets</li>
+                                <li class="ml-4">Ensure visible focus indicators</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How it works:</h3>
+                            <p class="color-fg-muted mb-4">
+                                Keyboard navigation relies on the browser's built-in focus management and custom
+                                JavaScript for more complex interactions. The Tab key moves focus between elements,
+                                while Enter or Space activates them. Arrow keys are often used for navigation within
+                                components like menus or sliders.
+                            </p>
+                            <h3 class="f4 mb-2">Example Usage:</h3>
+                            <pre class="bg-gray-light p-3 mb-4"><code>&lt;button class="focusable"&gt;Focusable Button&lt;/button&gt;
+&lt;div tabindex="0" class="focusable"&gt;Focusable Div&lt;/div&gt;
+&lt;a href="#" class="focusable"&gt;Focusable Link&lt;/a&gt;</code></pre>
+                            <p class="color-fg-muted">
+                                These elements can be navigated using the Tab key and activated with Enter or Space.
+                            </p>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me:</h3>
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">1. Tab Order:</h4>
+                                <button class="btn mr-2 focusable" tabindex="0">Button 1</button>
+                                <button class="btn mr-2 focusable" tabindex="0">Button 2</button>
+                                <button class="btn focusable" tabindex="0">Button 3</button>
+                                <p class="color-fg-muted mt-2">Use Tab to navigate through these buttons in order.</p>
+                            </div>
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">2. Skip Link:</h4>
+                                <p class="color-fg-muted">Press Tab from the start of the page to reveal the skip link.
+                                </p>
+                            </div>
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">3. Dropdown Menu:</h4>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle focusable" type="button" id="dropdownMenuButton"
+                                        aria-haspopup="true" aria-expanded="false" tabindex="0">
+                                        Dropdown
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                        style="display: none;">
+                                        <a class="dropdown-item focusable" href="#" tabindex="-1">Action</a>
+                                        <a class="dropdown-item focusable" href="#" tabindex="-1">Another action</a>
+                                        <a class="dropdown-item focusable" href="#" tabindex="-1">Something else
+                                            here</a>
+                                    </div>
+                                </div>
+                                <p class="color-fg-muted mt-2">Use Enter to open the dropdown, then arrow keys to
+                                    navigate, and Enter to select.</p>
+                            </div>
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">4. Modal Dialog:</h4>
+                                <button class="btn focusable" onclick="openModal()" tabindex="0">Open Modal</button>
+                                <div id="modal" class="modal-overlay" style="display:none;">
+                                    <div class="Box">
+                                        <div class="Box-header">
+                                            <h3 class="Box-title">Modal Title</h3>
+                                        </div>
+                                        <div class="Box-body">
+                                            <p>This is a modal dialog. Press Tab to navigate within it.</p>
+                                            <button class="btn mr-2 focusable" tabindex="0">OK</button>
+                                            <button class="btn focusable" onclick="closeModal()"
+                                                tabindex="0">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="color-fg-muted mt-2">Open the modal and use Tab to navigate within it. Escape
+                                    key closes the modal.</p>
+                            </div>
+
+                            <script>
+                                function openModal() {
+                                    document.getElementById('modal').style.display = 'flex';
+                                    const firstFocusableElement = document.querySelector('#modal .focusable');
+                                    firstFocusableElement.focus();
+                                }
+
+                                function closeModal() {
+                                    document.getElementById('modal').style.display = 'none';
+                                }
+
+                                // Modal dışına tıklandığında kapatma
+                                document.getElementById('modal').addEventListener('click', function (e) {
+                                    if (e.target === this) {
+                                        closeModal();
+                                    }
+                                });
+
+                                // Dropdown functionality
+                                const dropdownButton = document.getElementById('dropdownMenuButton');
+                                const dropdownMenu = document.querySelector('.dropdown-menu');
+                                let isDropdownOpen = false;
+
+                                dropdownButton.addEventListener('click', toggleDropdown);
+                                dropdownButton.addEventListener('keydown', function (e) {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                        e.preventDefault();
+                                        toggleDropdown();
+                                    }
+                                });
+
+                                function toggleDropdown() {
+                                    isDropdownOpen = !isDropdownOpen;
+                                    dropdownMenu.style.display = isDropdownOpen ? 'block' : 'none';
+                                    dropdownButton.setAttribute('aria-expanded', isDropdownOpen);
+
+                                    // Update tabindex of dropdown items
+                                    const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
+                                    dropdownItems.forEach(item => {
+                                        item.setAttribute('tabindex', isDropdownOpen ? '0' : '-1');
+                                    });
+
+                                    // Focus on the first item when opened
+                                    if (isDropdownOpen) {
+                                        dropdownItems[0].focus();
+                                    }
+                                }
+
+                                // Close dropdown when clicking outside
+                                document.addEventListener('click', function (e) {
+                                    if (!dropdownButton.contains(e.target) && isDropdownOpen) {
+                                        toggleDropdown();
+                                    }
+                                });
+
+                                // Handle arrow key navigation in dropdown
+                                dropdownMenu.addEventListener('keydown', function (e) {
+                                    if (!isDropdownOpen) return;
+
+                                    const items = Array.from(dropdownMenu.querySelectorAll('.dropdown-item'));
+                                    const currentIndex = items.indexOf(document.activeElement);
+
+                                    if (e.key === 'ArrowDown') {
+                                        e.preventDefault();
+                                        const nextIndex = (currentIndex + 1) % items.length;
+                                        items[nextIndex].focus();
+                                    } else if (e.key === 'ArrowUp') {
+                                        e.preventDefault();
+                                        const prevIndex = (currentIndex - 1 + items.length) % items.length;
+                                        items[prevIndex].focus();
+                                    } else if (e.key === 'Escape') {
+                                        e.preventDefault();
+                                        toggleDropdown();
+                                        dropdownButton.focus();
+                                    }
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Tab Order</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify logical tab order
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check focus visibility
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Skip Links</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test skip link visibility on focus
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify skip link functionality
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Dropdown
+                                            Navigation</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test dropdown opening with Enter key
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify arrow key navigation within dropdown
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Modal Dialog</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check focus trap within modal
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Escape key for closing modal
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block mt-3">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+</body>
+<script>
+    document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+        e.preventDefault();
+        const additionalScenarios = document.querySelectorAll('.additional-scenario');
+        additionalScenarios.forEach(scenario => {
+            scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+        });
+        this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+    });
+</script>
+
+</html>
