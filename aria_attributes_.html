@@ -43,8 +43,13 @@
 <body>
     <!-- Header -->
     <header class="color-bg-subtle border-bottom color-border-muted">
-        <div class="container-xl p-responsive py-3">
-            <h1 class="f2 color-fg-default">ARIA Attributes Example</h1>
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+            </small>
+            </p>
         </div>
     </header>
 
@@ -84,43 +89,62 @@
                                 <li class="ml-4">aria-expanded: Indicates if a collapsible element is expanded or not
                                 </li>
                             </ul>
+
+                            <h3 class="f4 mb-2">How it works:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Button Accessibility: Shows how aria-label provides context for
+                                    icon-only buttons and aria-pressed
+                                    indicates toggle state.</li>
+                                <li class="ml-4">Form Labeling: Demonstrates aria-labelledby for associating labels
+                                    with
+                                    inputs and aria-describedby
+                                    for error messages.</li>
+                                <li class="ml-4">Dynamic Content: Illustrates aria-live for announcing updates and
+                                    aria-expanded for collapsible
+                                    content.</li>
+                                <li class="ml-4">Navigation: Uses aria-current for the active page and
+                                    aria-haspopup/aria-expanded for dropdown
+                                    menus.</li>
+                                <li class="ml-4">Modal Dialog: Employs role="dialog", aria-modal, and aria-labelledby to
+                                    create an accessible modal.
+                                </li>
+                            </ul>
                             <h3 class="f4 mb-2">Example Usage:</h3>
-                            <pre class="bg-gray-light p-3 mb-4"><code>&lt;button aria-label="Close" aria-describedby="dialogDescription"&gt;X&lt;/button&gt;
+                            <pre class="bg-gray-light p-3 mb-4"><code
+                                style="display: block; text-align: justify; white-space: pre-wrap; word-break: break-word; font-family: monospace; text-align-last: left;">&lt;button aria-label="Close" aria-describedby="dialogDescription"&gt;X&lt;/button&gt;
 &lt;p id="dialogDescription"&gt;Closing this dialog will discard any unsaved changes&lt;/p&gt;</code></pre>
                             <p class="color-fg-muted">
                                 In this example, the button has an aria-label that provides its purpose, and
                                 aria-describedby references additional descriptive text. This ensures that screen
-                                reader users understand both the button's function and its implications when activated.
+                                reader users understand both the button's function and its implications when
+                                activated.
                             </p>
                             <hr>
-                            <h3 class="f4 mb-2">Test Me:</h3>
-
-                            <!-- Scenario 1: Button Accessibility -->
-                            <div class="mb-4">
-                                <h4 class="f5 mb-2">1. Button Accessibility:</h4>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">Button Accessibility:</h4>
                                 <button class="btn mr-2" aria-label="Close dialog">X</button>
                                 <button class="btn" aria-pressed="false" id="toggleButton">Toggle Me</button>
-                                <p class="color-fg-muted mt-2">The first button uses aria-label for icon-only buttons.
+                                <p class="color-fg-muted mt-2">The first button uses aria-label for icon-only
+                                    buttons.
                                     The second button uses
                                     aria-pressed for toggle state.</p>
                             </div>
-
-                            <!-- Scenario 2: Form Labeling -->
-                            <div class="mb-4">
-                                <h4 class="f5 mb-2">2. Form Labeling:</h4>
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">Form Labeling:</h4>
                                 <label id="nameLabel">Name:</label>
                                 <input type="text" aria-labelledby="nameLabel" class="form-control mb-2">
-                                <div id="nameError" class="color-fg-danger" style="display: none;">Please enter a valid
+                                <div id="nameError" class="color-fg-danger" style="display: none;">Please enter a
+                                    valid
                                     name.</div>
                                 <button class="btn" onclick="showError()">Show Error</button>
-                                <p class="color-fg-muted mt-2">The input uses aria-labelledby. The error message uses
+                                <p class="color-fg-muted mt-2">The input uses aria-labelledby. The error message
+                                    uses
                                     aria-describedby when shown.
                                 </p>
                             </div>
-
-                            <!-- Scenario 3: Dynamic Content -->
-                            <div class="mb-4">
-                                <h4 class="f5 mb-2">3. Dynamic Content:</h4>
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">Dynamic Content:</h4>
                                 <div id="liveRegion" aria-live="polite" class="color-bg-accent p-2 mb-2">
                                     This is a live region.
                                 </div>
@@ -136,10 +160,8 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Scenario 4: Navigation -->
-                            <div class="mb-4">
-                                <h4 class="f5 mb-2">4. Navigation:</h4>
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">Navigation:</h4>
                                 <nav>
                                     <ul class="list-style-none">
                                         <li><a href="#" aria-current="page">Home</a></li>
@@ -155,10 +177,8 @@
                                     </ul>
                                 </nav>
                             </div>
-
-                            <!-- Scenario 5: Modal Dialog -->
-                            <div class="mb-4">
-                                <h4 class="f5 mb-2">5. Modal Dialog:</h4>
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">Modal Dialog:</h4>
                                 <button class="btn" onclick="openModal()">Open Modal</button>
                                 <div id="modalOverlay" class="position-fixed top-0 right-0 bottom-0 left-0"
                                     style="display: none; background: rgba(0,0,0,0.5); z-index: 1000;">
@@ -177,26 +197,22 @@
                             </div>
 
                             <script>
-                                // Toggle Button
                                 document.getElementById('toggleButton').addEventListener('click', function () {
                                     const pressed = this.getAttribute('aria-pressed') === 'true';
                                     this.setAttribute('aria-pressed', !pressed);
                                     this.textContent = pressed ? 'Toggle Me' : 'Toggled';
                                 });
 
-                                // Form Error
                                 function showError() {
                                     const error = document.getElementById('nameError');
                                     error.style.display = 'block';
                                     document.querySelector('input[aria-labelledby="nameLabel"]').setAttribute('aria-describedby', 'nameError');
                                 }
 
-                                // Live Region
                                 function updateLiveRegion() {
                                     document.getElementById('liveRegion').textContent = 'Updated at ' + new Date().toLocaleTimeString();
                                 }
 
-                                // Expandable Content
                                 function toggleExpand(button) {
                                     const content = document.getElementById('expandableContent');
                                     const expanded = button.getAttribute('aria-expanded') === 'true';
@@ -205,7 +221,6 @@
                                     button.textContent = expanded ? 'Expand Content' : 'Collapse Content';
                                 }
 
-                                // Dropdown
                                 function toggleDropdown(link) {
                                     const dropdown = document.getElementById('servicesDropdown');
                                     const expanded = link.getAttribute('aria-expanded') === 'true';
@@ -213,18 +228,16 @@
                                     dropdown.style.display = expanded ? 'none' : 'block';
                                 }
 
-                                // Modal
                                 function openModal() {
                                     document.getElementById('modalOverlay').style.display = 'block';
-                                    document.body.style.overflow = 'hidden'; // Sayfa kaydırmayı engeller
+                                    document.body.style.overflow = 'hidden';
                                 }
 
                                 function closeModal() {
                                     document.getElementById('modalOverlay').style.display = 'none';
-                                    document.body.style.overflow = ''; // Sayfa kaydırmayı geri açar
+                                    document.body.style.overflow = '';
                                 }
 
-                                // Modal dışına tıklandığında kapatma
                                 document.getElementById('modalOverlay').addEventListener('click', function (event) {
                                     if (event.target === this) {
                                         closeModal();
@@ -385,12 +398,19 @@
     <!-- Footer -->
     <footer class="color-bg-subtle border-top color-border-muted">
         <div class="container-xl p-responsive py-3 text-center">
-            <span class="color-fg-muted">&copy; 2025 Practice Test & Automation.</span>
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
         </div>
     </footer>
 </body>
 <script>
-    // View More Scenarios functionality
     document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
         e.preventDefault();
         const additionalScenarios = document.querySelectorAll('.additional-scenario');
