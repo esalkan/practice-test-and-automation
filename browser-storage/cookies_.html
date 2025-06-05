@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Cookies - Practice Test & Automation</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        #message-banner {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        @media (max-width: 768px) {
+
+            .col-md-8,
+            .col-md-4 {
+                width: 100%;
+                float: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.</p>
+            </small>
+        </div>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Cookies</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Cookies</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Cookies are small pieces of data stored on the client-side by websites. They are used to
+                                remember stateful information for the stateless HTTP protocol or for tracking user
+                                behavior.
+                            </p>
+                            <h3 class="f4 mb-2">Key Points:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Cookies are name-value pairs stored in the browser</li>
+                                <li class="ml-4">They can have various attributes like expiration, domain, and security
+                                    flags</li>
+                                <li class="ml-4">Cookies are sent with every HTTP request to the server</li>
+                                <li class="ml-4">They are commonly used for session management, personalization, and
+                                    tracking</li>
+                                <li class="ml-4">There are concerns about privacy and security with cookie usage</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How it works:</h3>
+                            <p class="color-fg-muted mb-4">
+                                When a server sends a response, it can include a Set-Cookie header. The browser then
+                                stores this cookie and sends it back to the server with subsequent requests to the same
+                                domain.
+                            </p>
+                            <h3 class="f4 mb-2">Example Usage:</h3>
+                            <pre class="bg-gray-light p-3 mb-4"><code>// Setting a cookie
+document.cookie = "username=John Doe; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/";
+
+// Reading a cookie
+const username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];</code></pre>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+                            <div class="flash mt-3 mb-3" id="message-banner" role="alert" style="display: none;">
+                                <svg class="octicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16"
+                                    height="16">
+                                    <path fill-rule="evenodd"
+                                        d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z">
+                                    </path>
+                                </svg>
+                                <span id="message-text"></span>
+                                <button class="flash-close js-flash-close" type="button" aria-label="Close">
+                                    <svg class="octicon octicon-x" viewBox="0 0 16 16" version="1.1" width="16"
+                                        height="16" aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">Set a Cookie:</h4>
+                                <input type="text" id="cookieName" placeholder="Cookie Name" class="form-control mb-2">
+                                <input type="text" id="cookieValue" placeholder="Cookie Value"
+                                    class="form-control mb-2">
+                                <button class="btn" onclick="setCookie()">Set Cookie</button>
+                            </div>
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">Get a Cookie:</h4>
+                                <input type="text" id="getCookieName" placeholder="Cookie Name"
+                                    class="form-control mb-2">
+                                <button class="btn" onclick="getCookie()">Get Cookie</button>
+                                <p id="cookieResult" class="mt-2 color-fg-accent"></p>
+                            </div>
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">Delete a Cookie:</h4>
+                                <input type="text" id="deleteCookieName" placeholder="Cookie Name"
+                                    class="form-control mb-2">
+                                <button class="btn" onclick="deleteCookie()">Delete Cookie</button>
+                            </div>
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">All Cookies:</h4>
+                                <button class="btn" onclick="showAllCookies()">Show All Cookies</button>
+                                <pre id="allCookies" class="bg-gray-light p-3 mt-2 color-fg-accent"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Basic Cookie
+                                            Operations</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Set a cookie and verify it's created
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Retrieve a cookie's value
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Delete a cookie and verify it's removed
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Cookie
+                                            Attributes</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Set a cookie with expiration date
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Set a secure cookie
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Cookie
+                                            Management</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                View all cookies
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Handle multiple cookies
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        function setCookie() {
+            const name = document.getElementById('cookieName').value;
+            const value = document.getElementById('cookieValue').value;
+            if (name && value) {
+                document.cookie = `${name}=${value}; path=/`;
+                showMessage('Cookie set successfully', 'success');
+            } else {
+                showMessage('Please enter both name and value', 'warning');
+            }
+        }
+
+        function getCookie() {
+            const name = document.getElementById('getCookieName').value;
+            const value = document.cookie.split('; ').find(row => row.startsWith(name + '='))?.split('=')[1];
+            if (value) {
+                document.getElementById('cookieResult').textContent = `Value: ${value}`;
+            } else {
+                showMessage('Cookie not found', 'warning');
+            }
+        }
+
+        function deleteCookie() {
+            const name = document.getElementById('deleteCookieName').value;
+            if (name) {
+                document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+                showMessage('Cookie deleted successfully', 'success');
+            } else {
+                showMessage('Please enter a cookie name', 'warning');
+            }
+        }
+
+        function showAllCookies() {
+            document.getElementById('allCookies').textContent = document.cookie || 'No cookies found';
+        }
+
+        function showMessage(message, type) {
+            const banner = document.getElementById('message-banner');
+            const messageText = document.getElementById('message-text');
+            banner.className = `flash flash-${type} mt-3 mb-3`;
+            messageText.textContent = message;
+            banner.style.display = 'block';
+            setTimeout(() => {
+                banner.style.display = 'none';
+            }, 3000);
+        }
+
+        // Close button functionality for the message banner
+        document.querySelector('.js-flash-close').addEventListener('click', function () {
+            document.getElementById('message-banner').style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>
