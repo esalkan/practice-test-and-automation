@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test & Automation - Preflight CORS Request</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.</p>
+            </small>
+        </div>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Preflight CORS Request</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Preflight CORS Requests</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                A preflight CORS request is an automatic request sent by the browser before the actual
+                                request. It's used to determine whether the actual request is safe to send.
+                            </p>
+                            <h3 class="f4 mb-2">Key Points:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Preflight requests use the OPTIONS HTTP method</li>
+                                <li class="ml-4">They include special headers like Origin and
+                                    Access-Control-Request-Method</li>
+                                <li class="ml-4">The server must respond with appropriate Access-Control-* headers</li>
+                                <li class="ml-4">Preflight requests are typically used for "non-simple" requests</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How it works:</h3>
+                            <p class="color-fg-muted mb-4">
+                                When a "non-simple" request is made (e.g., using PUT method or custom headers), the
+                                browser first sends an OPTIONS request. The server then responds with the allowed
+                                methods, headers, and other CORS details. If the actual request is allowed, the browser
+                                proceeds with it.
+                            </p>
+                            <h3 class="f4 mb-2">Example Usage:</h3>
+                            <pre class="bg-gray-light p-3 mb-4 overflow-auto"><code>
+// Making a request that triggers a preflight
+fetch('https://api.example.com/data', {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Custom-Header': 'value'
+    },
+    body: JSON.stringify({ key: 'value' })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+                            </code></pre>
+                            <hr />
+                            <h3 class="f4 mb-2">Test Me:</h3>
+                            <div id="cors-test-area">
+                                <button id="make-preflight-request" class="btn btn-primary mb-2">
+                                    Make Preflight CORS Request
+                                </button>
+                                <button id="make-preflight-error-request" class="btn btn-danger mb-2">
+                                    Test Preflight CORS Error
+                                </button>
+                                <button id="make-preflight-custom-headers" class="btn btn-info mb-2">
+                                    Preflight with Custom Headers
+                                </button>
+                                <button id="make-preflight-put-request" class="btn btn-success mb-2">
+                                    Preflight PUT Request
+                                </button>
+                                <button id="make-preflight-delete-request" class="btn btn-warning mb-2">
+                                    Preflight DELETE Request
+                                </button>
+                                <div id="cors-result" class="mt-3 p-3 border rounded overflow-auto"></div>
+                            </div>
+
+                            <script>
+                                // JavaScript kodu buraya gelecek
+                                const corsResultDiv = document.getElementById('cors-result');
+
+                                function displayResult(message, isError = false) {
+                                    let formattedMessage = message;
+                                    if (!isError) {
+                                        try {
+                                            const jsonObj = JSON.parse(message.replace('Success: ', ''));
+                                            formattedMessage = 'Success:\n' + JSON.stringify(jsonObj, null, 2);
+                                        } catch (e) {
+                                            // If parsing fails, use the original message
+                                        }
+                                    }
+                                    corsResultDiv.innerHTML = '<pre>' + formattedMessage + '</pre>';
+                                    corsResultDiv.className = isError
+                                        ? 'mt-3 p-3 border rounded overflow-auto color-bg-danger color-fg-default'
+                                        : 'mt-3 p-3 border rounded overflow-auto color-bg-success color-fg-default';
+                                }
+
+                                function makeCorsRequest(url, method = 'GET', headers = {}, body = null) {
+                                    fetch(url, {
+                                        method: method,
+                                        headers: headers,
+                                        body: body,
+                                        mode: 'cors'
+                                    })
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error(`HTTP error! status: ${response.status}`);
+                                            }
+                                            return response.json();
+                                        })
+                                        .then(data => {
+                                            displayResult(JSON.stringify(data), false);
+                                        })
+                                        .catch(error => {
+                                            displayResult(`Error: ${error.message}`, true);
+                                        });
+                                }
+
+                                document.getElementById('make-preflight-request').addEventListener('click', () => {
+                                    makeCorsRequest('https://jsonplaceholder.typicode.com/posts/1');
+                                });
+
+                                document.getElementById('make-preflight-error-request').addEventListener('click', () => {
+                                    makeCorsRequest('https://jsonplaceholder.typicode.com/invalid-endpoint');
+                                });
+
+                                document.getElementById('make-preflight-custom-headers').addEventListener('click', () => {
+                                    makeCorsRequest('https://jsonplaceholder.typicode.com/posts/1', 'GET', {
+                                        'X-Custom-Header': 'value'
+                                    });
+                                });
+
+                                document.getElementById('make-preflight-put-request').addEventListener('click', () => {
+                                    makeCorsRequest('https://jsonplaceholder.typicode.com/posts/1', 'PUT', {
+                                        'Content-Type': 'application/json'
+                                    }, JSON.stringify({
+                                        id: 1,
+                                        title: 'Updated Title',
+                                        body: 'Updated body',
+                                        userId: 1
+                                    }));
+                                });
+
+                                document.getElementById('make-preflight-delete-request').addEventListener('click', () => {
+                                    makeCorsRequest('https://jsonplaceholder.typicode.com/posts/1', 'DELETE');
+                                });
+
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Basic Preflight
+                                            CORS Request</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify OPTIONS request is sent before actual request
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check for correct CORS headers in preflight response
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Preflight CORS
+                                            Error Handling</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test preflight request to non-CORS enabled endpoint
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify error handling for preflight failures
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Preflight with
+                                            Custom Headers</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Send preflight request with custom headers
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify server allows custom headers in preflight response
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Preflight with
+                                            Different HTTP Methods</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="                                                1.1"
+                                                    width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test preflight for PUT request
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify preflight for DELETE request
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Preflight Request
+                                            Caching</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check if preflight results are cached
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify cache expiration behavior
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block mt-3">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+</body>
+<script>
+    document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+        e.preventDefault();
+        const additionalScenarios = document.querySelectorAll('.additional-scenario');
+        additionalScenarios.forEach(scenario => {
+            scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+        });
+        this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+    });
+</script>
+
+</html>
