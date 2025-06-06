@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test & Automation - Heat Maps</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+    </style>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Heat Maps</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Heat Maps</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Heat maps are powerful data visualization tools that use color-coding to represent
+                                different values in a two-dimensional grid. They are excellent for showing patterns,
+                                correlations, and intensity levels in large datasets.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Heat Maps:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Color gradient to represent data intensity</li>
+                                <li class="ml-4">Two-dimensional layout for comparing multiple variables</li>
+                                <li class="ml-4">Ability to show patterns and correlations in complex datasets</li>
+                                <li class="ml-4">Customizable color schemes and scales</li>
+                                <li class="ml-4">Interactive features like tooltips and zooming</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How It Works:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">Data is organized into a grid format with rows and columns.</li>
+                                <li class="ml-4">Each cell in the grid represents a data point.</li>
+                                <li class="ml-4">Colors are assigned to cells based on their values.</li>
+                                <li class="ml-4">A color legend is provided to interpret the values.</li>
+                                <li class="ml-4">Additional features like labels and tooltips enhance readability.</li>
+                            </ol>
+                            <h3 class="f4 mb-2">Common Applications:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Geographical data visualization</li>
+                                <li class="ml-4">Website click patterns analysis</li>
+                                <li class="ml-4">Correlation matrices in statistics</li>
+                                <li class="ml-4">Genetic expression data in biology</li>
+                                <li class="ml-4">Financial market trends visualization</li>
+                            </ul>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+                            <div class="d-flex flex-wrap justify-content-center">
+                                <div class="mr-4 mb-4">
+                                    <h3 class="f4 mb-2">Static Heatmap:</h3>
+                                    <div id="heatmap" style="width: 250px; height: 250px;"></div>
+                                    <button id="updateHeatmap" class="btn btn-primary mt-2 mr-2">Update Heatmap</button>
+                                    <button id="resetHeatmap" class="btn btn-outline mt-2">Reset Heatmap</button>
+                                </div>
+
+                                <div>
+                                    <h3 class="f4 mb-2">Click Heatmap:</h3>
+                                    <div id="clickHeatmap"
+                                        style="width: 250px; height: 250px; border: 1px solid #ccc; position: relative;">
+                                    </div>
+                                    <button id="resetClickHeatmap" class="btn btn-outline mt-2">Reset Click
+                                        Heatmap</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Static Heatmap
+                                            Functionality</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify initial heatmap grid is displayed correctly
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test 'Update Heatmap' button functionality
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check 'Reset Heatmap' button functionality
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Click Heatmap
+                                            Functionality</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify click heatmap updates on user clicks
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test color intensity changes with multiple clicks
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check 'Reset Click Heatmap' button functionality
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Color Gradient
+                                            Accuracy</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify color mapping matches data values in static heatmap
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check color intensity accuracy in click heatmap
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block mt-3">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const heatmapElement = document.getElementById('heatmap');
+            const updateButton = document.getElementById('updateHeatmap');
+            const resetButton = document.getElementById('resetHeatmap');
+
+            const colors = ['#FFA07A', '#FA8072', '#E9967A', '#F08080', '#CD5C5C', '#DC143C', '#B22222', '#FF0000', '#8B0000'];
+            let currentColorIndex = 0;
+            // Click Heatmap
+            const clickHeatmapElement = document.getElementById('clickHeatmap');
+            const resetClickHeatmapButton = document.getElementById('resetClickHeatmap');
+            let clickData = new Array(25).fill(0);
+
+            function createClickHeatmap() {
+                clickHeatmapElement.innerHTML = '';
+                for (let i = 0; i < 25; i++) {
+                    const cell = document.createElement('div');
+                    cell.style.width = '20%';
+                    cell.style.height = '20%';
+                    cell.style.position = 'absolute';
+                    cell.style.left = `${(i % 5) * 20}%`;
+                    cell.style.top = `${Math.floor(i / 5) * 20}%`;
+                    cell.style.backgroundColor = 'rgba(255, 0, 0, 0)';
+                    clickHeatmapElement.appendChild(cell);
+                }
+            }
+
+            function updateClickHeatmap(index) {
+                clickData[index]++;
+                const maxClicks = Math.max(...clickData);
+                const cells = clickHeatmapElement.children;
+                for (let i = 0; i < cells.length; i++) {
+                    const opacity = clickData[i] / maxClicks;
+                    cells[i].style.backgroundColor = `rgba(255, 0, 0, ${opacity})`;
+                }
+            }
+
+            function resetClickHeatmap() {
+                clickData = new Array(25).fill(0);
+                const cells = clickHeatmapElement.children;
+                for (let cell of cells) {
+                    cell.style.backgroundColor = 'rgba(255, 0, 0, 0)';
+                }
+            }
+
+            createClickHeatmap();
+
+            clickHeatmapElement.addEventListener('click', function (e) {
+                const rect = clickHeatmapElement.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const cellX = Math.floor((x / rect.width) * 5);
+                const cellY = Math.floor((y / rect.height) * 5);
+                const index = cellY * 5 + cellX;
+                updateClickHeatmap(index);
+            });
+
+            resetClickHeatmapButton.addEventListener('click', resetClickHeatmap);
+
+            function createGrid() {
+                heatmapElement.innerHTML = '';
+                for (let i = 0; i < 25; i++) {
+                    const cell = document.createElement('div');
+                    cell.style.width = '20%';
+                    cell.style.height = '20%';
+                    cell.style.float = 'left';
+                    cell.style.backgroundColor = colors[currentColorIndex];
+                    heatmapElement.appendChild(cell);
+                }
+            }
+
+            function updateHeatmap() {
+                currentColorIndex = (currentColorIndex + 1) % colors.length;
+                const cells = heatmapElement.children;
+                for (let cell of cells) {
+                    cell.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                }
+            }
+
+            function resetHeatmap() {
+                currentColorIndex = 0;
+                const cells = heatmapElement.children;
+                for (let cell of cells) {
+                    cell.style.backgroundColor = colors[currentColorIndex];
+                }
+            }
+
+            createGrid();
+
+            updateButton.addEventListener('click', updateHeatmap);
+            resetButton.addEventListener('click', resetHeatmap);
+        });
+
+        // Toggle additional scenarios
+        document.getElementById("view-more-scenarios").addEventListener("click", function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+    </script>
+</body>
+
+</html>
