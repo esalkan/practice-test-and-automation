@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test & Automation - Data Tables</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        /* Mobil görünüm için ek stiller */
+        @media (max-width: 768px) {
+            .table-fixed {
+                font-size: 14px;
+            }
+
+            .table-fixed th,
+            .table-fixed td {
+                padding: 5px;
+            }
+        }
+
+        .sortable {
+            cursor: pointer;
+        }
+
+        .sortable:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-3">
+            <h1 class="f2 color-fg-default">Data Tables</h1>
+        </div>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Data Tables</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Data Tables in Web Development</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Data tables are essential components in web development for organizing and presenting
+                                large sets of data in a structured, easily readable format. They allow users to sort,
+                                filter, and interact with data efficiently.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Data Tables:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Sorting functionality for columns</li>
+                                <li class="ml-4">Filtering and search capabilities</li>
+                                <li class="ml-4">Pagination for large datasets</li>
+                                <li class="ml-4">Responsive design for various screen sizes</li>
+                                <li class="ml-4">Customizable styling and layout</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How It Works:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">The table is initialized with employee data stored in a JavaScript
+                                    array.</li>
+                                <li class="ml-4">Sorting: Clicking on column headers sorts the data in ascending or
+                                    descending order.</li>
+                                <li class="ml-4">Filtering: The "Filter Age > 60" button filters employees older than
+                                    60.</li>
+                                <li class="ml-4">Search: The search input allows filtering across all columns.</li>
+                                <li class="ml-4">Pagination: The table is divided into pages, with navigation buttons to
+                                    move between pages.</li>
+                                <li class="ml-4">Responsive Design: The table adjusts its layout for different screen
+                                    sizes.</li>
+                            </ol>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+
+                            <div class="Box">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Employee Data</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="d-flex flex-justify-between flex-items-center mb-3">
+                                        <div>
+                                            <button id="sortNameBtn" class="btn btn-sm mr-2">Sort by
+                                                Name</button>
+                                            <button id="filterAgeBtn" class="btn btn-sm">Filter Age >
+                                                60</button>
+                                        </div>
+                                        <input type="text" id="searchInput" class="form-control input-sm"
+                                            placeholder="Search...">
+                                    </div>
+                                    <div class="overflow-auto">
+                                        <table class="table-fixed width-full">
+                                            <thead>
+                                                <tr class="color-bg-subtle">
+                                                    <th class="p-2 text-left sortable" data-sort="name">Name</th>
+                                                    <th class="p-2 text-left sortable" data-sort="position">Position
+                                                    </th>
+                                                    <th class="p-2 text-left sortable" data-sort="office">Office</th>
+                                                    <th class="p-2 text-right sortable" data-sort="age">Age</th>
+                                                    <th class="p-2 text-left sortable" data-sort="startDate">Start Date
+                                                    </th>
+                                                    <th class="p-2 text-right sortable" data-sort="salary">Salary</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableBody">
+                                                <!-- Table rows will be dynamically inserted here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="Box-footer">
+                                    <div class="d-flex flex-justify-between">
+                                        <button id="prevPage" class="btn btn-sm">Previous</button>
+                                        <span id="pageInfo" class="text-small text-gray"></span>
+                                        <button id="nextPage" class="btn btn-sm">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Table
+                                            Initialization</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify table loads with correct number of columns and rows
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check initial sorting order
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Sorting
+                                            Functionality</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test ascending and descending sorts on each column
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify sort indicators appear correctly
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Filtering and
+                                            Search</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test search functionality with various inputs
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify filter functionality (e.g., Filter Age > 60)
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Pagination</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test navigation between pages
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify correct number of rows per page
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Responsiveness</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check table layout on different screen sizes
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify functionality in mobile view
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block mt-3">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+
+        const employees = [
+            { name: "Tiger Nixon", position: "System Architect", office: "Edinburgh", age: 61, startDate: "2011/04/25", salary: "$320,800" },
+            { name: "Garrett Winters", position: "Accountant", office: "Tokyo", age: 63, startDate: "2011/07/25", salary: "$170,750" },
+            { name: "Ashton Cox", position: "Junior Technical Author", office: "San Francisco", age: 66, startDate: "2009/01/12", salary: "$86,000" },
+            { name: "Cedric Kelly", position: "Senior Javascript Developer", office: "Edinburgh", age: 22, startDate: "2012/03/29", salary: "$433,060" },
+            { name: "Airi Satou", position: "Accountant", office: "Tokyo", age: 33, startDate: "2008/11/28", salary: "$162,700" },
+            { name: "Brielle Williamson", position: "Integration Specialist", office: "New York", age: 61, startDate: "2012/12/02", salary: "$372,000" },
+            { name: "Herrod Chandler", position: "Sales Assistant", office: "San Francisco", age: 59, startDate: "2012/08/06", salary: "$137,500" },
+            { name: "Rhona Davidson", position: "Integration Specialist", office: "Tokyo", age: 55, startDate: "2010/10/14", salary: "$327,900" },
+            { name: "Colleen Hurst", position: "Javascript Developer", office: "San Francisco", age: 39, startDate: "2009/09/15", salary: "$205,500" },
+            { name: "Sonya Frost", position: "Software Engineer", office: "Edinburgh", age: 23, startDate: "2008/12/13", salary: "$103,600" },
+            { name: "Jena Gaines", position: "Office Manager", office: "London", age: 30, startDate: "2008/12/19", salary: "$90,560" },
+            { name: "Quinn Flynn", position: "Support Lead", office: "Edinburgh", age: 22, startDate: "2013/03/03", salary: "$342,000" },
+            { name: "Charde Marshall", position: "Regional Director", office: "San Francisco", age: 36, startDate: "2008/10/16", salary: "$470,600" },
+            { name: "Haley Kennedy", position: "Senior Marketing Designer", office: "London", age: 43, startDate: "2012/12/18", salary: "$313,500" },
+            { name: "Tatyana Fitzpatrick", position: "Regional Director", office: "London", age: 19, startDate: "2010/03/17", salary: "$385,750" },
+            { name: "Michael Silva", position: "Marketing Designer", office: "London", age: 66, startDate: "2012/11/27", salary: "$198,500" },
+            { name: "Paul Byrd", position: "Chief Financial Officer (CFO)", office: "New York", age: 64, startDate: "2010/06/09", salary: "$725,000" },
+            { name: "Gloria Little", position: "Systems Administrator", office: "New York", age: 59, startDate: "2009/04/10", salary: "$237,500" },
+            { name: "Bradley Greer", position: "Software Engineer", office: "London", age: 41, startDate: "2012/10/13", salary: "$132,000" },
+            { name: "Dai Rios", position: "Personnel Lead", office: "Edinburgh", age: 35, startDate: "2012/09/26", salary: "$217,500" },
+            { name: "Jenette Caldwell", position: "Development Lead", office: "New York", age: 30, startDate: "2011/09/03", salary: "$345,000" },
+            { name: "Yuri Berry", position: "Chief Marketing Officer (CMO)", office: "New York", age: 40, startDate: "2009/06/25", salary: "$675,000" },
+            { name: "Caesar Vance", position: "Pre-Sales Support", office: "New York", age: 21, startDate: "2011/12/12", salary: "$106,450" },
+            { name: "Doris Wilder", position: "Sales Assistant", office: "Sydney", age: 23, startDate: "2010/09/20", salary: "$85,600" },
+            { name: "Angelica Ramos", position: "Chief Executive Officer (CEO)", office: "London", age: 47, startDate: "2009/10/09", salary: "$1,200,000" },
+            { name: "Gavin Joyce", position: "Developer", office: "Edinburgh", age: 42, startDate: "2010/12/22", salary: "$92,575" },
+            { name: "Jennifer Chang", position: "Regional Director", office: "Singapore", age: 28, startDate: "2010/11/14", salary: "$357,650" },
+            { name: "Brenden Wagner", position: "Software Engineer", office: "San Francisco", age: 28, startDate: "2011/06/07", salary: "$206,850" },
+            { name: "Fiona Green", position: "Chief Operating Officer (COO)", office: "San Francisco", age: 48, startDate: "2010/03/11", salary: "$850,000" },
+            { name: "Shou Itou", position: "Regional Marketing", office: "Tokyo", age: 20, startDate: "2011/08/14", salary: "$163,000" },
+            { name: "Michelle House", position: "Integration Specialist", office: "Sydney", age: 37, startDate: "2011/06/02", salary: "$95,400" },
+            { name: "Suki Burks", position: "Developer", office: "London", age: 53, startDate: "2009/10/22", salary: "$114,500" },
+            { name: "Prescott Bartlett", position: "Technical Author", office: "London", age: 27, startDate: "2011/05/07", salary: "$145,000" },
+            { name: "Gavin Cortez", position: "Team Leader", office: "San Francisco", age: 22, startDate: "2008/10/26", salary: "$235,500" },
+            { name: "Martena Mccray", position: "Post-Sales support", office: "Edinburgh", age: 46, startDate: "2011/03/09", salary: "$324,050" },
+            { name: "Unity Butler", position: "Marketing Designer", office: "San Francisco", age: 47, startDate: "2009/12/09", salary: "$85,675" },
+            { name: "Howard Hatfield", position: "Office Manager", office: "San Francisco", age: 51, startDate: "2008/12/16", salary: "$164,500" },
+            { name: "Hope Fuentes", position: "Secretary", office: "San Francisco", age: 41, startDate: "2010/02/12", salary: "$109,850" },
+            { name: "Vivian Harrell", position: "Financial Controller", office: "San Francisco", age: 62, startDate: "2009/02/14", salary: "$452,500" },
+            { name: "Timothy Mooney", position: "Office Manager", office: "London", age: 37, startDate: "2008/12/11", salary: "$136,200" },
+            { name: "Jackson Bradshaw", position: "Director", office: "New York", age: 65, startDate: "2008/09/26", salary: "$645,750" },
+            { name: "Olivia Liang", position: "Support Engineer", office: "Singapore", age: 64, startDate: "2011/02/03", salary: "$234,500" },
+            { name: "Bruno Nash", position: "Software Engineer", office: "London", age: 38, startDate: "2011/05/03", salary: "$163,500" },
+            { name: "Sakura Yamamoto", position: "Support Engineer", office: "Tokyo", age: 37, startDate: "2009/08/19", salary: "$139,575" },
+            { name: "Thor Walton", position: "Developer", office: "New York", age: 61, startDate: "2013/08/11", salary: "$98,540" },
+            { name: "Finn Camacho", position: "Support Engineer", office: "San Francisco", age: 47, startDate: "2009/07/07", salary: "$87,500" },
+            { name: "Serge Baldwin", position: "Data Coordinator", office: "Singapore", age: 64, startDate: "2012/04/09", salary: "$138,575" },
+            { name: "Zenaida Frank", position: "Software Engineer", office: "New York", age: 63, startDate: "2010/01/04", salary: "$125,250" },
+            { name: "Zorita Serrano", position: "Software Engineer", office: "San Francisco", age: 56, startDate: "2012/06/01", salary: "$115,000" },
+            { name: "Jennifer Acosta", position: "Junior Javascript Developer", office: "Edinburgh", age: 43, startDate: "2013/02/01", salary: "$75,650" },
+            { name: "Cara Stevens", position: "Sales Assistant", office: "New York", age: 46, startDate: "2011/12/06", salary: "$145,600" },
+            { name: "Hermione Butler", position: "Regional Director", office: "London", age: 47, startDate: "2011/03/21", salary: "$356,250" },
+            { name: "Lael Greer", position: "Systems Administrator", office: "London", age: 21, startDate: "2009/02/27", salary: "$103,500" },
+            { name: "Jonas Alexander", position: "Developer", office: "San Francisco", age: 30, startDate: "2010/07/14", salary: "$86,500" },
+            { name: "Shad Decker", position: "Regional Director", office: "Edinburgh", age: 51, startDate: "2008/11/13", salary: "$183,000" },
+            { name: "Michael Bruce", position: "Javascript Developer", office: "Singapore", age: 29, startDate: "2011/06/27", salary: "$183,000" },
+            { name: "Donna Snider", position: "Customer Support", office: "New York", age: 27, startDate: "2011/01/25", salary: "$112,000" },
+            { name: "Erika Wolfe", position: "UX Designer", office: "London", age: 32, startDate: "2014/03/15", salary: "$98,000" },
+            { name: "Lucas Nguyen", position: "Data Analyst", office: "Tokyo", age: 29, startDate: "2015/07/01", salary: "$120,000" },
+            { name: "Zoe Chen", position: "Product Manager", office: "San Francisco", age: 35, startDate: "2013/09/12", salary: "$180,000" },
+            { name: "Ethan Park", position: "Full Stack Developer", office: "Seoul", age: 31, startDate: "2016/01/20", salary: "$145,000" }
+        ];
+
+        let currentPage = 1;
+        const rowsPerPage = 10;
+        let filteredEmployees = [...employees];
+
+        function renderTable() {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const paginatedEmployees = filteredEmployees.slice(start, end);
+
+            paginatedEmployees.forEach(employee => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+            <td class="p-2">${employee.name}</td>
+            <td class="p-2">${employee.position}</td>
+            <td class="p-2">${employee.office}</td>
+            <td class="p-2 text-right">${employee.age}</td>
+            <td class="p-2">${employee.startDate}</td>
+            <td class="p-2 text-right">${employee.salary}</td>
+        `;
+                tableBody.appendChild(row);
+            });
+
+            updatePagination();
+        }
+
+        function updatePagination() {
+            const pageInfo = document.getElementById('pageInfo');
+            const totalPages = Math.ceil(filteredEmployees.length / rowsPerPage);
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage === totalPages;
+        }
+
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            const totalPages = Math.ceil(filteredEmployees.length / rowsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTable();
+            }
+        });
+
+        document.getElementById('sortNameBtn').addEventListener('click', () => {
+            filteredEmployees.sort((a, b) => a.name.localeCompare(b.name));
+            currentPage = 1;
+            renderTable();
+        });
+
+        document.getElementById('filterAgeBtn').addEventListener('click', () => {
+            filteredEmployees = employees.filter(emp => emp.age > 60);
+            currentPage = 1;
+            renderTable();
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            filteredEmployees = employees.filter(emp =>
+                Object.values(emp).some(val =>
+                    val.toString().toLowerCase().includes(searchTerm)
+                )
+            );
+            currentPage = 1;
+            renderTable();
+        });
+
+        document.querySelectorAll('.sortable').forEach(th => {
+            th.addEventListener('click', () => {
+                const sortBy = th.dataset.sort;
+                filteredEmployees.sort((a, b) => {
+                    if (a[sortBy] < b[sortBy]) return -1;
+                    if (a[sortBy] > b[sortBy]) return 1;
+                    return 0;
+                });
+                currentPage = 1;
+                renderTable();
+            });
+        });
+
+        // İlk yükleme
+        renderTable();
+
+
+
+    </script>
+</body>
+
+</html>
