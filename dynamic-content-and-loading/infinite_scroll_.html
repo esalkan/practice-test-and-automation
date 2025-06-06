@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Scroll - Practice Test & Automation</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Dynamic Content and
+                        Loading</a></li>
+                <li class="breadcrumb-item" aria-current="page">Infinite Scroll</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Infinite Scroll</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Infinite scroll is a web design technique that loads content continuously as the user
+                                scrolls down the page, eliminating the need for pagination. This technique is widely
+                                used in social media feeds, news websites, and e-commerce platforms to provide a
+                                seamless browsing experience.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Infinite Scroll:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Continuous content loading without page reloads</li>
+                                <li class="ml-4">Improved user engagement and time spent on site</li>
+                                <li class="ml-4">Reduced server load by loading content in smaller chunks</li>
+                                <li class="ml-4">Seamless integration with various types of content (text, images,
+                                    videos)</li>
+                                <li class="ml-4">Customizable loading thresholds and batch sizes</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How It Works:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">The page initially loads with a set amount of content.</li>
+                                <li class="ml-4">As the user scrolls, a script detects when they're near the bottom of
+                                    the page.</li>
+                                <li class="ml-4">An AJAX request is sent to the server to fetch more content.</li>
+                                <li class="ml-4">New content is appended to the existing content without a page reload.
+                                </li>
+                                <li class="ml-4">This process repeats as long as there's more content to load.</li>
+                            </ol>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+                            <div id="infinite-scroll-demo" class="border rounded-2 p-3">
+                                <div id="content-container"></div>
+                                <div id="loading" class="text-center py-3" style="display: none;">
+                                    Loading more items...
+                                </div>
+                            </div>
+                            <button id="reset-demo" class="btn btn-primary mt-3">Reset Demo</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Basic
+                                            Functionality</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify initial content loads on page load
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test scrolling triggers new content load
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify "Loading more items..." message appears while loading
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Content Limit</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify content stops loading after reaching maximum paragraphs (30)
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check "End of content" message appears after reaching the limit
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Reset
+                                            Functionality</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test "Reset Demo" button clears all content
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify new content loads after reset
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Performance</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Measure load time for new content (should be around 1 second)
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check scrolling performance with large amount of loaded content
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Content
+                                            Variety</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify different paragraphs are loaded (not just repeating)
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check formatting and styling of loaded paragraphs
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        // Infinite scroll demo implementation
+        const contentContainer = document.getElementById('content-container');
+        const loadingIndicator = document.getElementById('loading');
+
+        const loremIpsumParagraphs = [
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
+            "Praesent vel ante in sapien placerat posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec vel sapien in sapien placerat posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec vel sapien in sapien placerat posuere.",
+            "Fusce nec justo vel nunc bibendum tincidunt. Curabitur auctor, nunc id aliquam tincidunt, nisi nunc tincidunt nunc, nec tincidunt nunc nunc id nunc. Sed euismod, nunc id aliquam tincidunt, nisi nunc tincidunt nunc, nec tincidunt nunc nunc id nunc. Sed euismod, nunc id aliquam tincidunt, nisi nunc tincidunt nunc, nec tincidunt nunc nunc id nunc.",
+            "Vivamus lacinia, nunc id aliquam tincidunt, nisi nunc tincidunt nunc, nec tincidunt nunc nunc id nunc. Sed euismod, nunc id aliquam tincidunt, nisi nunc tincidunt nunc, nec tincidunt nunc nunc id nunc. Sed euismod, nunc id aliquam tincidunt, nisi nunc tincidunt nunc, nec tincidunt nunc nunc id nunc.",
+            "Etiam eget nunc vel nunc bibendum tincidunt. Curabitur auctor, nunc id aliquam tincidunt, nisi nunc tincidunt nunc, nec tincidunt nunc nunc id nunc. Sed euismod, nunc id aliquam tincidunt, nisi nunc tincidunt nunc, nec tincidunt nunc nunc id nunc. Sed euismod, nunc id aliquam tincidunt, nisi nunc tincidunt nunc, nec tincidunt nunc nunc id nunc.",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc id aliquam tincidunt, nisi nunc tincidunt nunc, nec tincidunt nunc nunc id nunc. Sed euismod, nunc id aliquam tincidunt, nisi nunc tincidunt nunc, nec tincidunt nunc nunc id nunc. Sed euismod, nunc id aliquam tincidunt, nisi nunc tincidunt nunc, nec tincidunt nunc nunc id nunc."];
+        let isLoading = false;
+        let totalLoadedParagraphs = 0;
+        const maxParagraphs = 30;
+
+        function loadMoreContent() {
+            if (isLoading || totalLoadedParagraphs >= maxParagraphs) return;
+
+            isLoading = true;
+            loadingIndicator.style.display = 'block';
+
+            setTimeout(() => {
+                for (let i = 0; i < 3; i++) {
+                    if (totalLoadedParagraphs < maxParagraphs) {
+                        const paragraph = document.createElement('p');
+                        paragraph.className = 'color-fg-muted mb-3';
+                        paragraph.textContent = loremIpsumParagraphs[Math.floor(Math.random() * loremIpsumParagraphs.length)];
+                        contentContainer.appendChild(paragraph);
+                        totalLoadedParagraphs++;
+                    }
+                }
+
+                loadingIndicator.style.display = 'none';
+                isLoading = false;
+
+                if (totalLoadedParagraphs >= maxParagraphs) {
+                    const endMessage = document.createElement('p');
+                    endMessage.className = 'color-fg-muted mb-3 text-center';
+                    endMessage.textContent = 'End of content';
+                    contentContainer.appendChild(endMessage);
+                }
+            }, 1000);
+        }
+
+        function isNearBottom() {
+            return window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 500;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (isNearBottom()) {
+                loadMoreContent();
+            }
+        });
+
+        document.getElementById('reset-demo').addEventListener('click', () => {
+            contentContainer.innerHTML = '';
+            totalLoadedParagraphs = 0;
+            loadMoreContent();
+        });
+
+        // Initial load
+        loadMoreContent();
+
+        // View more scenarios functionality
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+    </script>
+</body>
+
+</html>
