@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test & Automation - Form Accessibility</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .form-group.has-error .form-control {
+            border-color: var(--color-danger-emphasis);
+        }
+
+        .form-group.has-error .error-message {
+            display: block;
+            color: var(--color-danger-fg);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .error-message {
+            display: none;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .focus-indicator:focus {
+            outline: 2px solid var(--color-accent-fg);
+            outline-offset: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-hint {
+            color: var(--color-fg-muted);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .required-field::after {
+            content: "*";
+            color: var(--color-danger-fg);
+            margin-left: 0.25rem;
+        }
+
+        .success-message {
+            display: none;
+            background-color: var(--color-success-subtle);
+            color: var(--color-success-fg);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Form Accessibility</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Form Accessibility</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Form accessibility ensures that all users, including those with disabilities, can
+                                successfully complete forms on your website. This includes proper labeling, keyboard
+                                navigation, error handling, and more.
+                            </p>
+                            <h3 class="f4 mb-2">Key Aspects of Form Accessibility:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Proper labeling of form controls with associated labels</li>
+                                <li class="ml-4">Clear instructions and error messages</li>
+                                <li class="ml-4">Keyboard accessibility for all form elements</li>
+                                <li class="ml-4">Logical tab order and focus management</li>
+                                <li class="ml-4">ARIA attributes for complex form components</li>
+                                <li class="ml-4">Sufficient color contrast for text and form elements</li>
+                            </ul>
+                            <h3 class="f4 mb-2">Best Practices:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">Always use <code>&lt;label&gt;</code> elements properly associated with
+                                    form controls.</li>
+                                <li class="ml-4">Provide clear instructions before forms and fields that need specific
+                                    formatting.</li>
+                                <li class="ml-4">Ensure error messages are descriptive and linked to their respective
+                                    fields.</li>
+                                <li class="ml-4">Group related form elements using <code>&lt;fieldset&gt;</code> and
+                                    <code>&lt;legend&gt;</code>.
+                                </li>
+                                <li class="ml-4">Make sure all interactive elements are keyboard accessible.</li>
+                            </ol>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+
+                            <div class="mt-4">
+                                <form id="accessible-form" novalidate>
+                                    <fieldset class="border rounded-2 p-3 mb-4">
+                                        <legend class="f4">Personal Information</legend>
+
+                                        <div class="form-group">
+                                            <label for="full-name" class="required-field">Full Name</label>
+                                            <input type="text" id="full-name" name="full-name"
+                                                class="form-control focus-indicator" required aria-required="true">
+                                            <div class="error-message" id="full-name-error">Please enter your full name
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email" class="required-field">Email Address</label>
+                                            <input type="email" id="email" name="email"
+                                                class="form-control focus-indicator" required aria-required="true">
+                                            <div class="form-hint">We'll never share your email with anyone else.</div>
+                                            <div class="error-message" id="email-error">Please enter a valid email
+                                                address</div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="phone">Phone Number</label>
+                                            <input type="tel" id="phone" name="phone"
+                                                class="form-control focus-indicator" aria-describedby="phone-hint">
+                                            <div class="form-hint" id="phone-hint">Format: (123) 456-7890</div>
+                                        </div>
+                                    </fieldset>
+
+                                    <fieldset class="border rounded-2 p-3 mb-4">
+                                        <legend class="f4">Preferences</legend>
+
+                                        <div class="form-group">
+                                            <label id="contact-preference-label">Preferred Contact Method</label>
+                                            <div class="d-flex flex-column" role="radiogroup"
+                                                aria-labelledby="contact-preference-label">
+                                                <label class="d-flex flex-items-center mb-2">
+                                                    <input type="radio" name="contact-preference" value="email"
+                                                        class="mr-2 focus-indicator">
+                                                    Email
+                                                </label>
+                                                <label class="d-flex flex-items-center mb-2">
+                                                    <input type="radio" name="contact-preference" value="phone"
+                                                        class="mr-2 focus-indicator">
+                                                    Phone
+                                                </label>
+                                                <label class="d-flex flex-items-center">
+                                                    <input type="radio" name="contact-preference" value="text"
+                                                        class="mr-2 focus-indicator">
+                                                    Text Message
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="topics">Topics of Interest</label>
+                                            <select id="topics" name="topics" class="form-select focus-indicator"
+                                                multiple aria-describedby="topics-hint">
+                                                <option value="accessibility">Accessibility</option>
+                                                <option value="testing">Testing</option>
+                                                <option value="automation">Automation</option>
+                                                <option value="design">Design</option>
+                                                <option value="development">Development</option>
+                                            </select>
+                                            <div class="form-hint" id="topics-hint">Hold Ctrl (or Cmd) to select
+                                                multiple options</div>
+                                        </div>
+                                    </fieldset>
+
+                                    <div class="form-group">
+                                        <label for="message">Message</label>
+                                        <textarea id="message" name="message" class="form-control focus-indicator"
+                                            rows="4"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="d-flex flex-items-center">
+                                            <input type="checkbox" name="terms" id="terms" class="mr-2 focus-indicator"
+                                                required aria-required="true">
+                                            <span class="required-field">I agree to the terms and conditions</span>
+                                        </label>
+                                        <div class="error-message" id="terms-error">You must agree to the terms and
+                                            conditions</div>
+                                    </div>
+
+                                    <div class="d-flex flex-items-center">
+                                        <button type="submit"
+                                            class="btn btn-primary mr-2 focus-indicator">Submit</button>
+                                        <button type="reset" class="btn focus-indicator">Reset</button>
+                                    </div>
+                                </form>
+
+                                <div id="form-success" class="success-message">
+                                    <svg class="octicon octicon-check mr-2" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 16 16" width="16" height="16">
+                                        <path fill-rule="evenodd"
+                                            d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                        </path>
+                                    </svg>
+                                    Form submitted successfully! Thank you for your submission.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Form Navigation
+                                            Accessibility</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test keyboard navigation through all form elements
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Ensure form can be submitted using only keyboard
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Form Validation
+                                            Accessibility</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Validate form error messages are accessible
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check required fields are properly indicated
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Screen Reader
+                                            Compatibility</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test form with screen readers (NVDA, JAWS, VoiceOver)
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Validate form works with voice recognition software
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Structural
+                                            Accessibility</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify fieldset and legend are used for logical grouping
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check ARIA attributes are correctly implemented
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Visual
+                                            Accessibility</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test color contrast for form elements
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify focus indicators are visible
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block mt-3">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+
+        // Form validation and submission
+        const form = document.getElementById('accessible-form');
+        const formSuccess = document.getElementById('form-success');
+        const errorMessages = document.querySelectorAll('.error-message');
+
+        // Hide all error messages initially
+        errorMessages.forEach(msg => {
+            msg.style.display = 'none';
+        });
+
+        // Hide success message initially
+        formSuccess.style.display = 'none';
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let isValid = true;
+
+            // Validate full name
+            const fullName = document.getElementById('full-name');
+            if (!fullName.value.trim()) {
+                document.getElementById('full-name-error').style.display = 'block';
+                fullName.setAttribute('aria-invalid', 'true');
+                isValid = false;
+            } else {
+                document.getElementById('full-name-error').style.display = 'none';
+                fullName.setAttribute('aria-invalid', 'false');
+            }
+
+            // Validate email
+            const email = document.getElementById('email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                document.getElementById('email-error').style.display = 'block';
+                email.setAttribute('aria-invalid', 'true');
+                isValid = false;
+            } else {
+                document.getElementById('email-error').style.display = 'none';
+                email.setAttribute('aria-invalid', 'false');
+            }
+
+            // Validate terms checkbox
+            const terms = document.getElementById('terms');
+            if (!terms.checked) {
+                document.getElementById('terms-error').style.display = 'block';
+                terms.setAttribute('aria-invalid', 'true');
+                isValid = false;
+            } else {
+                document.getElementById('terms-error').style.display = 'none';
+                terms.setAttribute('aria-invalid', 'false');
+            }
+
+            // If form is valid, show success message
+            if (isValid) {
+                form.style.display = 'none';
+                formSuccess.style.display = 'block';
+                formSuccess.setAttribute('tabindex', '-1');
+                formSuccess.focus();
+            }
+        });
+    </script>
+</body>
+
+</html>

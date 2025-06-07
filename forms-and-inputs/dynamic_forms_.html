@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test & Automation - Dynamic Forms</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .error {
+            color: var(--color-danger-fg);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.</p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Dynamic Forms</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Dynamic Forms</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Dynamic forms are web forms that can change their structure or content based on user
+                                input or other conditions. They enhance user experience by presenting relevant fields
+                                and reducing form complexity.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Dynamic Forms:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Conditional field display</li>
+                                <li class="ml-4">Real-time form updates</li>
+                                <li class="ml-4">Dynamic field generation</li>
+                                <li class="ml-4">Adaptive validation rules</li>
+                                <li class="ml-4">Interactive user guidance</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How It Works:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">The form listens for user input or changes in form state.</li>
+                                <li class="ml-4">Based on predefined conditions, it shows/hides fields or sections.</li>
+                                <li class="ml-4">New fields can be dynamically added or removed as needed.</li>
+                                <li class="ml-4">Validation rules adjust according to the current form state.</li>
+                                <li class="ml-4">The form provides immediate feedback and guidance to the user.</li>
+                            </ol>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+                            <form id="dynamicForm" class="mb-3">
+                                <div class="form-group mb-3">
+                                    <label for="userType" class="d-block mb-2">I am a:</label>
+                                    <select class="form-select" id="userType" name="userType" required>
+                                        <option value="">Select user type</option>
+                                        <option value="student">Student</option>
+                                        <option value="professional">Professional</option>
+                                    </select>
+                                    <p class="note error mt-2" id="userTypeError"></p>
+                                </div>
+
+                                <div id="studentFields" style="display: none;">
+                                    <div class="form-group mb-3">
+                                        <label for="schoolName" class="d-block mb-2">School Name:</label>
+                                        <input type="text" class="form-control" id="schoolName" name="schoolName">
+                                        <p class="note error mt-2" id="schoolNameError"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="gradeLevel" class="d-block mb-2">Grade Level:</label>
+                                        <input type="number" class="form-control" id="gradeLevel" name="gradeLevel"
+                                            min="1" max="12">
+                                        <p class="note error mt-2" id="gradeLevelError"></p>
+                                    </div>
+                                </div>
+
+                                <div id="professionalFields" style="display: none;">
+                                    <div class="form-group mb-3">
+                                        <label for="company" class="d-block mb-2">Company:</label>
+                                        <input type="text" class="form-control" id="company" name="company">
+                                        <p class="note error mt-2" id="companyError"></p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="jobTitle" class="d-block mb-2">Job Title:</label>
+                                        <input type="text" class="form-control" id="jobTitle" name="jobTitle">
+                                        <p class="note error mt-2" id="jobTitleError"></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="d-block mb-2">Interests:</label>
+                                    <div id="interestsContainer">
+                                        <div class="d-flex mb-2">
+                                            <input type="text" class="form-control flex-grow-1" name="interests[]">
+                                            <button type="button" class="btn btn-sm btn-danger ml-2 remove-interest"
+                                                style="display:none;">Remove</button>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-secondary mt-2" id="addInterest">Add
+                                        Another Interest</button>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">1. User Type Selection</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify 'Student' selection displays student-specific fields
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Confirm 'Professional' selection shows professional-specific fields
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">2. Dynamic Interest Fields</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify addition of multiple interest fields
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Confirm removal of interest fields
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">3. Form Validation</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify required field validation for user type
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Confirm grade level range validation (1-12)
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">4. Form Submission</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify successful form submission with all fields completed
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Confirm form submission prevention with missing required fields
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View All Scenarios
+                                →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+
+        const userTypeSelect = document.getElementById('userType');
+        const studentFields = document.getElementById('studentFields');
+        const professionalFields = document.getElementById('professionalFields');
+        const addInterestBtn = document.getElementById('addInterest');
+        const interestsContainer = document.getElementById('interestsContainer');
+        const form = document.getElementById('dynamicForm');
+
+        userTypeSelect.addEventListener('change', function () {
+            if (this.value === 'student') {
+                studentFields.style.display = 'block';
+                professionalFields.style.display = 'none';
+            } else if (this.value === 'professional') {
+                studentFields.style.display = 'none';
+                professionalFields.style.display = 'block';
+            } else {
+                studentFields.style.display = 'none';
+                professionalFields.style.display = 'none';
+            }
+        });
+
+        addInterestBtn.addEventListener('click', function () {
+            const newInterest = document.createElement('div');
+            newInterest.innerHTML = `
+            <div class="form-group d-flex mb-2">
+                <input type="text" class="form-control flex-auto" name="interests[]">
+                <button type="button" class="btn btn-sm btn-danger ml-2 remove-interest">Remove</button>
+            </div>
+        `;
+            interestsContainer.appendChild(newInterest);
+        });
+
+        interestsContainer.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-interest')) {
+                e.target.closest('.form-group').remove();
+            }
+        });
+
+        function validateForm() {
+            let isValid = true;
+            const userType = userTypeSelect.value;
+
+            // User Type validation
+            if (!userType) {
+                showError(userTypeSelect, 'Please select a user type');
+                isValid = false;
+            } else {
+                clearError(userTypeSelect);
+            }
+
+            // Student-specific validations
+            if (userType === 'student') {
+                const schoolName = document.getElementById('schoolName');
+                const gradeLevel = document.getElementById('gradeLevel');
+
+                if (!schoolName.value.trim()) {
+                    showError(schoolName, 'School name is required');
+                    isValid = false;
+                } else {
+                    clearError(schoolName);
+                }
+
+                if (!gradeLevel.value) {
+                    showError(gradeLevel, 'Grade level is required');
+                    isValid = false;
+                } else if (gradeLevel.value < 1 || gradeLevel.value > 12) {
+                    showError(gradeLevel, 'Grade level must be between 1 and 12');
+                    isValid = false;
+                } else {
+                    clearError(gradeLevel);
+                }
+            }
+
+            // Professional-specific validations
+            if (userType === 'professional') {
+                const company = document.getElementById('company');
+                const jobTitle = document.getElementById('jobTitle');
+
+                if (!company.value.trim()) {
+                    showError(company, 'Company name is required');
+                    isValid = false;
+                } else {
+                    clearError(company);
+                }
+
+                if (!jobTitle.value.trim()) {
+                    showError(jobTitle, 'Job title is required');
+                    isValid = false;
+                } else {
+                    clearError(jobTitle);
+                }
+            }
+
+            // Interests validation
+            const interests = document.querySelectorAll('input[name="interests[]"]');
+            let hasInterest = false;
+            interests.forEach(interest => {
+                if (interest.value.trim()) {
+                    hasInterest = true;
+                }
+            });
+            if (!hasInterest) {
+                showError(interestsContainer, 'At least one interest is required');
+                isValid = false;
+            } else {
+                clearError(interestsContainer);
+            }
+
+            return isValid;
+        }
+
+        function showError(element, message) {
+            const formGroup = element.closest('.form-group');
+            formGroup.classList.add('errored');
+            const errorElement = formGroup.querySelector('.error');
+            if (errorElement) {
+                errorElement.textContent = message;
+            } else {
+                const newErrorElement = document.createElement('p');
+                newErrorElement.className = 'note error';
+                newErrorElement.textContent = message;
+                formGroup.appendChild(newErrorElement);
+            }
+        }
+
+        function clearError(element) {
+            const formGroup = element.closest('.form-group');
+            formGroup.classList.remove('errored');
+            const errorElement = formGroup.querySelector('.error');
+            if (errorElement) {
+                errorElement.textContent = '';
+            }
+        }
+
+        function showSuccessMessage() {
+            const successMessage = document.createElement('div');
+            successMessage.className = 'flash flash-success';
+            successMessage.innerHTML = `
+            <svg class="octicon octicon-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
+            </svg>
+            Form submitted successfully!
+        `;
+            form.insertBefore(successMessage, form.firstChild);
+            setTimeout(() => successMessage.remove(), 5000); // Remove after 5 seconds
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Clear all previous error messages
+            document.querySelectorAll('.form-group').forEach(el => el.classList.remove('errored'));
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+
+            if (validateForm()) {
+                // Form is valid, you can submit it
+                console.log('Form submitted!');
+                const formData = new FormData(form);
+                for (let [key, value] of formData.entries()) {
+                    console.log(key, value);
+                }
+                showSuccessMessage();
+                form.reset(); // Reset the form after successful submission
+            }
+        });
+    </script>
+</body>
+
+</html>

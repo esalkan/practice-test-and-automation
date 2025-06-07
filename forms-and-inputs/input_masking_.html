@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test & Automation - Input Masking</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <script src="https://unpkg.com/imask@6.4.3/dist/imask.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .input-group .form-control {
+            width: 100%;
+        }
+
+        .input-hint {
+            display: block;
+            font-size: 12px;
+            color: #6a737d;
+            margin-top: 4px;
+        }
+
+        .validation-message {
+            color: #d73a49;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .is-invalid .validation-message {
+            display: block;
+        }
+
+        .is-invalid .form-control {
+            border-color: #d73a49;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Input Masking</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Input Masking</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Input masking is a technique that helps users enter data in a specific format, such as
+                                phone numbers, credit cards, dates, or currency values. It provides visual cues and
+                                automatically formats the input as the user types, reducing errors and improving the
+                                user experience.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Input Masking:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Guides users to enter data in the correct format</li>
+                                <li class="ml-4">Automatically adds formatting characters like dashes, parentheses, or
+                                    slashes</li>
+                                <li class="ml-4">Restricts input to allowed characters (e.g., only numbers for phone
+                                    numbers)</li>
+                                <li class="ml-4">Provides immediate visual feedback during data entry</li>
+                                <li class="ml-4">Improves form completion rates by reducing user errors</li>
+                            </ul>
+                            <h3 class="f4 mb-2">Common Input Mask Types:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">Phone numbers: (123) 456-7890</li>
+                                <li class="ml-4">Credit cards: 1234 5678 9012 3456</li>
+                                <li class="ml-4">Dates: MM/DD/YYYY or DD/MM/YYYY</li>
+                                <li class="ml-4">Time: HH:MM AM/PM</li>
+                                <li class="ml-4">Currency: $1,234.56</li>
+                                <li class="ml-4">Social security numbers: 123-45-6789</li>
+                                <li class="ml-4">IP addresses: 192.168.1.1</li>
+                            </ol>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+
+                            <div class="form-container">
+                                <form id="masked-input-form">
+                                    <!-- Phone Number Input -->
+                                    <div class="input-group px-6">
+                                        <label for="phone">Phone Number</label>
+                                        <input type="text" id="phone" class="form-control" placeholder="(___) ___-____">
+                                        <span class="input-hint">Format: (123) 456-7890</span>
+                                        <div class="validation-message">Please enter a valid phone number</div>
+                                    </div>
+
+                                    <!-- Credit Card Input -->
+                                    <div class="input-group px-6">
+                                        <label for="credit-card">Credit Card Number</label>
+                                        <input type="text" id="credit-card" class="form-control"
+                                            placeholder="____ ____ ____ ____">
+                                        <span class="input-hint">Format: 1234 5678 9012 3456</span>
+                                        <div class="validation-message">Please enter a valid credit card number</div>
+                                    </div>
+
+                                    <!-- Date Input -->
+                                    <div class="input-group px-6">
+                                        <label for="date">Date</label>
+                                        <input type="text" id="date" class="form-control" placeholder="MM/DD/YYYY">
+                                        <span class="input-hint">Format: MM/DD/YYYY</span>
+                                        <div class="validation-message">Please enter a valid date</div>
+                                    </div>
+
+                                    <!-- Currency Input -->
+                                    <div class="input-group px-6">
+                                        <label for="currency">Currency</label>
+                                        <input type="text" id="currency" class="form-control" placeholder="$0.00">
+                                        <span class="input-hint">Format: $1,234.56</span>
+                                        <div class="validation-message">Please enter a valid amount</div>
+                                    </div>
+
+                                    <!-- Time Input -->
+                                    <div class="input-group px-6">
+                                        <label for="time">Time</label>
+                                        <input type="text" id="time" class="form-control" placeholder="HH:MM AM/PM">
+                                        <span class="input-hint">Format: 12:30 PM</span>
+                                        <div class="validation-message">Please enter a valid time</div>
+                                    </div>
+
+                                    <!-- ZIP Code Input -->
+                                    <div class="input-group additional-input px-6" style="display: none;">
+                                        <label for="zipcode">ZIP Code</label>
+                                        <input type="text" id="zipcode" class="form-control" placeholder="_____-____">
+                                        <span class="input-hint">Format: 12345 or 12345-6789</span>
+                                        <div class="validation-message">Please enter a valid ZIP code</div>
+                                    </div>
+
+                                    <!-- IP Address Input -->
+                                    <div class="input-group additional-input px-6" style="display: none;">
+                                        <label for="ip-address">IP Address</label>
+                                        <input type="text" id="ip-address" class="form-control"
+                                            placeholder="___.___.___.___ ">
+                                        <span class="input-hint">Format: 192.168.1.1</span>
+                                        <div class="validation-message">Please enter a valid IP address</div>
+                                    </div>
+
+                                    <!-- Social Security Number Input -->
+                                    <div class="input-group additional-input px-6" style="display: none;">
+                                        <label for="ssn">Social Security Number</label>
+                                        <input type="text" id="ssn" class="form-control" placeholder="___-__-____">
+                                        <span class="input-hint">Format: 123-45-6789</span>
+                                        <div class="validation-message">Please enter a valid SSN</div>
+                                    </div>
+
+                                    <div class="d-flex mt-4">
+                                        <button type="button" id="show-more-inputs" class="btn btn-outline mr-2">Show
+                                            More Input Types</button>
+                                        <button type="submit" class="btn btn-primary">Validate All</button>
+                                        <button type="reset" class="btn ml-2">Reset</button>
+                                    </div>
+                                </form>
+
+                                <div id="validation-results" class="flash mt-3" style="display: none;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Phone Number
+                                            Masking</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test Case 1.1: Verify phone number format is applied as (XXX)
+                                                XXX-XXXX
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 1.2: Verify only numeric input is allowed
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 1.3: Verify validation for incomplete phone numbers
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Credit Card Number
+                                            Masking</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 2.1: Verify card number format is applied as XXXX XXXX XXXX
+                                                XXXX
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 2.2: Verify Luhn algorithm validation for card numbers
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 2.3: Verify card type detection (Visa, Mastercard, etc.)
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Date Format
+                                            Masking</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 3.1: Verify date format is applied as MM/DD/YYYY
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 3.2: Verify validation for invalid dates (e.g., 02/31/2023)
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 3.3: Verify leap year handling for February dates
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Currency Format
+                                            Masking</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 4.1: Verify currency format with dollar sign and commas
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 4.2: Verify decimal precision is limited to 2 places
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 4.3: Verify handling of large numbers with proper grouping
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Time Format
+                                            Masking</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 5.1: Verify time format is applied as HH:MM AM/PM
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 5.2: Verify hours are limited to 1-12 range
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 5.3: Verify minutes are limited to 0-59 range
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 6: ZIP Code
+                                            Masking</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 6.1: Verify basic 5-digit ZIP code format
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Case 6.2: Verify extended ZIP+4 format with hyphen
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="mt-3">
+                                <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View All Test
+                                    Scenarios →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        // View More Scenarios functionality
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+
+        // Show More Input Types functionality
+        document.getElementById('show-more-inputs').addEventListener('click', function () {
+            const additionalInputs = document.querySelectorAll('.additional-input');
+            additionalInputs.forEach(input => {
+                input.style.display = input.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('Show More') ? 'Hide Additional Inputs' : 'Show More Input Types';
+        });
+
+        // Apply masks to inputs
+        document.addEventListener('DOMContentLoaded', function () {
+            // Phone Number Mask
+            const phoneMask = IMask(document.getElementById('phone'), {
+                mask: '(000) 000-0000'
+            });
+
+            // Credit Card Mask
+            const creditCardMask = IMask(document.getElementById('credit-card'), {
+                mask: '0000 0000 0000 0000',
+                lazy: false
+            });
+
+            // Date Mask with validation
+            const dateMask = IMask(document.getElementById('date'), {
+                mask: Date,
+                pattern: 'MM/dd/yyyy',
+                blocks: {
+                    MM: {
+                        mask: IMask.MaskedRange,
+                        from: 1,
+                        to: 12,
+                        maxLength: 2
+                    },
+                    dd: {
+                        mask: IMask.MaskedRange,
+                        from: 1,
+                        to: 31,
+                        maxLength: 2
+                    },
+                    yyyy: {
+                        mask: IMask.MaskedRange,
+                        from: 1900,
+                        to: 2099,
+                        maxLength: 4
+                    }
+                },
+                lazy: false,
+                overwrite: true
+            });
+
+            // Currency Mask
+            const currencyMask = IMask(document.getElementById('currency'), {
+                mask: '$num',
+                blocks: {
+                    num: {
+                        mask: Number,
+                        thousandsSeparator: ',',
+                        radix: '.',
+                        scale: 2,
+                        padFractionalZeros: true,
+                        normalizeZeros: true,
+                        min: 0
+                    }
+                }
+            });
+
+            // Time Mask
+            const timeMask = IMask(document.getElementById('time'), {
+                mask: 'HH:MM XX',
+                blocks: {
+                    HH: {
+                        mask: IMask.MaskedRange,
+                        from: 1,
+                        to: 12,
+                        maxLength: 2
+                    },
+                    MM: {
+                        mask: IMask.MaskedRange,
+                        from: 0,
+                        to: 59,
+                        maxLength: 2
+                    },
+                    XX: {
+                        mask: /^[AaPp][Mm]$/,
+                        prepare: function (str) {
+                            return str.toUpperCase();
+                        },
+                        commit: function (value, masked) {
+                            return value.toUpperCase();
+                        }
+                    }
+                },
+                lazy: false
+            });
+
+            // ZIP Code Mask
+            const zipMask = IMask(document.getElementById('zipcode'), {
+                mask: '00000[-0000]',
+                lazy: false
+            });
+
+            // IP Address Mask
+            const ipMask = IMask(document.getElementById('ip-address'), {
+                mask: '000.000.000.000',
+                lazy: false
+            });
+
+            // SSN Mask
+            const ssnMask = IMask(document.getElementById('ssn'), {
+                mask: '000-00-0000',
+                lazy: false
+            });
+
+            // Form validation
+            document.getElementById('masked-input-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                let isValid = true;
+                const validationResults = document.getElementById('validation-results');
+                validationResults.innerHTML = '';
+                validationResults.className = 'flash mt-3';
+
+                // Validate phone
+                const phoneInput = document.getElementById('phone');
+                const phoneParent = phoneInput.parentElement;
+                if (!phoneMask.masked.isComplete) {
+                    phoneParent.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    phoneParent.classList.remove('is-invalid');
+                }
+
+                // Validate credit card (simple length check)
+                const ccInput = document.getElementById('credit-card');
+                const ccParent = ccInput.parentElement;
+                if (!creditCardMask.masked.isComplete) {
+                    ccParent.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    ccParent.classList.remove('is-invalid');
+                }
+
+                // Validate date
+                const dateInput = document.getElementById('date');
+                const dateParent = dateInput.parentElement;
+                if (!dateMask.masked.isComplete) {
+                    dateParent.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    dateParent.classList.remove('is-invalid');
+                }
+
+                // Validate currency
+                const currencyInput = document.getElementById('currency');
+                const currencyParent = currencyInput.parentElement;
+                if (currencyInput.value === '$0.00' || currencyInput.value === '') {
+                    currencyParent.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    currencyParent.currencyParent.classList.remove('is-invalid');
+                }
+
+                // Validate time
+                const timeInput = document.getElementById('time');
+                const timeParent = timeInput.parentElement;
+                if (!timeMask.masked.isComplete) {
+                    timeParent.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    timeParent.classList.remove('is-invalid');
+                }
+
+                // Validate ZIP code
+                const zipInput = document.getElementById('zipcode');
+                const zipParent = zipInput.parentElement;
+                if (zipInput.value.length !== 5 && zipInput.value.length !== 10) {
+                    zipParent.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    zipParent.classList.remove('is-invalid');
+                }
+
+                // Show validation result
+                if (isValid) {
+                    validationResults.classList.add('flash-success');
+                    validationResults.innerHTML = `
+                        <svg class="octicon octicon-check-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                            <path fill-rule="evenodd" d="M8 16A8 8 0 108 0a8 8 0 000 16zm3.78-9.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path>
+                        </svg>
+                        Form validation successful! All inputs are properly formatted.
+                    `;
+                } else {
+                    validationResults.classList.add('flash-error');
+                    validationResults.innerHTML = `
+                        <svg class="octicon octicon-x-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                            <path fill-rule="evenodd" d="M2.343 13.657A8 8 0 1113.657 2.343 8 8 0 012.343 13.657zM6.03 4.97a.75.75 0 00-1.06 1.06L6.94 8 4.97 9.97a.75.75 0 101.06 1.06L8 9.06l1.97 1.97a.75.75 0 101.06-1.06L9.06 8l1.97-1.97a.75.75 0 10-1.06-1.06L8 6.94 6.03 4.97z"></path>
+                        </svg>
+                        Please correct the highlighted fields before submitting.
+                    `;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

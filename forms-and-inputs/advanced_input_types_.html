@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test & Automation - Advanced Input Types</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .custom-range-value {
+            display: inline-block;
+            width: 40px;
+            text-align: center;
+        }
+
+        .color-preview {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        .date-time-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .date-time-container>div {
+            flex: 1 1 200px;
+        }
+
+        .file-upload-preview {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .input-validation-success {
+            border-color: var(--color-success-emphasis);
+        }
+
+        .input-validation-error {
+            border-color: var(--color-danger-emphasis);
+        }
+
+        .validation-message {
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+
+        .validation-success {
+            color: var(--color-success-emphasis);
+        }
+
+        .validation-error {
+            color: var(--color-danger-emphasis);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Advanced Input Types</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Advanced Input Types</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Modern web applications utilize a variety of specialized input types that enhance user
+                                experience,
+                                improve data collection accuracy, and provide built-in validation. These HTML5 input
+                                types offer
+                                specific interfaces for different data types, from dates and times to colors and ranges.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Advanced Input Types:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Built-in validation for specific data formats (email, URL, etc.)</li>
+                                <li class="ml-4">Specialized UI controls for complex data types (date pickers, color
+                                    selectors)</li>
+                                <li class="ml-4">Mobile-optimized keyboards for specific input types</li>
+                                <li class="ml-4">Range sliders and number steppers for numerical inputs</li>
+                                <li class="ml-4">File upload controls with multiple file support and type filtering</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How They Work:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">The browser renders specialized UI controls based on the input type
+                                    attribute.</li>
+                                <li class="ml-4">Input validation occurs both at the browser level and can be enhanced
+                                    with JavaScript.</li>
+                                <li class="ml-4">Mobile devices show optimized keyboards based on the expected input
+                                    format.</li>
+                                <li class="ml-4">Specialized inputs like date and color provide consistent interfaces
+                                    across browsers.</li>
+                                <li class="ml-4">Pattern attributes can further refine validation requirements for
+                                    text-based inputs.</li>
+                            </ol>
+                            <h3 class="f4 mb-2">Common Use Cases:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Registration forms with email validation</li>
+                                <li class="ml-4">Appointment scheduling with date and time inputs</li>
+                                <li class="ml-4">Product customization with color pickers</li>
+                                <li class="ml-4">Preference settings with range sliders</li>
+                                <li class="ml-4">Document uploads with file type restrictions</li>
+                            </ul>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+
+                            <!-- Date and Time Inputs -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Date and Time Inputs</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="date-time-container">
+                                        <div>
+                                            <label for="date-input" class="d-block mb-1">Date:</label>
+                                            <input type="date" id="date-input" name="date-input"
+                                                class="form-control width-full" min="2023-01-01" max="2030-12-31">
+                                        </div>
+                                        <div>
+                                            <label for="time-input" class="d-block mb-1">Time:</label>
+                                            <input type="time" id="time-input" name="time-input"
+                                                class="form-control width-full">
+                                        </div>
+                                        <div>
+                                            <label for="datetime-local-input" class="d-block mb-1">Date and
+                                                Time:</label>
+                                            <input type="datetime-local" id="datetime-local-input"
+                                                name="datetime-local-input" class="form-control width-full">
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <button id="check-date-time" class="btn btn-primary">Check Selected
+                                            Date/Time</button>
+                                        <div id="date-time-result" class="mt-2 color-fg-muted"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Numeric and Range Inputs -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Numeric and Range Inputs</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="range-input" class="d-block mb-1">Satisfaction Level:</label>
+                                        <div class="d-flex flex-items-center">
+                                            <input type="range" id="range-input" class="form-control" min="0" max="100"
+                                                value="50" data-value-display="range-value" data-unit="%">
+                                            <span id="range-value" class="custom-range-value ml-2">50%</span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="numeric-input" class="d-block mb-1">Custom Numeric Input:</label>
+                                        <div class="numeric-input-container">
+                                            <button id="numeric-decrement" class="btn btn-sm">-</button>
+                                            <input type="number" id="numeric-input" class="form-control" min="0"
+                                                max="100" step="1" value="0">
+                                            <button id="numeric-increment" class="btn btn-sm">+</button>
+                                            <span id="numeric-value" class="numeric-value-display ml-2">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Color and Pattern Inputs -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Color and Pattern Inputs</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="color-input" class="d-block mb-1">Choose a Color:</label>
+                                        <div class="d-flex flex-items-center">
+                                            <input type="color" id="color-input" name="color-input" value="#4078c0"
+                                                class="form-control">
+                                            <span id="color-hex" class="ml-2">#4078c0</span>
+                                            <span class="color-preview" style="background-color: #4078c0;"></span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="pattern-input" class="d-block mb-1">Phone Number (format:
+                                            XXX-XXX-XXXX):</label>
+                                        <input type="tel" id="pattern-input" name="pattern-input"
+                                            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890"
+                                            class="form-control width-full">
+                                        <small class="color-fg-muted">Format: 123-456-7890</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- File Upload Input -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">File Upload Input</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="file-input" class="d-block mb-1">Upload Image (JPG, PNG
+                                            only):</label>
+                                        <input type="file" id="file-input" name="file-input" accept=".jpg,.jpeg,.png"
+                                            class="form-control width-full">
+                                        <img id="file-preview" class="file-upload-preview" alt="File preview">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email and URL Validation -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Email and URL Validation</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="email-input" class="d-block mb-1">Email Address:</label>
+                                        <input type="email" id="email-input" name="email-input"
+                                            placeholder="you@example.com" class="form-control width-full">
+                                        <div id="email-validation" class="validation-message"></div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="url-input" class="d-block mb-1">Website URL:</label>
+                                        <input type="url" id="url-input" name="url-input"
+                                            placeholder="https://example.com" class="form-control width-full">
+                                        <div id="url-validation" class="validation-message"></div>
+                                    </div>
+                                    <button id="validate-inputs" class="btn btn-primary">Validate Inputs</button>
+                                </div>
+                            </div>
+
+                            <!-- Search and Datalist -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Search and Datalist</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="search-input" class="d-block mb-1">Search Products:</label>
+                                        <input type="search" id="search-input" name="search-input"
+                                            placeholder="Type to search..." class="form-control width-full">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="browser-input" class="d-block mb-1">Choose your browser:</label>
+                                        <input list="browsers" id="browser-input" name="browser-input"
+                                            class="form-control width-full">
+                                        <datalist id="browsers">
+                                            <option value="Chrome">
+                                            <option value="Firefox">
+                                            <option value="Safari">
+                                            <option value="Edge">
+                                            <option value="Opera">
+                                        </datalist>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Date and Time
+                                            Input Validation</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify date input accepts valid dates within the specified range
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify time input accepts valid time formats
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify datetime-local input combines both date and time correctly
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Numeric Input
+                                            Constraints</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify number input enforces min/max constraints
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify range slider updates visual indicator correctly
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test step functionality in numeric inputs
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: File Upload
+                                            Validation</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify file type restrictions are enforced
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test image preview functionality
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify error handling for invalid file types
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="additional-scenario mb-3" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Email and URL
+                                            Format
+                                            Validation</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify email input validates correct email formats
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify URL input validates correct URL formats
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test custom validation messages for invalid inputs
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="additional-scenario mb-3" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Pattern-Based
+                                            Input Validation</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify phone number pattern validation
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test error messages for pattern mismatches
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify pattern validation on form submission
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="additional-scenario mb-3" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 6: Color Picker
+                                            Functionality</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify color selection updates hex value display
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test color preview functionality
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify default color is correctly displayed
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="additional-scenario mb-3" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 7: Datalist
+                                            Functionality</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify datalist suggestions appear when typing
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test selection of datalist options
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify custom values can be entered
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="additional-scenario mb-3" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 8: Mobile Device
+                                            Compatibility</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify specialized keyboards appear on mobile devices
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test touch-friendly controls for range and date inputs
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify responsive layout on different screen sizes
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block mt-3">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        // View More Scenarios functionality
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+
+        // Date and Time functionality
+        document.getElementById('check-date-time').addEventListener('click', function () {
+            const dateInput = document.getElementById('date-input').value;
+            const timeInput = document.getElementById('time-input').value;
+            const datetimeInput = document.getElementById('datetime-local-input').value;
+
+            let result = '';
+            if (dateInput) result += `Selected date: ${dateInput}<br>`;
+            if (timeInput) result += `Selected time: ${timeInput}<br>`;
+            if (datetimeInput) result += `Selected date and time: ${datetimeInput}`;
+
+            document.getElementById('date-time-result').innerHTML = result || 'No date/time selected';
+        });
+
+        // Range input functionality
+        document.getElementById('range-input').addEventListener('input', function () {
+            document.getElementById('range-value').textContent = this.value + '%';
+        });
+
+        // Color input functionality
+        document.getElementById('color-input').addEventListener('input', function () {
+            const colorValue = this.value;
+            document.getElementById('color-hex').textContent = colorValue;
+            document.querySelector('.color-preview').style.backgroundColor = colorValue;
+        });
+
+        // File upload preview
+        document.getElementById('file-input').addEventListener('change', function () {
+            const filePreview = document.getElementById('file-preview');
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    filePreview.src = e.target.result;
+                    filePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(this.files[0]);
+            } else {
+                filePreview.style.display = 'none';
+            }
+        });
+
+        // Email and URL validation
+        document.getElementById('validate-inputs').addEventListener('click', function () {
+            const emailInput = document.getElementById('email-input');
+            const urlInput = document.getElementById('url-input');
+            const emailValidation = document.getElementById('email-validation');
+            const urlValidation = document.getElementById('url-validation');
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailInput.value === '') {
+                emailValidation.textContent = 'Email is required';
+                emailValidation.className = 'validation-message text-red';
+            } else if (!emailRegex.test(emailInput.value)) {
+                emailValidation.textContent = 'Please enter a valid email address';
+                emailValidation.className = 'validation-message text-red';
+            } else {
+                emailValidation.textContent = 'Email is valid';
+                emailValidation.className = 'validation-message text-green';
+            }
+
+            // URL validation
+            const urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+            if (urlInput.value === '') {
+                urlValidation.textContent = 'URL is required';
+                urlValidation.className = 'validation-message text-red';
+            } else if (!urlRegex.test(urlInput.value)) {
+                urlValidation.textContent = 'Please enter a valid URL';
+                urlValidation.className = 'validation-message text-red';
+            } else {
+                urlValidation.textContent = 'URL is valid';
+                urlValidation.className = 'validation-message text-green';
+            }
+        });
+
+        // Search functionality
+        document.getElementById('search-input').addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase().trim();
+            console.log('Searching for:', searchTerm);
+
+            // Get all test scenarios
+            const scenarios = document.querySelectorAll('#all-scenarios li');
+            const resultsContainer = document.getElementById('search-results') || createSearchResultsContainer();
+
+            // Clear previous results
+            resultsContainer.innerHTML = '';
+
+            // If search term is empty, hide results container
+            if (searchTerm === '') {
+                resultsContainer.classList.add('d-none');
+                // Reset all scenarios visibility to default state
+                resetScenariosVisibility(scenarios);
+                return;
+            }
+
+            // Show results container
+            resultsContainer.classList.remove('d-none');
+
+            // Filter scenarios based on search term
+            let matchCount = 0;
+            scenarios.forEach(scenario => {
+                const scenarioTitle = scenario.querySelector('a').textContent.toLowerCase();
+                const scenarioItems = Array.from(scenario.querySelectorAll('ul li')).map(item =>
+                    item.textContent.toLowerCase()
+                );
+
+                // Check if search term is in title or any list item
+                const matchesTitle = scenarioTitle.includes(searchTerm);
+                const matchesItem = scenarioItems.some(item => item.includes(searchTerm));
+
+                if (matchesTitle || matchesItem) {
+                    matchCount++;
+                    // Create a result item
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'Box-row d-flex flex-items-center';
+
+                    // Create title with highlight
+                    const title = document.createElement('div');
+                    title.className = 'flex-auto';
+                    const titleLink = document.createElement('a');
+                    titleLink.className = 'Link--primary';
+                    titleLink.href = '#';
+                    titleLink.innerHTML = highlightMatch(scenario.querySelector('a').textContent, searchTerm);
+                    title.appendChild(titleLink);
+
+                    // Add matching items if any
+                    if (matchesItem) {
+                        const matchingItems = scenarioItems
+                            .map((item, index) => ({ text: item, index }))
+                            .filter(item => item.text.includes(searchTerm));
+
+                        if (matchingItems.length > 0) {
+                            const itemsList = document.createElement('ul');
+                            itemsList.className = 'color-fg-muted f6 mt-1';
+
+                            matchingItems.forEach(item => {
+                                const originalItem = scenario.querySelectorAll('ul li')[item.index];
+                                const listItem = document.createElement('li');
+                                listItem.innerHTML = highlightMatch(originalItem.textContent, searchTerm);
+                                itemsList.appendChild(listItem);
+                            });
+
+                            title.appendChild(itemsList);
+                        }
+                    }
+
+                    // Add a button to jump to the scenario
+                    const jumpButton = document.createElement('button');
+                    jumpButton.className = 'btn btn-sm btn-primary ml-2';
+                    jumpButton.textContent = 'View';
+                    jumpButton.addEventListener('click', () => {
+                        // Ensure the scenario is visible if it's an additional scenario
+                        if (scenario.classList.contains('additional-scenario') && scenario.style.display === 'none') {
+                            const viewMoreButton = document.getElementById('view-more-scenarios');
+                            viewMoreButton.click();
+                        }
+
+                        // Scroll to the scenario
+                        scenario.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                        // Highlight the scenario temporarily
+                        scenario.classList.add('color-bg-accent');
+                        setTimeout(() => {
+                            scenario.classList.remove('color-bg-accent');
+                        }, 2000);
+
+                        // Clear search
+                        this.value = '';
+                        resultsContainer.classList.add('d-none');
+                        resetScenariosVisibility(scenarios);
+                    });
+
+                    resultItem.appendChild(title);
+                    resultItem.appendChild(jumpButton);
+                    resultsContainer.appendChild(resultItem);
+                }
+            });
+
+            // Show no results message if needed
+            if (matchCount === 0) {
+                const noResults = document.createElement('div');
+                noResults.className = 'Box-row color-fg-muted text-center py-3';
+                noResults.innerHTML = `
+            <svg class="octicon octicon-search mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+                <path fill-rule="evenodd" d="M11.5 7a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path>
+            </svg>
+            No results found for <strong>${escapeHtml(searchTerm)}</strong>
+        `;
+                resultsContainer.appendChild(noResults);
+            }
+        });
+
+        // Helper function to create search results container
+        function createSearchResultsContainer() {
+            const searchInput = document.getElementById('search-input');
+            const container = document.createElement('div');
+            container.id = 'search-results';
+            container.className = 'Box position-absolute width-full d-none mt-1 color-shadow-large';
+            container.style.zIndex = '100';
+            container.style.maxHeight = '400px';
+            container.style.overflowY = 'auto';
+
+            // Insert after search input
+            searchInput.parentNode.insertBefore(container, searchInput.nextSibling);
+            return container;
+        }
+
+        // Helper function to reset scenarios visibility
+        function resetScenariosVisibility(scenarios) {
+            scenarios.forEach(scenario => {
+                if (!scenario.classList.contains('additional-scenario')) {
+                    scenario.style.display = 'block';
+                } else {
+                    // Keep additional scenarios hidden unless "View All" is active
+                    const viewMoreButton = document.getElementById('view-more-scenarios');
+                    scenario.style.display = viewMoreButton.textContent.includes('Hide') ? 'block' : 'none';
+                }
+            });
+        }
+
+        // Helper function to highlight matching text
+        function highlightMatch(text, term) {
+            if (!term) return escapeHtml(text);
+
+            const escapedText = escapeHtml(text);
+            const escapedTerm = escapeHtml(term);
+
+            // Case insensitive replace
+            const regex = new RegExp(`(${escapedTerm})`, 'gi');
+            return escapedText.replace(regex, '<mark class="color-bg-accent-emphasis color-fg-on-emphasis px-1 rounded-1">$1</mark>');
+        }
+
+        // Helper function to escape HTML
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Browser selection
+        document.getElementById('browser-input').addEventListener('change', function () {
+            console.log('Selected browser:', this.value);
+        });
+
+        // Numeric and Range Inputs functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            // Numeric input functionality
+            const numericInput = document.getElementById('numeric-input');
+            const numericValue = document.getElementById('numeric-value');
+            const numericIncrement = document.getElementById('numeric-increment');
+            const numericDecrement = document.getElementById('numeric-decrement');
+
+            // Initialize numeric value display
+            if (numericInput && numericValue) {
+                numericValue.textContent = numericInput.value;
+
+                // Update value on input change
+                numericInput.addEventListener('input', function () {
+                    numericValue.textContent = this.value;
+                });
+
+                // Increment button
+                if (numericIncrement) {
+                    numericIncrement.addEventListener('click', function () {
+                        const currentValue = parseInt(numericInput.value, 10);
+                        const max = parseInt(numericInput.getAttribute('max'), 10);
+                        const step = parseInt(numericInput.getAttribute('step'), 10) || 1;
+
+                        if (!isNaN(currentValue) && (isNaN(max) || currentValue + step <= max)) {
+                            numericInput.value = currentValue + step;
+                            numericValue.textContent = numericInput.value;
+                            // Trigger input event for any listeners
+                            numericInput.dispatchEvent(new Event('input'));
+                        }
+                    });
+                }
+
+                // Decrement button
+                if (numericDecrement) {
+                    numericDecrement.addEventListener('click', function () {
+                        const currentValue = parseInt(numericInput.value, 10);
+                        const min = parseInt(numericInput.getAttribute('min'), 10);
+                        const step = parseInt(numericInput.getAttribute('step'), 10) || 1;
+
+                        if (!isNaN(currentValue) && (isNaN(min) || currentValue - step >= min)) {
+                            numericInput.value = currentValue - step;
+                            numericValue.textContent = numericInput.value;
+                            // Trigger input event for any listeners
+                            numericInput.dispatchEvent(new Event('input'));
+                        }
+                    });
+                }
+            }
+
+            // Range input functionality with improved styling
+            const rangeInputs = document.querySelectorAll('input[type="range"]');
+            rangeInputs.forEach(rangeInput => {
+                const rangeValueDisplay = document.getElementById(rangeInput.getAttribute('data-value-display'));
+
+                if (rangeValueDisplay) {
+                    // Initialize value display
+                    rangeValueDisplay.textContent = rangeInput.value + (rangeInput.getAttribute('data-unit') || '');
+
+                    // Update on input change
+                    rangeInput.addEventListener('input', function () {
+                        rangeValueDisplay.textContent = this.value + (this.getAttribute('data-unit') || '');
+
+                        // Update progress fill for range input (Primer CSS style)
+                        const percentage = ((this.value - this.min) / (this.max - this.min)) * 100;
+                        this.style.background = `linear-gradient(to right, var(--color-accent-fg) 0%, var(--color-accent-fg) ${percentage}%, var(--color-border-default) ${percentage}%, var(--color-border-default) 100%)`;
+                    });
+
+                    // Trigger once to initialize the fill
+                    rangeInput.dispatchEvent(new Event('input'));
+                }
+            });
+
+            // Add custom styling for range inputs
+            const style = document.createElement('style');
+            style.textContent = `
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: var(--color-border-default);
+            border-radius: 3px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--color-accent-fg);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--color-accent-fg);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        .numeric-input-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .numeric-input-container .btn {
+            padding: 4px 8px;
+            margin: 0 4px;
+        }
+        
+        .numeric-value-display {
+            min-width: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+    `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+
+</html>

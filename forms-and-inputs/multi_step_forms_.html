@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test & Automation - Multi Step Forms</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #e1e4e8;
+            margin-bottom: 20px;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #2ea44f;
+            transition: width 0.3s ease;
+        }
+
+        .form-group.errored .form-control {
+            border-color: var(--color-danger-emphasis);
+        }
+
+        .form-group.errored .note.error {
+            color: var(--color-danger-fg);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Multi Step Forms</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Multi Step Forms</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Multi step forms break down complex processes into manageable steps, improving user
+                                experience and increasing form completion rates. They are particularly useful for
+                                lengthy forms or processes that require a significant amount of information from users.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Multi Step Forms:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Break down complex forms into smaller, manageable steps</li>
+                                <li class="ml-4">Progress indicator to show users their position in the process</li>
+                                <li class="ml-4">Ability to navigate between steps (forward and backward)</li>
+                                <li class="ml-4">Validation at each step before proceeding</li>
+                                <li class="ml-4">Final review step before submission</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How It Works:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">The form is divided into logical sections or steps.</li>
+                                <li class="ml-4">Only one step is displayed at a time, reducing cognitive load.</li>
+                                <li class="ml-4">Users can navigate between steps using 'Next' and 'Previous' buttons.
+                                </li>
+                                <li class="ml-4">Each step is validated before allowing progression to the next step.
+                                </li>
+                                <li class="ml-4">A progress bar or indicator shows the user's position in the overall
+                                    process.</li>
+                                <li class="ml-4">The final step often includes a review of all entered information
+                                    before submission.</li>
+                            </ol>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+                            <div id="multi-step-form" class="mb-3">
+                                <div class="Box">
+                                    <div class="Box-header">
+                                        <h3 class="Box-title">Multi-Step Form</h3>
+                                    </div>
+                                    <div class="Box-body">
+                                        <div class="progress-bar color-bg-subtle mb-3" style="height: 8px;">
+                                            <div class="progress color-bg-success-emphasis"
+                                                style="width: 0%; height: 100%;"></div>
+                                        </div>
+                                        <form id="stepForm">
+                                            <div class="step active" id="step1">
+                                                <h4 class="f4 mb-3">Step 1: Personal Information</h4>
+                                                <div class="form-group">
+                                                    <div class="form-group-header">
+                                                        <label for="name" class="form-group-header-title">Full
+                                                            Name</label>
+                                                    </div>
+                                                    <div class="form-group-body">
+                                                        <input type="text" id="name" name="name" class="form-control"
+                                                            required>
+                                                        <p class="note error" id="nameError"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="form-group-header">
+                                                        <label for="email" class="form-group-header-title">Email</label>
+                                                    </div>
+                                                    <div class="form-group-body">
+                                                        <input type="email" id="email" name="email" class="form-control"
+                                                            required>
+                                                        <p class="note error" id="emailError"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-justify-end mt-3">
+                                                    <button type="button" class="btn btn-primary"
+                                                        onclick="nextStep(1)">Next</button>
+                                                </div>
+                                            </div>
+                                            <div class="step" id="step2">
+                                                <h4 class="f4 mb-3">Step 2: Address</h4>
+                                                <div class="form-group">
+                                                    <div class="form-group-header">
+                                                        <label for="address" class="form-group-header-title">Street
+                                                            Address</label>
+                                                    </div>
+                                                    <div class="form-group-body">
+                                                        <input type="text" id="address" name="address"
+                                                            class="form-control" required>
+                                                        <p class="note error" id="addressError"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="form-group-header">
+                                                        <label for="city" class="form-group-header-title">City</label>
+                                                    </div>
+                                                    <div class="form-group-body">
+                                                        <input type="text" id="city" name="city" class="form-control"
+                                                            required>
+                                                        <p class="note error" id="cityError"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-justify-between mt-3">
+                                                    <button type="button" class="btn"
+                                                        onclick="prevStep(2)">Previous</button>
+                                                    <button type="button" class="btn btn-primary"
+                                                        onclick="nextStep(2)">Next</button>
+                                                </div>
+                                            </div>
+                                            <div class="step" id="step3">
+                                                <h4 class="f4 mb-3">Step 3: Review</h4>
+                                                <div id="review-content" class="mb-3"></div>
+                                                <div class="d-flex flex-justify-between mt-3">
+                                                    <button type="button" class="btn"
+                                                        onclick="prevStep(3)">Previous</button>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Form
+                                            Navigation</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Next button navigation
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test Previous button navigation
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify progress bar updates correctly
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Form
+                                            Validation</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test empty field validation
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify email format validation
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test error message display
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Data
+                                            Persistence</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify data persists when navigating between steps
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check all data appears correctly in review step
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Form
+                                            Submission</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test successful form submission
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify success message display
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check form reset after submission
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="mt-3">
+                                <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View All Test
+                                    Scenarios →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        function updateProgressBar() {
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.querySelector('.progress').style.width = `${progress}%`;
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById(`step${step}`).classList.add('active');
+            currentStep = step;
+            updateProgressBar();
+        }
+
+        function validateStep(step) {
+            const inputs = document.getElementById(`step${step}`).querySelectorAll('input[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                const formGroup = input.closest('.form-group');
+                const errorElement = document.getElementById(`${input.id}Error`);
+
+                if (!input.value.trim()) {
+                    isValid = false;
+                    formGroup.classList.add('errored');
+                    input.classList.add('is-invalid');
+                    errorElement.textContent = 'This field is required.';
+                } else if (input.type === 'email' && !isValidEmail(input.value)) {
+                    isValid = false;
+                    formGroup.classList.add('errored');
+                    input.classList.add('is-invalid');
+                    errorElement.textContent = 'Please enter a valid email address.';
+                } else {
+                    formGroup.classList.remove('errored');
+                    input.classList.remove('is-invalid');
+                    errorElement.textContent = '';
+                }
+            });
+
+            return isValid;
+        }
+
+        function isValidEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        function nextStep(step) {
+            if (validateStep(step)) {
+                showStep(step + 1);
+                if (step + 1 === totalSteps) {
+                    updateReviewStep();
+                }
+            }
+        }
+
+        function prevStep(step) {
+            showStep(step - 1);
+        }
+
+        function updateReviewStep() {
+            const reviewContent = document.getElementById('review-content');
+            reviewContent.innerHTML = '';
+
+            // Form içindeki tüm inputları al
+            const inputs = document.querySelectorAll('#stepForm input');
+
+            inputs.forEach(input => {
+                if (input.value.trim()) {
+                    const p = document.createElement('p');
+                    p.className = 'mb-2';
+
+                    // Label metnini bul
+                    const label = input.closest('.form-group').querySelector('label');
+                    const labelText = label ? label.textContent : input.name;
+
+                    p.innerHTML = `<strong>${labelText}:</strong> ${input.value}`;
+                    reviewContent.appendChild(p);
+                }
+            });
+        }
+
+        document.getElementById('stepForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Son adımda da validasyon yap
+            if (validateStep(totalSteps - 1)) {
+                // Başarılı mesajı göster
+                const successBanner = document.createElement('div');
+                successBanner.className = 'flash flash-success';
+                successBanner.innerHTML = `
+            <svg class="octicon octicon-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
+            </svg>
+            Form submitted successfully!
+        `;
+
+                const form = document.getElementById('stepForm');
+                form.insertAdjacentElement('beforebegin', successBanner);
+
+                // 5 saniye sonra başarı mesajını kaldır
+                setTimeout(() => successBanner.remove(), 5000);
+
+                // Formu sıfırla
+                form.reset();
+                showStep(1);
+            }
+        });
+
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+
+        // Initial setup
+        updateProgressBar();
+    </script>
+</body>
+
+</html>
