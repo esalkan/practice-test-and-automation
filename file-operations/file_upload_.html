@@ -93,7 +93,7 @@
                             <hr>
                             <h3 class="f4 mb-2">Test Me Here:</h3>
                             <div id="file-upload-demo" class="border rounded-2 p-3">
-                                <form id="upload-form" enctype="multipart/form-data">
+                                <form id="upload-form" enctype="multipart/form-data" action="upload.php" method="post">
                                     <div class="form-group">
                                         <label for="file-input">Choose a file to upload:</label>
                                         <input type="file" id="file-input" name="file" class="form-control-file"
@@ -289,53 +289,68 @@
                     return;
                 }
 
-                // File size validation (5MB limit for this example)
-                if (file.size > 1 * 1024 * 1024) {
-                    statusDiv.innerHTML = '<div class="flash flash-error">File size exceeds 1MB limit.</div>';
-                    return;
-                }
+                // Create FormData object
+                const formData = new FormData(this);
 
-                // Simulating file upload with progress
-                progressBar.style.display = 'flex';
-                let progress = 0;
-                const uploadSimulation = setInterval(() => {
-                    progress += 10;
-                    progressBarInner.style.width = `${progress}%`;
-                    progressBarInner.setAttribute('aria-valuenow', progress);
-                    progressBarInner.textContent = `${progress}%`;
+                // Use XMLHttpRequest for real progress tracking
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'upload.php', true);
 
-                    if (progress >= 100) {
-                        clearInterval(uploadSimulation);
-                        // Save to local storage
-                        const reader = new FileReader();
-                        reader.onload = function (event) {
-                            localStorage.setItem(file.name, event.target.result);
+                xhr.upload.onprogress = function (e) {
+                    if (e.lengthComputable) {
+                        const percentComplete = (e.loaded / e.total) * 100;
+                        progressBar.style.display = 'flex';
+                        progressBarInner.style.width = percentComplete + '%';
+                        progressBarInner.setAttribute('aria-valuenow', percentComplete);
+                        progressBarInner.textContent = percentComplete.toFixed(0) + '%';
+                    }
+                };
+
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.success) {
                             statusDiv.innerHTML = '<div class="flash flash-success">File "' + file.name + '" uploaded successfully!</div>';
                             fileInput.value = '';
                             displayUploadedFiles();
-                        };
-                        reader.readAsDataURL(file);
+                        } else {
+                            statusDiv.innerHTML = '<div class="flash flash-error">' + response.message + '</div>';
+                        }
+                    } else {
+                        statusDiv.innerHTML = '<div class="flash flash-error">An error occurred during upload.</div>';
                     }
-                }, 200);
+                };
+
+                xhr.onerror = function () {
+                    console.error('Error:', xhr.status);
+                    statusDiv.innerHTML = '<div class="flash flash-error">An error occurred during upload.</div>';
+                };
+
+                xhr.send(formData);
             } else {
                 statusDiv.innerHTML = '<div class="flash flash-error">Please select a file to upload.</div>';
             }
         });
-
         // Function to display uploaded files
         function displayUploadedFiles() {
-            const uploadedFilesDiv = document.getElementById('uploaded-files');
-            uploadedFilesDiv.innerHTML = '<h3>Uploaded Files:</h3>';
-            const fileList = document.createElement('ul');
+            fetch('list_files.php')
+                .then(response => response.json())
+                .then(files => {
+                    const uploadedFilesDiv = document.getElementById('uploaded-files');
+                    uploadedFilesDiv.innerHTML = '<h3>Uploaded Files:</h3>';
+                    const fileList = document.createElement('ul');
 
-            for (let i = 0; i < localStorage.length; i++) {
-                const fileName = localStorage.key(i);
-                const listItem = document.createElement('li');
-                listItem.textContent = fileName;
-                fileList.appendChild(listItem);
-            }
+                    files.forEach(fileName => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = fileName;
+                        fileList.appendChild(listItem);
+                    });
 
-            uploadedFilesDiv.appendChild(fileList);
+                    uploadedFilesDiv.appendChild(fileList);
+                })
+                .catch(error => {
+                    console.error('Error fetching file list:', error);
+                });
         }
 
         // Call the function to display uploaded files when the page loads
