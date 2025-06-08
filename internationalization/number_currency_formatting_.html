@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test & Automation - Number Currency Formatting</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .output-display {
+            background-color: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 8px 12px;
+            min-height: 38px;
+            font-family: monospace;
+        }
+
+        .output-display {
+            padding: 10px;
+            border-radius: 6px;
+            background-color: var(--color-canvas-subtle);
+            min-height: 40px;
+            font-family: monospace;
+            font-size: 16px;
+            word-break: break-all;
+        }
+
+        .success {
+            color: var(--color-success-fg);
+        }
+
+        .error {
+            color: var(--color-danger-fg);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control,
+        .form-select {
+            width: 100%;
+            padding: 5px 10px;
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            background-color: var(--color-canvas-default);
+            color: var(--color-fg-default);
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--color-accent-emphasis);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.3);
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .checkbox-label input {
+            margin-right: 8px;
+        }
+
+        .btn {
+            border-radius: 6px;
+            padding: 5px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            cursor: pointer;
+            border: 1px solid;
+            transition: .2s;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: var(--color-accent-emphasis);
+            border-color: var(--color-accent-emphasis);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-accent-fg);
+            border-color: var(--color-accent-fg);
+        }
+
+        .btn-sm {
+            padding: 3px 12px;
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        .language-selector .btn {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .language-selector .btn img {
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .language-selector .btn.active {
+            background-color: var(--color-accent-emphasis);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Number Currency Formatting</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Number & Currency Formatting</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Number and currency formatting is a crucial aspect of internationalization in web
+                                applications. Different regions and cultures have varying conventions for displaying
+                                numbers, decimal separators, thousands separators, and currency symbols. Proper
+                                formatting
+                                ensures that users worldwide can understand numerical information in a way that's
+                                familiar
+                                to them, enhancing the user experience across different locales.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Number & Currency Formatting:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Locale-specific number representations</li>
+                                <li class="ml-4">Different decimal and thousands separators (e.g., 1,234.56 vs 1.234,56)
+                                </li>
+                                <li class="ml-4">Currency symbols and positions (prefix vs suffix)</li>
+                                <li class="ml-4">Digit grouping patterns</li>
+                                <li class="ml-4">Negative number representations</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How It Works:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">The application detects the user's locale from browser settings or user
+                                    preferences.</li>
+                                <li class="ml-4">Numerical values are stored in a standardized format internally.</li>
+                                <li class="ml-4">When displaying numbers or currencies, the application formats them
+                                    according to the user's locale.</li>
+                                <li class="ml-4">The Intl.NumberFormat API or similar libraries handle the complex
+                                    formatting rules.</li>
+                                <li class="ml-4">Currency codes (USD, EUR, JPY) are converted to appropriate symbols ($
+                                    €
+                                    ¥) and positioned correctly.</li>
+                            </ol>
+                            <h3 class="f4 mb-2">Common Use Cases:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">E-commerce product prices</li>
+                                <li class="ml-4">Financial dashboards and reports</li>
+                                <li class="ml-4">Invoice and billing systems</li>
+                                <li class="ml-4">Statistical data visualization</li>
+                                <li class="ml-4">User input forms for monetary values</li>
+                            </ul>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+
+                            <!-- Basic Number Formatting -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Basic Number Formatting</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="number-to-format" class="d-block mb-1">Enter a Number:</label>
+                                        <input type="number" id="number-to-format" class="form-control width-full"
+                                            value="1234567.89" step="0.01">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="number-locale-selector" class="d-block mb-1">Select Locale:</label>
+                                        <select id="number-locale-selector" class="form-select width-full">
+                                            <option value="en-US">English (United States)</option>
+                                            <option value="en-GB">English (United Kingdom)</option>
+                                            <option value="fr-FR">French (France)</option>
+                                            <option value="de-DE">German (Germany)</option>
+                                            <option value="ja-JP">Japanese (Japan)</option>
+                                            <option value="ar-EG">Arabic (Egypt)</option>
+                                            <option value="zh-CN">Chinese (China)</option>
+                                            <option value="es-ES">Spanish (Spain)</option>
+                                            <option value="pt-BR">Portuguese (Brazil)</option>
+                                            <option value="ru-RU">Russian (Russia)</option>
+                                            <option value="hi-IN">Hindi (India)</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex flex-column flex-md-row">
+                                        <div class="col-12 col-md-6 mb-3 pr-md-2">
+                                            <label class="d-block mb-1">Formatting Options:</label>
+                                            <div class="form-checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="use-grouping" checked>
+                                                    Use thousand separators
+                                                </label>
+                                            </div>
+                                            <div class="form-checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="use-significant-digits">
+                                                    Use significant digits
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="min-fraction-digits">Minimum Fraction Digits:</label>
+                                                <input type="number" id="min-fraction-digits" class="form-control"
+                                                    value="2" min="0" max="20">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="max-fraction-digits">Maximum Fraction Digits:</label>
+                                                <input type="number" id="max-fraction-digits" class="form-control"
+                                                    value="2" min="0" max="20">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <label class="d-block mb-1">Formatted Number:</label>
+                                            <div id="formatted-number-output" class="output-display"></div>
+                                        </div>
+                                    </div>
+                                    <button id="format-number-btn" class="btn btn-primary">Format Number</button>
+                                </div>
+                            </div>
+
+                            <!-- Currency Formatting -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Currency Formatting</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="currency-value" class="d-block mb-1">Enter Amount:</label>
+                                        <input type="number" id="currency-value" class="form-control width-full"
+                                            value="1234.56" step="0.01">
+                                    </div>
+                                    <div class="d-flex flex-column flex-md-row">
+                                        <div class="col-12 col-md-6 mb-3 pr-md-2">
+                                            <label for="currency-code" class="d-block mb-1">Select Currency:</label>
+                                            <select id="currency-code" class="form-select width-full">
+                                                <option value="USD">US Dollar (USD)</option>
+                                                <option value="EUR">Euro (EUR)</option>
+                                                <option value="GBP">British Pound (GBP)</option>
+                                                <option value="JPY">Japanese Yen (JPY)</option>
+                                                <option value="CNY">Chinese Yuan (CNY)</option>
+                                                <option value="INR">Indian Rupee (INR)</option>
+                                                <option value="BRL">Brazilian Real (BRL)</option>
+                                                <option value="RUB">Russian Ruble (RUB)</option>
+                                                <option value="AUD">Australian Dollar (AUD)</option>
+                                                <option value="CAD">Canadian Dollar (CAD)</option>
+                                                <option value="CHF">Swiss Franc (CHF)</option>
+                                                <option value="TRY">Turkish Lira (TRY)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <label for="currency-locale" class="d-block mb-1">Display Locale:</label>
+                                            <select id="currency-locale" class="form-select width-full">
+                                                <option value="en-US">English (United States)</option>
+                                                <option value="en-GB">English (United Kingdom)</option>
+                                                <option value="fr-FR">French (France)</option>
+                                                <option value="de-DE">German (Germany)</option>
+                                                <option value="ja-JP">Japanese (Japan)</option>
+                                                <option value="ar-EG">Arabic (Egypt)</option>
+                                                <option value="zh-CN">Chinese (China)</option>
+                                                <option value="es-ES">Spanish (Spain)</option>
+                                                <option value="pt-BR">Portuguese (Brazil)</option>
+                                                <option value="ru-RU">Russian (Russia)</option>
+                                                <option value="hi-IN">Hindi (India)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column flex-md-row">
+                                        <div class="col-12 col-md-6 mb-3 pr-md-2">
+                                            <label class="d-block mb-1">Display Options:</label>
+                                            <div class="form-checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="currency-use-symbol" checked>
+                                                    Use currency symbol
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="currency-min-fraction">Minimum Fraction Digits:</label>
+                                                <input type="number" id="currency-min-fraction" class="form-control"
+                                                    value="2" min="0" max="20">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="currency-max-fraction">Maximum Fraction Digits:</label>
+                                                <input type="number" id="currency-max-fraction" class="form-control"
+                                                    value="2" min="0" max="20">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <label class="d-block mb-1">Formatted Currency:</label>
+                                            <div id="formatted-currency-output" class="output-display"></div>
+                                        </div>
+                                    </div>
+                                    <button id="format-currency-btn" class="btn btn-primary">Format Currency</button>
+                                </div>
+                            </div>
+
+                            <!-- Advanced Formatting -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Advanced Formatting Examples</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="d-flex flex-column flex-md-row">
+                                        <div class="col-12 col-md-6 mb-3 pr-md-2">
+                                            <h4 class="f4 mb-2">Percentage Formatting</h4>
+                                            <div class="form-group">
+                                                <label for="percentage-value">Enter Percentage Value (0-1):</label>
+                                                <input type="number" id="percentage-value" class="form-control"
+                                                    value="0.2345" step="0.01" min="0" max="1">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="percentage-locale">Select Locale:</label>
+                                                <select id="percentage-locale" class="form-select">
+                                                    <option value="en-US">English (United States)</option>
+                                                    <option value="fr-FR">French (France)</option>
+                                                    <option value="de-DE">German (Germany)</option>
+                                                    <option value="ar-EG">Arabic (Egypt)</option>
+                                                </select>
+                                            </div>
+                                            <button id="format-percentage-btn" class="btn btn-sm">Format
+                                                Percentage</button>
+                                            <div class="mt-2">
+                                                <label>Result:</label>
+                                                <div id="percentage-output" class="output-display"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <h4 class="f4 mb-2">Unit Formatting</h4>
+                                            <div class="form-group">
+                                                <label for="unit-value">Enter Value:</label>
+                                                <input type="number" id="unit-value" class="form-control" value="25"
+                                                    step="1">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="unit-type">Select Unit:</label>
+                                                <select id="unit-type" class="form-select">
+                                                    <option value="celsius">Temperature (Celsius)</option>
+                                                    <option value="kilometer">Distance (Kilometer)</option>
+                                                    <option value="kilogram">Weight (Kilogram)</option>
+                                                    <option value="liter">Volume (Liter)</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="unit-locale">Select Locale:</label>
+                                                <select id="unit-locale" class="form-select">
+                                                    <option value="en-US">English (United States)</option>
+                                                    <option value="fr-FR">French (France)</option>
+                                                    <option value="de-DE">German (Germany)</option>
+                                                    <option value="ja-JP">Japanese (Japan)</option>
+                                                </select>
+                                            </div>
+                                            <button id="format-unit-btn" class="btn btn-sm">Format Unit</button>
+                                            <div class="mt-2">
+                                                <label>Result:</label>
+                                                <div id="unit-output" class="output-display"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Basic Number
+                                            Formatting</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Format large numbers with different locales
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify decimal and thousands separators change by locale
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with different fraction digit settings
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Currency
+                                            Formatting</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test currency symbol position (prefix vs suffix)
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify currency symbol changes based on currency code
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6                                                                                        10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with different display locales for the same currency
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Advanced
+                                            Formatting</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test percentage formatting across locales
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify unit formatting with different measurement systems
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Edge Cases</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with very large numbers (billions+)
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with very small decimal numbers
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with negative values
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block mt-3">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // View More Scenarios functionality
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+
+        // Number Formatting
+        const formatNumberBtn = document.getElementById('format-number-btn');
+        const formattedNumberOutput = document.getElementById('formatted-number-output');
+
+        formatNumberBtn.addEventListener('click', function () {
+            // Değerleri doğru şekilde alıyoruz ve hata kontrolü yapıyoruz
+            const numberInput = document.getElementById('number-to-format');
+            if (!numberInput || numberInput.value === '') {
+                formattedNumberOutput.textContent = 'Please enter a number';
+                formattedNumberOutput.classList.add('error');
+                formattedNumberOutput.classList.remove('success');
+                return;
+            }
+
+            const numberValue = parseFloat(numberInput.value);
+            if (isNaN(numberValue)) {
+                formattedNumberOutput.textContent = 'Invalid number format';
+                formattedNumberOutput.classList.add('error');
+                formattedNumberOutput.classList.remove('success');
+                return;
+            }
+
+            const locale = document.getElementById('number-locale-selector').value;
+            const useGrouping = document.getElementById('use-grouping').checked;
+            const useSignificantDigits = document.getElementById('use-significant-digits').checked;
+            const minFractionDigits = parseInt(document.getElementById('min-fraction-digits').value) || 0;
+            const maxFractionDigits = parseInt(document.getElementById('max-fraction-digits').value) || 2;
+
+            try {
+                let options = {
+                    useGrouping: useGrouping,
+                    minimumFractionDigits: minFractionDigits,
+                    maximumFractionDigits: maxFractionDigits
+                };
+
+                if (useSignificantDigits) {
+                    options.minimumSignificantDigits = 1;
+                    options.maximumSignificantDigits = 5;
+                }
+
+                const formatter = new Intl.NumberFormat(locale, options);
+                const formattedNumber = formatter.format(numberValue);
+
+                // Sonucu gösteriyoruz
+                formattedNumberOutput.textContent = formattedNumber;
+                formattedNumberOutput.classList.add('success');
+                formattedNumberOutput.classList.remove('error');
+
+                console.log('Number formatted successfully:', formattedNumber);
+            } catch (error) {
+                console.error('Error formatting number:', error);
+                formattedNumberOutput.textContent = `Error: ${error.message}`;
+                formattedNumberOutput.classList.add('error');
+                formattedNumberOutput.classList.remove('success');
+            }
+        });
+
+        // Currency Formatting
+        const formatCurrencyBtn = document.getElementById('format-currency-btn');
+        const formattedCurrencyOutput = document.getElementById('formatted-currency-output');
+
+        formatCurrencyBtn.addEventListener('click', function () {
+            const currencyValue = parseFloat(document.getElementById('currency-value').value);
+            const currencyCode = document.getElementById('currency-code').value;
+            const currencyLocale = document.getElementById('currency-locale').value;
+            const useSymbol = document.getElementById('currency-use-symbol').checked;
+            const minFractionDigits = parseInt(document.getElementById('currency-min-fraction').value);
+            const maxFractionDigits = parseInt(document.getElementById('currency-max-fraction').value);
+
+            try {
+                const options = {
+                    style: 'currency',
+                    currency: currencyCode,
+                    currencyDisplay: useSymbol ? 'symbol' : 'code',
+                    minimumFractionDigits: minFractionDigits,
+                    maximumFractionDigits: maxFractionDigits
+                };
+
+                const formatter = new Intl.NumberFormat(currencyLocale, options);
+                const formattedCurrency = formatter.format(currencyValue);
+                formattedCurrencyOutput.textContent = formattedCurrency;
+                formattedCurrencyOutput.classList.add('success');
+                formattedCurrencyOutput.classList.remove('error');
+            } catch (error) {
+                formattedCurrencyOutput.textContent = `Error: ${error.message}`;
+                formattedCurrencyOutput.classList.add('error');
+                formattedCurrencyOutput.classList.remove('success');
+            }
+        });
+
+        // Percentage Formatting
+        const formatPercentageBtn = document.getElementById('format-percentage-btn');
+        const percentageOutput = document.getElementById('percentage-output');
+
+        formatPercentageBtn.addEventListener('click', function () {
+            const percentageValue = parseFloat(document.getElementById('percentage-value').value);
+            const percentageLocale = document.getElementById('percentage-locale').value;
+
+            try {
+                const options = {
+                    style: 'percent',
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 2
+                };
+
+                const formatter = new Intl.NumberFormat(percentageLocale, options);
+                const formattedPercentage = formatter.format(percentageValue);
+                percentageOutput.textContent = formattedPercentage;
+                percentageOutput.classList.add('success');
+                percentageOutput.classList.remove('error');
+            } catch (error) {
+                percentageOutput.textContent = `Error: ${error.message}`;
+                percentageOutput.classList.add('error');
+                percentageOutput.classList.remove('success');
+            }
+        });
+
+        // Unit Formatting
+        const formatUnitBtn = document.getElementById('format-unit-btn');
+        const unitOutput = document.getElementById('unit-output');
+
+        formatUnitBtn.addEventListener('click', function () {
+            const unitValue = parseFloat(document.getElementById('unit-value').value);
+            const unitType = document.getElementById('unit-type').value;
+            const unitLocale = document.getElementById('unit-locale').value;
+
+            try {
+                // Map unit types to their Intl.NumberFormat unit values
+                const unitMap = {
+                    'celsius': 'celsius',
+                    'kilometer': 'kilometer',
+                    'kilogram': 'kilogram',
+                    'liter': 'liter'
+                };
+
+                const options = {
+                    style: 'unit',
+                    unit: unitMap[unitType],
+                    unitDisplay: 'long'
+                };
+
+                const formatter = new Intl.NumberFormat(unitLocale, options);
+                const formattedUnit = formatter.format(unitValue);
+                unitOutput.textContent = formattedUnit;
+                unitOutput.classList.add('success');
+                unitOutput.classList.remove('error');
+            } catch (error) {
+                unitOutput.textContent = `Error: ${error.message}`;
+                unitOutput.classList.add('error');
+                unitOutput.classList.remove('success');
+            }
+        });
+
+        // Sayfa yüklendiğinde tüm butonları bir kez tetikle
+        setTimeout(function () {
+            try {
+                formatNumberBtn.click();
+                formatCurrencyBtn.click();
+                formatPercentageBtn.click();
+                formatUnitBtn.click();
+                console.log('Initial formatting triggered');
+            } catch (e) {
+                console.error('Error during initial formatting:', e);
+            }
+        }, 500);
+    });
+</script>
+
+</html>

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test & Automation - Content Negotiation</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .response-box {
+            background-color: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 16px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .request-form {
+            margin-bottom: 16px;
+        }
+
+        .request-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .request-form select,
+        .request-form input {
+            margin-bottom: 12px;
+        }
+
+        .header-pair {
+            display: flex;
+            margin-bottom: 8px;
+        }
+
+        .header-pair input {
+            flex: 1;
+            margin-right: 8px;
+        }
+
+        .header-pair button {
+            flex-shrink: 0;
+        }
+
+        #headers-container {
+            margin-bottom: 16px;
+        }
+
+        .content-type-example {
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .content-type-tabs {
+            display: flex;
+            border-bottom: 1px solid #d0d7de;
+            margin-bottom: 16px;
+        }
+
+        .content-type-tab {
+            padding: 8px 16px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-bottom: -1px;
+        }
+
+        .content-type-tab.active {
+            background-color: #ffffff;
+            border-color: #d0d7de;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .content-panel {
+            display: none;
+        }
+
+        .content-panel.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body id="page-body">
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <div class="d-flex flex-items-center flex-justify-between">
+                <div>
+                    <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+                    <small>
+                        <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with
+                            our
+                            examples.
+                        </p>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Content Negotiation</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Content Negotiation</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Content negotiation is a mechanism defined in the HTTP protocol that allows a client and
+                                server to agree on the most appropriate representation of a resource. This enables
+                                servers to serve different versions of the same resource based on client capabilities
+                                and preferences, improving user experience and optimizing resource delivery.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Content Negotiation:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Multiple representations of the same resource (different formats,
+                                    languages, encodings)</li>
+                                <li class="ml-4">Client-driven preferences through HTTP headers</li>
+                                <li class="ml-4">Server-side selection of the most appropriate representation</li>
+                                <li class="ml-4">Improved user experience with content tailored to client capabilities
+                                </li>
+                                <li class="ml-4">Bandwidth optimization by serving compressed or reduced content when
+                                    appropriate</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How Content Negotiation Works:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">Client sends request with preference headers (<code>Accept</code>,
+                                    <code>Accept-Language</code>, <code>Accept-Encoding</code>, etc.)
+                                </li>
+                                <li class="ml-4">Server evaluates available representations against client preferences
+                                </li>
+                                <li class="ml-4">Server selects the best matching representation based on quality values
+                                    and availability</li>
+                                <li class="ml-4">Server responds with the selected representation and corresponding
+                                    headers</li>
+                                <li class="ml-4">Client receives and processes the content in its preferred format</li>
+                            </ol>
+                            <h3 class="f4 mb-2">Common Negotiation Headers:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4"><code>Accept</code>: Preferred media types (e.g.,
+                                    <code>application/json</code>, <code>text/html</code>)
+                                </li>
+                                <li class="ml-4"><code>Accept-Language</code>: Preferred languages (e.g.,
+                                    <code>en-US</code>, <code>fr</code>)
+                                </li>
+                                <li class="ml-4"><code>Accept-Encoding</code>: Supported compression algorithms (e.g.,
+                                    <code>gzip</code>, <code>br</code>)
+                                </li>
+                                <li class="ml-4"><code>Accept-Charset</code>: Preferred character encodings (e.g.,
+                                    <code>utf-8</code>)
+                                </li>
+                                <li class="ml-4"><code>User-Agent</code>: Client application information (indirectly
+                                    used for negotiation)</li>
+                            </ul>
+                            <p class="color-fg-muted">
+                                Implementing proper content negotiation is crucial for creating truly global and
+                                accessible applications. It allows servers to deliver the most appropriate content based
+                                on client capabilities and preferences, improving user experience and optimizing
+                                resource delivery.
+                            </p>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+                            <div id="content-negotiation-examples">
+                                <h4 class="f5 mb-2">1. Content Type Negotiation:</h4>
+                                <div class="content-type-example">
+                                    <div class="content-type-tabs">
+                                        <div class="content-type-tab active" data-target="json-panel">JSON</div>
+                                        <div class="content-type-tab" data-target="xml-panel">XML</div>
+                                        <div class="content-type-tab" data-target="html-panel">HTML</div>
+                                    </div>
+                                    <div class="content-panels">
+                                        <div id="json-panel" class="content-panel active">
+                                            <p>Request with <code>Accept: application/json</code> header:</p>
+                                            <pre class="response-box">{
+  "name": "Content Negotiation",
+  "type": "HTTP Mechanism",
+  "purpose": "Serve appropriate content based on client preferences",
+  "headers": ["Accept", "Accept-Language", "Accept-Encoding"],
+  "benefits": [
+    "Improved user experience",
+    "Bandwidth optimization",
+    "Internationalization support"
+  ]
+}</pre>
+                                        </div>
+                                        <div id="xml-panel" class="content-panel">
+                                            <p>Request with <code>Accept: application/xml</code> header:</p>
+                                            <pre class="response-box">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;resource&gt;
+  &lt;name&gt;Content Negotiation&lt;/name&gt;
+  &lt;type&gt;HTTP Mechanism&lt;/type&gt;
+  &lt;purpose&gt;Serve appropriate content based on client preferences&lt;/purpose&gt;
+  &lt;headers&gt;
+    &lt;header&gt;Accept&lt;/header&gt;
+    &lt;header&gt;Accept-Language&lt;/header&gt;
+    &lt;header&gt;Accept-Encoding&lt;/header&gt;
+  &lt;/headers&gt;
+  &lt;benefits&gt;
+    &lt;benefit&gt;Improved user experience&lt;/benefit&gt;
+    &lt;benefit&gt;Bandwidth optimization&lt;/benefit&gt;
+    &lt;benefit&gt;Internationalization support&lt;/benefit&gt;
+  &lt;/benefits&gt;
+&lt;/resource&gt;</pre>
+                                        </div>
+                                        <div id="html-panel" class="content-panel">
+                                            <p>Request with <code>Accept: text/html</code> header:</p>
+                                            <pre class="response-box">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Content Negotiation&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Content Negotiation&lt;/h1&gt;
+  &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; HTTP Mechanism&lt;/p&gt;
+  &lt;p&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Serve appropriate content based on client preferences&lt;/p&gt;
+  &lt;h2&gt;Headers:&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Accept&lt;/li&gt;
+    &lt;li&gt;Accept-Language&lt;/li&gt;
+    &lt;li&gt;Accept-Encoding&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;h2&gt;Benefits:&lt;/h2&gt;
+  &lt;ul&&lt;ul&gt;
+&lt;li&gt;Improved user experience&lt;/li&gt;
+&lt;li&gt;Bandwidth optimization&lt;/li&gt;
+&lt;li&gt;Internationalization support&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="f5 mb-2">2. Language Negotiation:</h4>
+                                <div class="content-type-example">
+                                    <div class="content-type-tabs">
+                                        <div class="content-type-tab active" data-target="en-panel">English</div>
+                                        <div class="content-type-tab" data-target="fr-panel">French</div>
+                                        <div class="content-type-tab" data-target="es-panel">Spanish</div>
+                                    </div>
+                                    <div class="content-panels">
+                                        <div id="en-panel" class="content-panel active">
+                                            <p>Request with <code>Accept-Language: en</code> header:</p>
+                                            <pre
+                                                class="response-box">Content negotiation is a mechanism defined in the HTTP protocol that allows a client and server to agree on the most appropriate representation of a resource.</pre>
+                                        </div>
+                                        <div id="fr-panel" class="content-panel">
+                                            <p>Request with <code>Accept-Language: fr</code> header:</p>
+                                            <pre
+                                                class="response-box">La négociation de contenu est un mécanisme défini dans le protocole HTTP qui permet à un client et à un serveur de s'accorder sur la représentation la plus appropriée d'une ressource.</pre>
+                                        </div>
+                                        <div id="es-panel" class="content-panel">
+                                            <p>Request with <code>Accept-Language: es</code> header:</p>
+                                            <pre
+                                                class="response-box">La negociación de contenido es un mecanismo definido en el protocolo HTTP que permite que un cliente y un servidor acuerden la representación más apropiada de un recurso.</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="f5 mb-2">3. Custom Request Builder:</h4>
+                                <div class="content-type-example">
+                                    <form id="negotiation-form" class="request-form">
+                                        <label for="endpoint">API Endpoint:</label>
+                                        <input type="text" id="endpoint" class="form-control" value="/api/resource"
+                                            readonly>
+
+                                        <label for="accept-header">Accept Header:</label>
+                                        <select id="accept-header" class="form-select">
+                                            <option value="application/json">application/json</option>
+                                            <option value="application/xml">application/xml</option>
+                                            <option value="text/html">text/html</option>
+                                            <option value="*/*">*/* (Any format)</option>
+                                        </select>
+
+                                        <label for="accept-language">Accept-Language Header:</label>
+                                        <select id="accept-language" class="form-select">
+                                            <option value="en">en (English)</option>
+                                            <option value="fr">fr (French)</option>
+                                            <option value="es">es (Spanish)</option>
+                                            <option value="en-US,en;q=0.9,fr;q=0.8">en-US,en;q=0.9,fr;q=0.8 (Weighted)
+                                            </option>
+                                        </select>
+
+                                        <label for="accept-encoding">Accept-Encoding Header:</label>
+                                        <select id="accept-encoding" class="form-select">
+                                            <option value="gzip">gzip</option>
+                                            <option value="br">br (Brotli)</option>
+                                            <option value="gzip, deflate, br">gzip, deflate, br (Multiple)</option>
+                                            <option value="">None</option>
+                                        </select>
+
+                                        <div class="d-flex mt-3">
+                                            <button type="submit" class="btn btn-primary">Send Request</button>
+                                        </div>
+                                    </form>
+
+                                    <div class="mt-3">
+                                        <h5>Response:</h5>
+                                        <pre id="negotiation-response"
+                                            class="response-box">// Response will appear here after sending the request</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Content Type
+                                            Negotiation</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with Accept: application/json header
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with Accept: application/xml header
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with Accept: text/html header
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Language
+                                            Negotiation</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with Accept-Language: en header
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with Accept-Language: fr header
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with Accept-Language: es header
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Encoding
+                                            Negotiation</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06                                                        d="
+                                                        M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22
+                                                        9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with Accept-Encoding: gzip header
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with Accept-Encoding: br header
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with multiple encoding preferences
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Quality Values</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with weighted language preferences
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with weighted content type preferences
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Fallback
+                                            Behavior</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with unsupported content type
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with unsupported language
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block mt-3">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.content-type-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    // Get the parent tabs container
+                    const tabsContainer = this.parentElement;
+                    // Get all tabs in this container
+                    const siblingTabs = tabsContainer.querySelectorAll('.content-type-tab');
+                    // Remove active class from all tabs
+                    siblingTabs.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+
+                    // Get the target panel ID
+                    const targetId = this.getAttribute('data-target');
+                    // Get the panels container (sibling of tabs container)
+                    const panelsContainer = tabsContainer.nextElementSibling;
+                    // Get all panels in this container
+                    const panels = panelsContainer.querySelectorAll('.content-panel');
+                    // Hide all panels
+                    panels.forEach(p => p.classList.remove('active'));
+                    // Show the target panel
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+
+            // View More Scenarios functionality
+            document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+                e.preventDefault();
+                const additionalScenarios = document.querySelectorAll('.additional-scenario');
+                additionalScenarios.forEach(scenario => {
+                    scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+                });
+                this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+            });
+
+            // Form submission handler
+            document.getElementById('negotiation-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Get form values
+                const acceptHeader = document.getElementById('accept-header').value;
+                const acceptLanguage = document.getElementById('accept-language').value;
+                const acceptEncoding = document.getElementById('accept-encoding').value;
+
+                // Prepare response based on headers
+                let response = '';
+
+                // Content type negotiation
+                if (acceptHeader === 'application/json') {
+                    response = JSON.stringify({
+                        name: "Content Negotiation",
+                        type: "HTTP Mechanism",
+                        purpose: "Serve appropriate content based on client preferences",
+                        headers: ["Accept", "Accept-Language", "Accept-Encoding"],
+                        benefits: [
+                            "Improved user experience",
+                            "Bandwidth optimization",
+                            "Internationalization support"
+                        ]
+                    }, null, 2);
+                } else if (acceptHeader === 'application/xml') {
+                    response = `<?xml version="1.0" encoding="UTF-8"?>
+<resource>
+  <name>Content Negotiation</name>
+  <type>HTTP Mechanism</type>
+  <purpose>Serve appropriate content based on client preferences</purpose>
+  <headers>
+    <header>Accept</header>
+    <header>Accept-Language</header>
+    <header>Accept-Encoding</header>
+  </headers>
+  <benefits>
+    <benefit>Improved user experience</benefit>
+    <benefit>Bandwidth optimization</benefit>
+    <benefit>Internationalization support</benefit>
+  </benefits>
+</resource>`;
+                } else {
+                    response = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Content Negotiation</title>
+</head>
+<body>
+  <h1>Content Negotiation</h1>
+  <p><strong>Type:</strong> HTTP Mechanism</p>
+  <p><strong>Purpose:</strong> Serve appropriate content based on client preferences</p>
+  <h2>Headers:</h2>
+  <ul>
+    <li>Accept</li>
+    <li>Accept-Language</li>
+    <li>Accept-Encoding</li>
+  </ul>
+  <h2>Benefits:</h2>
+  <ul>
+    <li>Improved user experience</li>
+    <li>Bandwidth optimization</li>
+    <li>Internationalization support</li>
+  </  </ul>
+</body>
+</html>`;
+                }
+
+                // Language negotiation
+                if (acceptLanguage.startsWith('fr')) {
+                    response = response.replace('Content Negotiation', 'Négociation de Contenu')
+                        .replace('HTTP Mechanism', 'Mécanisme HTTP')
+                        .replace('Serve appropriate content based on client preferences', 'Servir le contenu approprié en fonction des préférences du client')
+                        .replace('Headers', 'En-têtes')
+                        .replace('Benefits', 'Avantages')
+                        .replace("Improved user experience', 'Amélioration de l'expérience utilisateur")
+                        .replace('Bandwidth optimization', 'Optimisation de la bande passante')
+                        .replace("PluralizationInternationalization support', 'Support de l'internationalisation");
+                } else if (acceptLanguage.startsWith('es')) {
+                    response = response.replace('Content Negotiation', 'Negociación de Contenido')
+                        .replace('HTTP Mechanism', 'Mecanismo HTTP')
+                        .replace('Serve appropriate content based on client preferences', 'Servir contenido apropiado según las preferencias del cliente')
+                        .replace('Headers', 'Encabezados')
+                        .replace('Benefits', 'Beneficios')
+                        .replace('Improved user experience', 'Mejora de la experiencia del usuario')
+                        .replace('Bandwidth optimization', 'Optimización del ancho de banda')
+                        .replace('Internationalization support', 'Soporte de internacionalización');
+                }
+
+                // Encoding simulation
+                if (acceptEncoding) {
+                    const encodingInfo = acceptEncoding.includes('gzip') ? 'gzip' :
+                        acceptEncoding.includes('br') ? 'br' : 'identity';
+                    response = `// Content would be ${encodingInfo} encoded\n// Content-Encoding: ${encodingInfo}\n\n${response}`;
+                }
+
+                // Display response
+                document.getElementById('negotiation-response').textContent = response;
+            });
+        });
+    </script>
+</body>
+
+</html>

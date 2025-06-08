@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Switcher - Practice Test & Automation</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .language-selector button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+        }
+
+        .language-selector button.active {
+            background-color: #0366d6;
+            color: white;
+        }
+
+        .language-selector img {
+            width: 20px;
+            height: 15px;
+        }
+
+        .content-section {
+            transition: opacity 0.3s ease;
+        }
+
+        .fade {
+            opacity: 0.5;
+        }
+
+        [dir="rtl"] .language-selector {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .language-selector button {
+            flex-direction: row-reverse;
+        }
+
+        .translation-missing {
+            background-color: #fffbdd;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Language Switcher</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Language Switching in Web Applications</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Language switching is a critical feature for global applications, allowing users to
+                                interact with content in their preferred language. This page demonstrates various
+                                language switching implementations and testing scenarios.
+                            </p>
+
+                            <h3 class="f4 mb-2">Key Features of Language Switchers:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Seamless switching between multiple languages without page reload</li>
+                                <li class="ml-4">Support for both left-to-right (LTR) and right-to-left (RTL) languages
+                                </li>
+                                <li class="ml-4">Persistent language preferences across user sessions</li>
+                                <li class="ml-4">Visual indicators showing the currently selected language</li>
+                                <li class="ml-4">Automatic detection of user's preferred language based on browser
+                                    settings</li>
+                            </ul>
+
+                            <h3 class="f4 mb-2">How It Works:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">Translation strings are stored in language-specific resource files or
+                                    objects.</li>
+                                <li class="ml-4">When a user selects a language, the UI elements are updated with the
+                                    corresponding translations.
+                                </li>
+                                <li class="ml-4">The selected language preference is stored in browser storage (cookies
+                                    or localStorage).</li>
+                                <li class="ml-4">For RTL languages, the text direction and layout are adjusted
+                                    accordingly.</li>
+                                <li class="ml-4">On subsequent visits, the application loads with the user's previously
+                                    selected language.</li>
+                                <li class="ml-4">Fallback mechanisms ensure the UI remains functional even if
+                                    translations are missing.</li>
+                            </ol>
+
+                            <hr>
+                            <h3 class="mb-2" data-t="implementation-title">Test Me Here:</h3>
+
+                            <div class="Box p-3 mb-3">
+                                <h4 class="mb-2" data-t="demo-title">Interactive Demo</h4>
+                                <div class="language-selector mb-3">
+                                    <button class="btn btn-sm active" data-lang="tr" aria-pressed="true">
+                                        <img src="https://flagcdn.com/w20/tr.png" alt="Turkish" />
+                                        <span>Turkish</span>
+                                    </button>
+                                    <button class="btn btn-sm" data-lang="en" aria-pressed="false">
+                                        <img src="https://flagcdn.com/w20/us.png" alt="English" />
+                                        <span>English</span>
+                                    </button>
+                                    <button class="btn btn-sm" data-lang="fr" aria-pressed="false">
+                                        <img src="https://flagcdn.com/w20/fr.png" alt="French" />
+                                        <span>Français</span>
+                                    </button>
+                                    <button class="btn btn-sm" data-lang="de" aria-pressed="false">
+                                        <img src="https://flagcdn.com/w20/de.png" alt="German" />
+                                        <span>Deutsch</span>
+                                    </button>
+                                    <button class="btn btn-sm" data-lang="ar" aria-pressed="false">
+                                        <img src="https://flagcdn.com/w20/sa.png" alt="Arabic" />
+                                        <span>العربية</span>
+                                    </button>
+                                    <button class="btn btn-sm" data-lang="jp" aria-pressed="false">
+                                        <img src="https://flagcdn.com/w20/jp.png" alt="Japanese" />
+                                        <span>日本語</span>
+                                    </button>
+                                </div>
+
+                                <div class="content-section" id="demo-content">
+                                    <div class="Box p-3 mb-3">
+                                        <h5 class="mb-2" data-t="welcome-title">Welcome to our Application</h5>
+                                        <p data-t="welcome-text">This is a demonstration of language switching
+                                            functionality. The content of this page will change based on your selected
+                                            language.</p>
+                                        <div class="d-flex flex-items-center mt-3">
+                                            <button class="btn btn-primary mr-2" data-t="signup-button">Sign Up</button>
+                                            <button class="btn" data-t="login-button">Log In</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="Box p-3">
+                                        <h5 class="mb-2" data-t="product-title">Featured Products</h5>
+                                        <ul class="list-style-none">
+                                            <li class="d-flex flex-items-center mb-2">
+                                                <span
+                                                    class="Label mr-2 color-bg-accent-emphasis color-fg-on-emphasis">New</span>
+                                                <span data-t="product-1">Premium Subscription</span>
+                                                <span class="ml-auto" data-t="price-1">$19.99/month</span>
+                                            </li>
+                                            <li class="d-flex flex-items-center mb-2">
+                                                <span data-t="product-2">Basic Package</span>
+                                                <span class="ml-auto" data-t="price-2">$9.99/month</span>
+                                            </li>
+                                            <li class="d-flex flex-items-center">
+                                                <span data-t="product-3">Free Trial</span>
+                                                <span class="ml-auto" data-t="price-3">$0.00</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Basic Language
+                                            Switching</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Switch from English to French and verify all text changes
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Switch from French to German and verify all text changes
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify active state of language button changes correctly
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: RTL Language
+                                            Support</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Switch to Arabic and verify text direction changes to RTL
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify layout elements reposition correctly in RTL mode
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Switch back to LTR language and verify layout returns to normal
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Persistence
+                                            Testing</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Change language and refresh page to verify preference persists
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Close browser and reopen to verify language preference is saved
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Edge Cases</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with missing translation strings (fallback behavior)
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with very long text in translated strings
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test with special characters and non-Latin scripts
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block mt-3">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        // View More Scenarios functionality
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const languageButtons = document.querySelectorAll('.language-selector button');
+
+            // Translation data
+            const translations = {
+                tr: {
+                    "welcome-title": "Uygulamamıza Hoş Geldiniz",
+                    "welcome-text": "Bu, dil değiştirme işlevselliğinin bir gösterimidir. Bu sayfanın içeriği seçtiğiniz dile göre değişecektir.",
+                    "signup-button": "Kayıt Ol",
+                    "login-button": "Giriş Yap",
+                    "product-title": "Öne Çıkan Ürünler",
+                    "product-1": "Premium Abonelik",
+                    "product-2": "Temel Paket",
+                    "product-3": "Ücretsiz Deneme",
+                    "price-1": "19,99₺/ay",
+                    "price-2": "9,99₺/ay",
+                    "price-3": "0,00₺"
+                },
+
+                en: {
+                    "welcome-title": "Welcome to our Application",
+                    "welcome-text": "This is a demonstration of language switching functionality. The content of this page will change based on your selected language.",
+                    "signup-button": "Sign Up",
+                    "login-button": "Log In",
+                    "product-title": "Featured Products",
+                    "product-1": "Premium Subscription",
+                    "product-2": "Basic Package",
+                    "product-3": "Free Trial",
+                    "price-1": "$19.99/month",
+                    "price-2": "$9.99/month",
+                    "price-3": "$0.00"
+                },
+                fr: {
+                    "welcome-title": "Bienvenue dans notre Application",
+                    "welcome-text": "Ceci est une démonstration de la fonctionnalité de changement de langue. Le contenu de cette page changera en fonction de la langue sélectionnée.",
+                    "signup-button": "S'inscrire",
+                    "login-button": "Se Connecter",
+                    "product-title": "Produits en Vedette",
+                    "product-1": "Abonnement Premium",
+                    "product-2": "Forfait de Base",
+                    "product-3": "Essai Gratuit",
+                    "price-1": "19,99€/mois",
+                    "price-2": "9,99€/mois",
+                    "price-3": "0,00€"
+                },
+                de: {
+                    "welcome-title": "Willkommen in unserer Anwendung",
+                    "welcome-text": "Dies ist eine Demonstration der Sprachumschaltungsfunktion. Der Inhalt dieser Seite ändert sich je nach ausgewählter Sprache.",
+                    "signup-button": "Registrieren",
+                    "login-button": "Anmelden",
+                    "product-title": "Ausgewählte Produkte",
+                    "product-1": "Premium-Abonnement",
+                    "product-2": "Basispaket",
+                    "product-3": "Kostenlose Testversion",
+                    "price-1": "19,99€/Monat",
+                    "price-2": "9,99€/Monat",
+                    "price-3": "0,00€"
+                },
+                ar: {
+                    "welcome-title": "مرحبًا بك في تطبيقنا",
+                    "welcome-text": "هذا عرض توضيحي لوظيفة تبديل اللغة. سيتغير محتوى هذه الصفحة بناءً على اللغة المحددة.",
+                    "signup-button": "التسجيل",
+                    "login-button": "تسجيل الدخول",
+                    "product-title": "المنتجات المميزة",
+                    "product-1": "اشتراك متميز",
+                    "product-2": "الباقة الأساسية",
+                    "product-3": "نسخة تجريبية مجانية",
+                    "price-1": "19.99 دولار/شهر",
+                    "price-2": "9.99 دولار/شهر",
+                    "price-3": "0.00 دولار"
+                },
+                jp: {
+                    "welcome-title": "アプリケーションへようこそ",
+                    "welcome-text": "これは言語切り替え機能のデモンストレーションです。このページの内容は、選択した言語に基づいて変更されます。",
+                    "signup-button": "サインアップ",
+                    "login-button": "ログイン",
+                    "product-title": "注目の商品",
+                    "product-1": "プレミアムサブスクリプション",
+                    "product-2": "ベーシックパッケージ",
+                    "product-3": "無料トライアル",
+                    "price-1": "¥2,200/月",
+                    "price-2": "¥1,100/月",
+                    "price-3": "¥0"
+                }
+            };
+
+            // Switch language function
+            function switchLanguage(lang) {
+                // Update active button
+                languageButtons.forEach(btn => {
+                    if (btn.dataset.lang === lang) {
+                        btn.classList.add('active');
+                        btn.setAttribute('aria-pressed', 'true');
+                    } else {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-pressed', 'false');
+                    }
+                });
+
+                // Set RTL for Arabic
+                document.getElementById('demo-content').dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+                // Update translations
+                const langData = translations[lang];
+                document.querySelectorAll('[data-t]').forEach(el => {
+                    const key = el.getAttribute('data-t');
+                    if (langData && langData[key]) {
+                        el.textContent = langData[key];
+                    }
+                });
+
+                // Store preference
+                localStorage.setItem('preferredLanguage', lang);
+            }
+
+            // Add click event to language buttons
+            languageButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    switchLanguage(this.dataset.lang);
+                });
+            });
+
+            // Load saved preference or default to English
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            switchLanguage(savedLang);
+        });
+    </script>
+</body>
+
+</html>

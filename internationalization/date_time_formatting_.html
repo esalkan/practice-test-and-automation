@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test & Automation - Date Time Formatting</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .format-example {
+            font-family: monospace;
+            background-color: #f6f8fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .output-display {
+            min-height: 24px;
+            padding: 8px;
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            margin-top: 8px;
+        }
+
+        .timezone-selector {
+            max-width: 300px;
+        }
+
+        .date-format-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .date-format-table th,
+        .date-format-table td {
+            padding: 8px;
+            border: 1px solid #d0d7de;
+        }
+
+        .date-format-table th {
+            background-color: #f6f8fa;
+        }
+
+        .format-preview {
+            margin-top: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Date Time Formatting</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Date Time Formatting</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Date and time formatting is a critical aspect of internationalization in web
+                                applications.
+                                Different regions and cultures have varying conventions for displaying dates, times, and
+                                timestamps. Proper formatting ensures that users worldwide can understand temporal
+                                information
+                                in a way that's familiar to them, enhancing the user experience across different
+                                locales.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Date Time Formatting:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Locale-specific date and time representations</li>
+                                <li class="ml-4">Support for different calendar systems (Gregorian, Buddhist, Islamic,
+                                    etc.)</li>
+                                <li class="ml-4">Flexible formatting options (short, medium, long, full)</li>
+                                <li class="ml-4">Time zone handling and conversions</li>
+                                <li class="ml-4">12-hour vs. 24-hour time format options</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How It Works:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">The application detects the user's locale from browser settings or user
+                                    preferences.</li>
+                                <li class="ml-4">Date and time values are stored in a standardized format (typically ISO
+                                    8601).</li>
+                                <li class="ml-4">When displaying dates and times, the application formats them according
+                                    to the user's locale.</li>
+                                <li class="ml-4">The Intl.DateTimeFormat API or similar libraries handle the complex
+                                    formatting rules.</li>
+                                <li class="ml-4">Time zones are adjusted based on the user's location or preferences.
+                                </li>
+                            </ol>
+                            <h3 class="f4 mb-2">Common Use Cases:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Event scheduling and calendar applications</li>
+                                <li class="ml-4">Transaction timestamps in financial applications</li>
+                                <li class="ml-4">Content publication dates in blogs and news sites</li>
+                                <li class="ml-4">Appointment booking systems</li>
+                                <li class="ml-4">Travel and flight booking applications</li>
+                            </ul>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+
+                            <!-- Locale-Based Date Formatting -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Locale-Based Date Formatting</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="date-to-format" class="d-block mb-1">Select a Date:</label>
+                                        <input type="date" id="date-to-format" class="form-control width-full"
+                                            value="2023-09-15">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="locale-selector" class="d-block mb-1">Select Locale:</label>
+                                        <select id="locale-selector" class="form-select width-full">
+                                            <option value="en-US">English (United States)</option>
+                                            <option value="en-GB">English (United Kingdom)</option>
+                                            <option value="fr-FR">French (France)</option>
+                                            <option value="de-DE">German (Germany)</option>
+                                            <option value="ja-JP">Japanese (Japan)</option>
+                                            <option value="ar-EG">Arabic (Egypt)</option>
+                                            <option value="zh-CN">Chinese (China)</option>
+                                            <option value="es-ES">Spanish (Spain)</option>
+                                            <option value="pt-BR">Portuguese (Brazil)</option>
+                                            <option value="ru-RU">Russian (Russia)</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex flex-column flex-md-row">
+                                        <div class="col-12 col-md-6 mb-3 pr-md-2">
+                                            <label class="d-block mb-1">Format Style:</label>
+                                            <div class="form-checkbox">
+                                                <label>
+                                                    <input type="radio" name="date-style" value="short" checked>
+                                                    Short (e.g., 9/15/23)
+                                                </label>
+                                            </div>
+                                            <div class="form-checkbox">
+                                                <label>
+                                                    <input type="radio" name="date-style" value="medium">
+                                                    Medium (e.g., Sep 15, 2023)
+                                                </label>
+                                            </div>
+                                            <div class="form-checkbox">
+                                                <label>
+                                                    <input type="radio" name="date-style" value="long">
+                                                    Long (e.g., September 15, 2023)
+                                                </label>
+                                            </div>
+                                            <div class="form-checkbox">
+                                                <label>
+                                                    <input type="radio" name="date-style" value="full">
+                                                    Full (e.g., Friday, September 15, 2023)
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <label class="d-block mb-1">Formatted Date:</label>
+                                            <div id="formatted-date-output" class="output-display"></div>
+                                        </div>
+                                    </div>
+                                    <button id="format-date-btn" class="btn btn-primary">Format Date</button>
+                                </div>
+                            </div>
+
+                            <!-- Time Formatting and Time Zones -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Time Formatting and Time Zones</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="time-to-format" class="d-block mb-1">Select a Time:</label>
+                                        <input type="time" id="time-to-format" class="form-control width-full"
+                                            value="14:30">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="timezone-selector" class="d-block mb-1">Select Time Zone:</label>
+                                        <select id="timezone-selector" class="form-select timezone-selector">
+                                            <option value="America/New_York">New York (EST/EDT)</option>
+                                            <option value="America/Los_Angeles">Los Angeles (PST/PDT)</option>
+                                            <option value="Europe/London">London (GMT/BST)</option>
+                                            <option value="Europe/Paris">Paris (CET/CEST)</option>
+                                            <option value="Asia/Tokyo">Tokyo (JST)</option>
+                                            <option value="Australia/Sydney">Sydney (AEST/AEDT)</option>
+                                            <option value="Asia/Dubai">Dubai (GST)</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex flex-column flex-md-row">
+                                        <div class="col-12 col-md-6 mb-3 pr-md-2">
+                                            <label class="d-block mb-1">Time Format Options:</label>
+                                            <div class="form-checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="hour12-option" checked>
+                                                    12-hour format (AM/PM)
+                                                </label>
+                                            </div>
+                                            <div class="form-checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="seconds-option">
+                                                    Show seconds</label>
+                                            </div>
+                                            <div class="form-checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="timezone-name-option">
+                                                    Show time zone name
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <label class="d-block mb-1">Formatted Time:</label>
+                                            <div id="formatted-time-output" class="output-display"></div>
+                                        </div>
+                                    </div>
+                                    <button id="format-time-btn" class="btn btn-primary">Format Time</button>
+                                </div>
+                            </div>
+
+                            <!-- Relative Time Formatting -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Relative Time Formatting</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="relative-date-selector" class="d-block mb-1">Select a Date:</label>
+                                        <input type="date" id="relative-date-selector" class="form-control width-full">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="relative-locale-selector" class="d-block mb-1">Select
+                                            Locale:</label>
+                                        <select id="relative-locale-selector" class="form-select width-full">
+                                            <option value="en-US">English (United States)</option>
+                                            <option value="en-GB">English (United Kingdom)</option>
+                                            <option value="fr-FR">French (France)</option>
+                                            <option value="de-DE">German (Germany)</option>
+                                            <option value="ja-JP">Japanese (Japan)</option>
+                                            <option value="ar-EG">Arabic (Egypt)</option>
+                                            <option value="zh-CN">Chinese (China)</option>
+                                            <option value="es-ES">Spanish (Spain)</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="d-block mb-1">Relative Time:</label>
+                                        <div id="relative-time-output" class="output-display"></div>
+                                    </div>
+                                    <button id="format-relative-btn" class="btn btn-primary">Format Relative
+                                        Time</button>
+                                </div>
+                            </div>
+
+                            <!-- Custom Format Patterns -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Custom Format Patterns</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="custom-date" class="d-block mb-1">Select Date and Time:</label>
+                                        <input type="datetime-local" id="custom-date" class="form-control width-full"
+                                            value="2023-09-15T14:30">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="custom-format" class="d-block mb-1">Custom Format Pattern:</label>
+                                        <input type="text" id="custom-format" class="form-control width-full"
+                                            value="YYYY-MM-DD hh:mm:ss A" placeholder="e.g., YYYY-MM-DD hh:mm:ss A">
+                                        <p class="note">
+                                            Use patterns like: YYYY (year), MM (month), DD (day), hh (hour), mm
+                                            (minute), ss (second), A (AM/PM)
+                                        </p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="d-block mb-1">Formatted Result:</label>
+                                        <div id="custom-format-output" class="output-display"></div>
+                                    </div>
+                                    <button id="format-custom-btn" class="btn btn-primary">Apply Custom Format</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Scenarios & Examples</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Date Formatting in
+                                            Different
+                                            Locales</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Try US locale (MM/DD/YYYY)
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Try UK locale (DD/MM/YYYY)
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Try RTL languages (Arabic)
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Time Format
+                                            Options</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Try 12-hour format with AM/PM
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Try 24-hour format
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Try with and without seconds display
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Time Zone
+                                            Handling</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Compare time across different time zones
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Try with and without time zone name
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Observe daylight saving time differences
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Relative Time
+                                            Examples</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Try "X days ago" formatting
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Try "in X days" formatting
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Try "in X days" formatting
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Compare "today", "yesterday", "tomorrow" formats
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Custom Format
+                                            Patterns</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Try different year formats (YYYY vs YY)
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Try month formats (MM, MMM, MMMM)
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Create custom date-time combinations
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 6:
+                                            Internationalization
+                                            Challenges</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Compare calendar systems (Gregorian vs others)
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Observe first day of week differences
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Try different numeral systems
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="mt-3">
+                                <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View More
+                                    Examples →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+
+
+    <!-- Footer -->
+    <footer class=" color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> -
+                    &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        // Locale-Based Date Formatting
+        document.getElementById('format-date-btn').addEventListener('click', function () {
+            const dateInput = document.getElementById('date-to-format').value;
+            const locale = document.getElementById('locale-selector').value;
+            const dateStyle = document.querySelector('input[name="date-style"]:checked').value;
+
+            // Create a Date object from the input
+            const date = new Date(dateInput);
+
+            // Format the date according to the selected options
+            const formattedDate = new Intl.DateTimeFormat(locale, {
+                dateStyle: dateStyle
+            }).format(date);
+
+            // Display the formatted date
+            document.getElementById('formatted-date-output').textContent = formattedDate;
+        });
+
+        // Time Formatting and Time Zones
+        document.getElementById('format-time-btn').addEventListener('click', function () {
+            const timeInput = document.getElementById('time-to-format').value;
+            const timezone = document.getElementById('timezone-selector').value;
+            const hour12 = document.getElementById('hour12-option').checked;
+            const showSeconds = document.getElementById('seconds-option').checked;
+            const showTimeZone = document.getElementById('timezone-name-option').checked;
+
+            // Create a Date object with the selected time
+            const [hours, minutes] = timeInput.split(':');
+            const date = new Date();
+            date.setHours(hours);
+            date.setMinutes(minutes);
+
+            // Format options
+            const options = {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: hour12,
+                timeZone: timezone
+            };
+
+            if (showSeconds) {
+                options.second = 'numeric';
+            }
+
+            if (showTimeZone) {
+                options.timeZoneName = 'short';
+            }
+
+            // Format the time
+            const formattedTime = new Intl.DateTimeFormat(navigator.language, options).format(date);
+
+            // Display the formatted time
+            document.getElementById('formatted-time-output').textContent = formattedTime;
+        });
+
+        // Relative Time Formatting
+        document.getElementById('format-relative-btn').addEventListener('click', function () {
+            const dateInput = document.getElementById('relative-date-selector').value;
+            const locale = document.getElementById('relative-locale-selector').value;
+
+            if (!dateInput) {
+                document.getElementById('relative-time-output').textContent = 'Please select a date';
+                return;
+            }
+
+            // Create Date objects
+            const selectedDate = new Date(dateInput);
+            const now = new Date();
+
+            // Calculate difference in days
+            const diffTime = selectedDate - now;
+            const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+            // Use RelativeTimeFormat if available
+            if (typeof Intl.RelativeTimeFormat !== 'undefined') {
+                const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
+                document.getElementById('relative-time-output').textContent = rtf.format(diffDays, 'day');
+            } else {
+                // Fallback for browsers that don't support RelativeTimeFormat
+                let relativeText = '';
+                if (diffDays === 0) {
+                    relativeText = 'today';
+                } else if (diffDays === 1) {
+                    relativeText = 'tomorrow';
+                } else if (diffDays === -1) {
+                    relativeText = 'yesterday';
+                } else if (diffDays > 0) {
+                    relativeText = `in ${diffDays} days`;
+                } else {
+                    relativeText = `${Math.abs(diffDays)} days ago`;
+                }
+                document.getElementById('relative-time-output').textContent = relativeText;
+            }
+        });
+
+        // Custom Format Patterns
+        document.getElementById('format-custom-btn').addEventListener('click', function () {
+            const datetimeInput = document.getElementById('custom-date').value;
+            const formatPattern = document.getElementById('custom-format').value;
+
+            if (!datetimeInput) {
+                document.getElementById('custom-format-output').textContent = 'Please select a date and time';
+                return;
+            }
+
+            // Create a Date object
+            const date = new Date(datetimeInput);
+
+            // Format the date according to the custom pattern
+            let formattedResult = formatPattern;
+
+            // Replace year patterns
+            formattedResult = formattedResult.replace('YYYY', date.getFullYear());
+            formattedResult = formattedResult.replace('YY', date.getFullYear().toString().slice(-2));
+
+            // Replace month patterns
+            const month = date.getMonth() + 1; // getMonth() returns 0-11
+            formattedResult = formattedResult.replace('MM', month < 10 ? '0' + month : month);
+            formattedResult = formattedResult.replace('M', month);
+
+            // Replace day patterns
+            const day = date.getDate();
+            formattedResult = formattedResult.replace('DD', day < 10 ? '0' + day : day);
+            formattedResult = formattedResult.replace('D', day);
+
+            // Replace hour patterns (12-hour format)
+            let hours12 = date.getHours() % 12;
+            hours12 = hours12 === 0 ? 12 : hours12; // Convert 0 to 12 for 12 AM
+            formattedResult = formattedResult.replace('hh', hours12 < 10 ? '0' + hours12 : hours12);
+            formattedResult = formattedResult.replace('h', hours12);
+
+            // Replace hour patterns (24-hour format)
+            const hours24 = date.getHours();
+            formattedResult = formattedResult.replace('HH', hours24 < 10 ? '0' + hours24 : hours24);
+            formattedResult = formattedResult.replace('H', hours24);
+
+            // Replace minute patterns
+            const minutes = date.getMinutes();
+            formattedResult = formattedResult.replace('mm', minutes < 10 ? '0' + minutes : minutes);
+            formattedResult = formattedResult.replace('m', minutes);
+
+            // Replace second patterns
+            const seconds = date.getSeconds();
+            formattedResult = formattedResult.replace('ss', seconds < 10 ? '0' + seconds : seconds);
+            formattedResult = formattedResult.replace('s', seconds);
+
+            // Replace AM/PM pattern
+            const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
+            formattedResult = formattedResult.replace('A', ampm);
+
+            // Display the formatted result
+            document.getElementById('custom-format-output').textContent = formattedResult;
+        });
+
+        // Set default date for relative time selector
+        document.getElementById('relative-date-selector').valueAsDate = new Date();
+    </script>
+</body>
+
+</html>
+</body>
+
+</html>

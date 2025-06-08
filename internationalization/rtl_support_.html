@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test & Automation - Right To Left Support</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        /* RTL specific styles */
+        .rtl {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .rtl .ml-4 {
+            margin-right: 16px !important;
+            margin-left: 0 !important;
+        }
+
+        .rtl .mr-2 {
+            margin-right: 0 !important;
+            margin-left: 0.5rem !important;
+        }
+
+        .rtl .mr-3 {
+            margin-right: 0 !important;
+            margin-left: 1rem !important;
+        }
+
+        .rtl .mr-1 {
+            margin-left: 4px !important;
+            margin-right: 0 !important;
+        }
+
+        .rtl .pl-3 {
+            padding-right: 16px !important;
+            padding-left: 0 !important;
+        }
+
+        .rtl .pr-md-3 {
+            padding-left: 16px !important;
+            padding-right: 0 !important;
+        }
+
+        .rtl .float-left {
+            float: right !important;
+        }
+
+        .rtl .float-right {
+            float: left !important;
+        }
+
+        .rtl .ml-auto {
+            margin-left: 0 !important;
+            margin-right: auto !important;
+        }
+
+        /* Toggle button styles */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.toggle-slider {
+            background-color: #2ea44f;
+        }
+
+        input:checked+.toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Bidirectional text examples */
+        .bidi-example {
+            border: 1px solid #d0d7de;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 6px;
+        }
+
+        #rtl-demo-container.rtl {
+            direction: rtl;
+            text-align: right;
+        }
+
+        #rtl-demo-container.rtl .mr-2 {
+            margin-right: 0 !important;
+            margin-left: 0.5rem !important;
+        }
+
+        #rtl-demo-container.rtl .mr-3 {
+            margin-right: 0 !important;
+            margin-left: 1rem !important;
+        }
+
+        /* Ensure bidirectional text input works properly */
+        #bidi-input {
+            resize: vertical;
+            font-family: Arial, sans-serif;
+        }
+
+        /* RTL Support Styles */
+        html[dir="rtl"],
+        .rtl {
+            direction: rtl;
+            text-align: right;
+        }
+        
+        html[dir="rtl"] .mr-2,
+        .rtl .mr-2 {
+            margin-right: 0 !important;
+            margin-left: 0.5rem !important;
+        }
+        
+        html[dir="rtl"] .mr-3,
+        .rtl .mr-3 {
+            margin-right: 0 !important;
+            margin-left: 1rem !important;
+        }
+        
+        html[dir="rtl"] .ml-auto,
+        .rtl .ml-auto {
+            margin-left: 0 !important;
+            margin-right: auto !important;
+        }
+        
+        html[dir="rtl"] .ml-4,
+        .rtl .ml-4 {
+            margin-left: 0 !important;
+            margin-right: 1rem !important;
+        }
+        
+        html[dir="rtl"] .pl-3,
+        .rtl .pl-3 {
+            padding-left: 0 !important;
+            padding-right: 1rem !important;
+        }
+        
+        html[dir="rtl"] .float-left,
+        .rtl .float-left {
+            float: right !important;
+        }
+        
+        html[dir="rtl"] .pr-md-3,
+        .rtl .pr-md-3 {
+            padding-right: 0 !important;
+            padding-left: 1rem !important;
+        }
+        
+        /* Fix for breadcrumbs in RTL mode */
+        html[dir="rtl"] .breadcrumb-item,
+        .rtl .breadcrumb-item {
+            float: right;
+        }
+        
+        html[dir="rtl"] .breadcrumb-item::before,
+        .rtl .breadcrumb-item::before {
+            padding-right: 0;
+            padding-left: 0.5rem;
+        }
+        
+        html[dir="rtl"] .breadcrumb-item::after,
+        .rtl .breadcrumb-item::after {
+            padding-left: 0;
+            padding-right: 0.5rem;
+        }
+    </style>
+</head>
+
+<body id="page-body">
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <div class="d-flex flex-items-center flex-justify-between">
+                <div>
+                    <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+                    <small>
+                        <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with
+                            our
+                            examples.
+                        </p>
+                    </small>
+                </div>
+                <div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="rtl-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="ml-2">RTL Mode</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Right To Left Support</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Right To Left Support</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Right-to-left (RTL) support is essential for websites and applications that serve users
+                                of languages
+                                written from right to left, such as Arabic, Hebrew, Persian, and Urdu. Proper RTL
+                                implementation
+                                ensures content is displayed correctly and provides a natural user experience for these
+                                language users.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of RTL Support:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Text alignment and reading direction from right to left</li>
+                                <li class="ml-4">Mirrored layout and UI components</li>
+                                <li class="ml-4">Properly aligned form elements and input fields</li>
+                                <li class="ml-4">Correct handling of bidirectional text (mixed RTL and LTR content)</li>
+                                <li class="ml-4">Culturally appropriate iconography and visual elements</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How RTL Support Works:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">Set the <code>dir="rtl"</code> attribute on the HTML or specific
+                                    elements</li>
+                                <li class="ml-4">Use CSS properties like <code>direction</code> and
+                                    <code>text-align</code> to control text flow
+                                </li>
+                                <li class="ml-4">Mirror margins, paddings, and positioning (left becomes right, right
+                                    becomes left)</li>
+                                <li class="ml-4">Adjust UI components like navigation menus, dropdowns, and modals</li>
+                                <li class="ml-4">Handle bidirectional text with Unicode control characters when needed
+                                </li>
+                            </ol>
+                            <h3 class="f4 mb-2">Common RTL Implementation Challenges:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Handling mixed content (numbers, Latin text within RTL content)</li>
+                                <li class="ml-4">Properly mirroring icons and directional elements</li>
+                                <li class="ml-4">Ensuring correct text input and cursor behavior</li>
+                                <li class="ml-4">Managing complex layouts and responsive designs</li>
+                                <li class="ml-4">Supporting bidirectional user interfaces</li>
+                            </ul>
+                            <p class="color-fg-muted">
+                                Implementing proper RTL support is crucial for creating truly global applications. It
+                                requires
+                                careful planning, testing, and attention to detail to ensure a seamless experience for
+                                users of
+                                right-to-left languages.
+                            </p>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+                            <div id="rtl-examples">
+                                <h4 class="f5 mb-2">1. RTL Toggle:</h4>
+                                <p class="color-fg-muted mb-2">Click the toggle in the header to switch the entire page
+                                    between LTR and RTL modes.</p>
+
+                                <h4 class="f5 mb-2 mt-4">2. Text Direction Examples:</h4>
+                                <div class="d-flex flex-column">
+                                    <div class="bidi-example">
+                                        <h5 class="f5 mb-2">English (LTR):</h5>
+                                        <p>This is a left-to-right text example. Numbers like 123 and symbols remain the
+                                            same.</p>
+                                    </div>
+                                    <div class="bidi-example rtl">
+                                        <h5 class="f5 mb-2">Arabic (RTL):</h5>
+                                        <p>هذا مثال على النص من اليمين إلى اليسار. الأرقام مثل 123 والرموز تبقى كما هي.
+                                        </p>
+                                    </div>
+                                    <div class="bidi-example">
+                                        <h5 class="f5 mb-2">Mixed Content:</h5>
+                                        <p>English text with <span class="rtl">كلمات عربية</span> mixed in the sentence.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <h4 class="f5 mb-2 mt-4">3. Form Elements in RTL:</h4>
+                                <div class="d-flex mb-3">
+                                    <div class="col-6 pr-2">
+                                        <h5 class="f5 mb-2">LTR Form:</h5>
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="ltr-name">Name:</label>
+                                                <input type="text" id="ltr-name" class="form-control"
+                                                    placeholder="Enter name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ltr-email">Email:</label>
+                                                <input type="email" id="ltr-email" class="form-control"
+                                                    placeholder="Enter email">
+                                            </div>
+                                            <button type="button" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-6 pl-2">
+                                        <h5 class="f5 mb-2">RTL Form:</h5>
+                                        <form class="rtl">
+                                            <div class="form-group">
+                                                <label for="rtl-name">الاسم:</label>
+                                                <input type="text" id="rtl-name" class="form-control"
+                                                    placeholder="أدخل الاسم">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="rtl-email">البريد الإلكتروني:</label>
+                                                <input type="email" id="rtl-email" class="form-control"
+                                                    placeholder="أدخل البريد الإلكتروني">
+                                            </div>
+                                            <button type="button" class="btn btn-primary">إرسال</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <h4 class="f5 mb-2 mt-4">4. Navigation and Menu Direction:</h4>
+                                <div class="d-flex mb-3">
+                                    <div class="col-6 pr-2">
+                                        <h5 class="f5 mb-2">LTR Navigation:</h5>
+                                        <nav class="UnderlineNav">
+                                            <div class="UnderlineNav-body">
+                                                <a class="UnderlineNav-item" href="#" aria-current="page">Home</a>
+                                                <a class="UnderlineNav-item" href="#">Products</a>
+                                                <a class="UnderlineNav-item" href="#">Services</a>
+                                                <a class="UnderlineNav-item" href="#">Contact</a>
+                                            </div>
+                                        </nav>
+                                    </div>
+                                    <div class="col-6 pl-2">
+                                        <h5 class="f5 mb-2">RTL Navigation:</h5>
+                                        <nav class="UnderlineNav rtl">
+                                            <div class="UnderlineNav-body">
+                                                <a class="UnderlineNav-item" href="#" aria-current="page">الرئيسية</a>
+                                                <a class="UnderlineNav-item" href="#">المنتجات</a>
+                                                <a class="UnderlineNav-item" href="#">الخدمات</a>
+                                                <a class="UnderlineNav-item" href="#">اتصل بنا</a>
+                                            </div>
+                                        </nav>
+                                    </div>
+                                </div>
+
+                                <h4 class="f5 mb-2 mt-4">5. Icon Direction Testing:</h4>
+                                <div class="d-flex mb-3">
+                                    <div class="col-6 pr-2">
+                                        <h5 class="f5 mb-2">LTR Icons:</h5>
+                                        <button class="btn mr-2">
+                                            <svg class="octicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                                width="16" height="16">
+                                                <path
+                                                    d="M7.78 12.53a.75.75 0 0 1-1.06 0L2.47 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 1.06L4.81 7h7.44a.75.75 0 0 1 0 1.5H4.81l2.97 2.97a.75.75 0 0 1 0 1.06Z">
+                                                </path>
+                                            </svg>
+                                            Previous
+                                        </button>
+                                        <button class="btn">
+                                            Next
+                                            <svg class="octicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                                width="16" height="16">
+                                                <path
+                                                    d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06l4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="col-6 pl-2">
+                                        <h5 class="f5 mb-2">RTL Icons:</h5>
+                                        <button class="btn mr-2 rtl">
+                                            <svg class="octicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                                width="16" height="16">
+                                                <path
+                                                    d="M8.22 12.53a.75.75 0 0 1-1.06 0L2.91 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 1.06L5.25 7h7.5a.75.75 0 0 1 0 1.5h-7.5l2.97 2.97a.75.75 0 0 1 0 1.06Z">
+                                                </path>
+                                            </svg>
+                                            السابق
+                                        </button>
+                                        <button class="btn rtl">
+                                            التالي
+                                            <svg class="octicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                                width="16" height="16">
+                                                <path
+                                                    d="M7.78 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L10.75 9h-7.5a.75.75 0 0 1 0-1.5h7.5L7.78 4.03a.75.75 0 0 1 0-1.06Z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <h4 class="f5 mb-2 mt-4">6. Bidirectional Text Input:</h4>
+                                <div class="form-group">
+                                    <label for="bidi-input">Enter mixed text (English and Arabic):</label>
+                                    <textarea id="bidi-input" class="form-control mb-2" rows="3"
+                                        placeholder="Type both English and Arabic text here..."></textarea>
+                                    <div class="d-flex">
+                                        <button id="set-ltr" class="btn btn-sm mr-2">Set LTR</button>
+                                        <button id="set-rtl" class="btn btn-sm mr-2">Set RTL</button>
+                                        <button id="set-auto" class="btn btn-sm">Set Auto</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Basic RTL
+                                            Layout</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify text aligns to the right in RTL mode
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Confirm layout elements flow from right to left
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check margins and paddings are properly flipped
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Form Elements</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Ensure input fields align properly with cursor starting on the right
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify form labels appear on the right side of inputs
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check validation messages appear in the correct position
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Navigation
+                                            Elements</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Confirm menu items order from right to left
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 1.06z">
+                                                    </path>
+                                                </svg>
+                                                Verify dropdown menus open from the right side
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check breadcrumb navigation flows right to left
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Icons and
+                                            Directional Elements</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Confirm directional icons are mirrored appropriately
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify pagination controls have reversed order
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check arrow buttons point in the correct direction
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Bidirectional
+                                            Text</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Confirm mixed LTR and RTL text rendering
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify numbers and special characters in RTL context
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify bidirectional override controls
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 6: RTL Mode
+                                            Switching</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify dynamic switching between LTR and RTL
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify persistence of RTL preference
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify automatic language detection
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 7: Responsive RTL
+                                            Design</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify RTL layout on mobile devices
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify responsive menu behavior in RTL mode
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify touch gestures in RTL context
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block mt-3">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // View More Scenarios functionality
+            const viewMoreBtn = document.getElementById('view-more-scenarios');
+            if (viewMoreBtn) {
+                viewMoreBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const additionalScenarios = document.querySelectorAll('.additional-scenario');
+                    additionalScenarios.forEach(scenario => {
+                        scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+                    });
+                    this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+                });
+            }
+
+            // RTL Toggle functionality - Updated to affect the entire page
+            const toggleRtlBtn = document.getElementById('rtl-toggle');
+            if (toggleRtlBtn) {
+                toggleRtlBtn.addEventListener('click', function () {
+                    // Get both the demo container and the entire HTML document
+                    const demoContainer = document.getElementById('rtl-demo-container');
+                    const htmlElement = document.documentElement; // This is the <html> element
+
+                    if (htmlElement.dir === 'rtl') {
+                        // Switch to LTR
+                        htmlElement.dir = 'ltr';
+                        if (demoContainer) demoContainer.classList.remove('rtl');
+                        this.textContent = 'Switch to RTL';
+                        const directionIndicator = document.getElementById('direction-indicator');
+                        if (directionIndicator) {
+                            directionIndicator.textContent = 'Current Direction: LTR (Left to Right)';
+                        }
+
+                        // Remove RTL class from body and other containers if needed
+                        document.body.classList.remove('rtl');
+                        document.querySelectorAll('.content-section').forEach(el => {
+                            el.classList.remove('rtl');
+                        });
+                    } else {
+                        // Switch to RTL
+                        htmlElement.dir = 'rtl';
+                        if (demoContainer) demoContainer.classList.add('rtl');
+                        this.textContent = 'Switch to LTR';
+                        const directionIndicator = document.getElementById('direction-indicator');
+                        if (directionIndicator) {
+                            directionIndicator.textContent = 'Current Direction: RTL (Right to Left)';
+                        }
+
+                        // Add RTL class to body and other containers if needed
+                        document.body.classList.add('rtl');
+                        document.querySelectorAll('.content-section').forEach(el => {
+                            el.classList.add('rtl');
+                        });
+                    }
+                });
+            }
+
+            // Bidirectional text input controls
+            const setLtrBtn = document.getElementById('set-ltr');
+            const setRtlBtn = document.getElementById('set-rtl');
+            const setAutoBtn = document.getElementById('set-auto');
+            const bidiInput = document.getElementById('bidi-input');
+
+            if (setLtrBtn && bidiInput) {
+                setLtrBtn.addEventListener('click', function () {
+                    bidiInput.style.direction = 'ltr';
+                });
+            }
+
+            if (setRtlBtn && bidiInput) {
+                setRtlBtn.addEventListener('click', function () {
+                    bidiInput.style.direction = 'rtl';
+                });
+            }
+
+            if (setAutoBtn && bidiInput) {
+                setAutoBtn.addEventListener('click', function () {
+                    bidiInput.style.direction = 'auto';
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
