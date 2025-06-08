@@ -43,6 +43,8 @@
         <div class="container-xl p-responsive py-2">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#browser-storage" class="color-fg-accent">Browser
+                        Storages</a></li>
                 <li class="breadcrumb-item" aria-current="page">Local Storage</li>
             </ol>
         </div>
@@ -137,34 +139,34 @@ localStorage.clear();</code></pre>
 
                             <script>
                                 function testPerformance() {
-                                        const startTime = performance.now();
-                                        const testSize = 1000; // Test 1000 items
-                                        let addedCount = 0;
-                                        let removedCount = 0;
+                                    const startTime = performance.now();
+                                    const testSize = 1000; // Test 1000 items
+                                    let addedCount = 0;
+                                    let removedCount = 0;
 
-                                        // Add items
-                                        for (let i = 0; i < testSize; i++) {
-                                            try {
-                                                localStorage.setItem(`perfTest${i}`, `value${i}`);
-                                                addedCount++;
-                                            } catch (e) {
-                                                console.error("Error adding item:", e);
-                                                break;
-                                            }
+                                    // Add items
+                                    for (let i = 0; i < testSize; i++) {
+                                        try {
+                                            localStorage.setItem(`perfTest${i}`, `value${i}`);
+                                            addedCount++;
+                                        } catch (e) {
+                                            console.error("Error adding item:", e);
+                                            break;
                                         }
+                                    }
 
-                                        // Remove items
-                                        for (let i = 0; i < testSize; i++) {
-                                            if (localStorage.getItem(`perfTest${i}`) !== null) {
-                                                localStorage.removeItem(`perfTest${i}`);
-                                                removedCount++;
-                                            }
+                                    // Remove items
+                                    for (let i = 0; i < testSize; i++) {
+                                        if (localStorage.getItem(`perfTest${i}`) !== null) {
+                                            localStorage.removeItem(`perfTest${i}`);
+                                            removedCount++;
                                         }
+                                    }
 
-                                        const endTime = performance.now();
-                                        const duration = endTime - startTime;
+                                    const endTime = performance.now();
+                                    const duration = endTime - startTime;
 
-                                        const resultMessage = `
+                                    const resultMessage = `
         <ul class="list-style-none">
             <li class="mb-1"><strong>Performance test completed:</strong></li>
             <li class="mb-1">⏱️ Time taken: ${duration.toFixed(2)} milliseconds</li>
@@ -174,45 +176,45 @@ localStorage.clear();</code></pre>
         </ul>
     `;
 
-                                        updateResult(resultMessage);
-                                        updateItemList();
-                                    }
+                                    updateResult(resultMessage);
+                                    updateItemList();
+                                }
 
-                                    function updateResult(message) {
-                                        const resultElement = document.getElementById('result');
-                                        resultElement.innerHTML = message;
-                                    }
+                                function updateResult(message) {
+                                    const resultElement = document.getElementById('result');
+                                    resultElement.innerHTML = message;
+                                }
 
 
-                                    function testDataPersistence() {
-                                            const testKey = 'persistenceTestKey';
-                                            const testValue = 'This value should persist';
+                                function testDataPersistence() {
+                                    const testKey = 'persistenceTestKey';
+                                    const testValue = 'This value should persist';
 
-                                            // Set the test item
-                                            localStorage.setItem(testKey, testValue);
+                                    // Set the test item
+                                    localStorage.setItem(testKey, testValue);
 
-                                            // Prompt the user to refresh the page
-                                            const message = `
+                                    // Prompt the user to refresh the page
+                                    const message = `
         <p>A test item has been added to Local Storage.</p>
         <p>Please refresh the page to test data persistence.</p>
         <p>After refreshing, click 'Test Data Persistence' again to check if the data persisted.</p>
     `;
 
-                                            // Check if the item already exists (i.e., page has been refreshed)
-                                            if (localStorage.getItem(testKey) === testValue) {
-                                                const persistedValue = localStorage.getItem(testKey);
-                                                updateResult(`
+                                    // Check if the item already exists (i.e., page has been refreshed)
+                                    if (localStorage.getItem(testKey) === testValue) {
+                                        const persistedValue = localStorage.getItem(testKey);
+                                        updateResult(`
             <p>Data persistence test successful!</p>
             <p>The value "${persistedValue}" was retrieved after page refresh.</p>
         `);
-                                                // Clean up the test item
-                                                localStorage.removeItem(testKey);
-                                            } else {
-                                                updateResult(message);
-                                            }
+                                        // Clean up the test item
+                                        localStorage.removeItem(testKey);
+                                    } else {
+                                        updateResult(message);
+                                    }
 
-                                            updateItemList();
-                                        }
+                                    updateItemList();
+                                }
 
                                 function updateExistingItem() {
                                     const key = document.getElementById('keyInput').value;
@@ -347,7 +349,7 @@ localStorage.clear();</code></pre>
                                     showStoredItems();
                                 }
 
-                                
+
 
                                 function showSuccessBanner() {
                                     const banner = document.getElementById('successBanner');
