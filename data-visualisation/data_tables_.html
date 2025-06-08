@@ -23,7 +23,6 @@
             flex-shrink: 0;
         }
 
-        /* Mobil görünüm için ek stiller */
         @media (max-width: 768px) {
             .table-fixed {
                 font-size: 14px;
@@ -48,8 +47,13 @@
 <body>
     <!-- Header -->
     <header class="color-bg-subtle border-bottom color-border-muted">
-        <div class="container-xl p-responsive py-3">
-            <h1 class="f2 color-fg-default">Data Tables</h1>
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
         </div>
     </header>
 
@@ -58,6 +62,8 @@
         <div class="container-xl p-responsive py-2">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#data-visualisation" class="color-fg-accent">Data
+                        Visualisation</a></li>
                 <li class="breadcrumb-item" aria-current="page">Data Tables</li>
             </ol>
         </div>
@@ -473,12 +479,7 @@
                 renderTable();
             });
         });
-
-        // İlk yükleme
         renderTable();
-
-
-
     </script>
 </body>
 
