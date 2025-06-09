@@ -1,0 +1,862 @@
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test &amp; Automation - Dropdowns</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet">
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .dropdown-container {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+        }
+
+        .dropdown-container h4 {
+            margin-bottom: 1rem;
+        }
+
+        .custom-select {
+            position: relative;
+            display: inline-block;
+        }
+
+        .custom-select-toggle {
+            padding: 8px 12px;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            background-color: #f6f8fa;
+            cursor: pointer;
+            min-width: 150px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .custom-select-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 100;
+            min-width: 150px;
+            padding: 4px 0;
+            margin-top: 4px;
+            background-color: #fff;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            box-shadow: 0 1px 5px rgba(27, 31, 35, 0.15);
+            display: none;
+        }
+
+        .custom-select-menu.show {
+            display: block;
+        }
+
+        .custom-select-item {
+            padding: 6px 12px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            text-align: left;
+            border: none;
+            background: none;
+        }
+
+        .custom-select-item:hover {
+            background-color: #f6f8fa;
+        }
+
+        .result-display {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border: 1px dashed #d0d7de;
+            border-radius: 6px;
+            min-height: 2rem;
+        }
+
+        .searchable-dropdown-input {
+            padding: 6px 12px;
+            width: 100%;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            margin-bottom: 4px;
+        }
+
+        .multi-select-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .multi-select-item input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .selected-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .selected-tag {
+            background-color: #ddf4ff;
+            color: #0969da;
+            border-radius: 2em;
+            padding: 2px 10px;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .selected-tag .remove-tag {
+            margin-left: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .dropdown-group {
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 4px;
+            margin-bottom: 4px;
+            font-weight: bold;
+            color: #57606a;
+            padding-left: 12px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test &amp; Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#forms-and-inputs" class="color-fg-accent">Forms and
+                        Input Operations</a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">Dropdowns</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Dropdowns</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Dropdowns are UI components that allow users to select one or multiple options from a
+                                list
+                                that appears when triggered. They help save screen space by hiding options until needed
+                                and are commonly used in forms, navigation menus, and filtering interfaces.
+                            </p>
+                            <h3 class="f4 mb-2">Key Types of Dropdowns:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Basic select dropdowns (native HTML select)</li>
+                                <li class="ml-4">Custom styled dropdowns</li>
+                                <li class="ml-4">Searchable dropdowns with filtering</li>
+                                <li class="ml-4">Multi-select dropdowns</li>
+                                <li class="ml-4">Grouped option dropdowns</li>
+                                <li class="ml-4">Cascading/dependent dropdowns</li>
+                            </ul>
+                            <h3 class="f4 mb-2">Common Dropdown Features:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">Toggle functionality to show/hide options</li>
+                                <li class="ml-4">Keyboard navigation support (arrow keys, Enter, Escape)</li>
+                                <li class="ml-4">Search/filter capabilities for large option lists</li>
+                                <li class="ml-4">Option grouping for better organization</li>
+                                <li class="ml-4">Custom styling and animations</li>
+                            </ol>
+                            <h3 class="f4 mb-2">Accessibility Considerations:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Proper ARIA attributes (aria-expanded, aria-haspopup)</li>
+                                <li class="ml-4">Keyboard navigation support</li>
+                                <li class="ml-4">Focus management</li>
+                                <li class="ml-4">Screen reader compatibility</li>
+                            </ul>
+                            <p class="color-fg-muted">
+                                Dropdowns are versatile UI components that can enhance user experience by providing
+                                organized selection interfaces while conserving screen space. Testing dropdowns
+                                thoroughly
+                                is essential to ensure they function correctly across different devices and for all
+                                users,
+                                including those using assistive technologies.
+                            </p>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+
+                            <div class="dropdown-container">
+                                <h4 class="f5 mb-2">1. Basic Dropdown:</h4>
+                                <select id="basic-dropdown" class="form-select">
+                                    <option value="">Select an option</option>
+                                    <option value="option1">Option 1</option>
+                                    <option value="option2">Option 2</option>
+                                    <option value="option3">Option 3</option>
+                                </select>
+                                <div class="result-display" id="basic-dropdown-result">
+                                    Selected value will appear here
+                                </div>
+                            </div>
+
+                            <div class="dropdown-container">
+                                <h4 class="f5 mb-2">2. Searchable Dropdown:</h4>
+                                <div class="custom-select" id="searchable-dropdown">
+                                    <button class="custom-select-toggle" aria-haspopup="true" aria-expanded="false">
+                                        <span class="selected-text">Select a country</span>
+                                        <svg class="octicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                            width="16" height="16">
+                                            <path fill-rule="evenodd"
+                                                d="M12.78 6.22a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06 0L3.22 7.28a.75.75 0 011.06-1.06L8 9.94l3.72-3.72a.75.75 0 011.06 0z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                    <div class="custom-select-menu" role="menu">
+                                        <input type="text" class="searchable-dropdown-input"
+                                            placeholder="Search countries...">
+                                        <button class="custom-select-item" data-value="us">United States</button>
+                                        <button class="custom-select-item" data-value="ca">Canada</button>
+                                        <button class="custom-select-item" data-value="uk">United Kingdom</button>
+                                        <button class="custom-select-item" data-value="fr">France</button>
+                                        <button class="custom-select-item" data-value="de">Germany</button>
+                                        <button class="custom-select-item" data-value="jp">Japan</button>
+                                        <button class="custom-select-item" data-value="au">Australia</button>
+                                        <button class="custom-select-item" data-value="br">Brazil</button>
+                                        <button class="custom-select-item" data-value="in">India</button>
+                                        <button class="custom-select-item" data-value="cn">China</button>
+                                    </div>
+                                </div>
+                                <div class="result-display" id="searchable-dropdown-result">
+                                    Selected value will appear here
+                                </div>
+                            </div>
+
+                            <div class="dropdown-container">
+                                <h4 class="f5 mb-2">3. Multi-Select Dropdown:</h4>
+                                <div class="custom-select" id="multi-select-dropdown">
+                                    <button class="custom-select-toggle" aria-haspopup="true" aria-expanded="false">
+                                        <span class="selected-text">Select programming languages</span>
+                                        <svg class="octicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                            width="16" height="16">
+                                            <path fill-rule="evenodd"
+                                                d="M12.78 6.22a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06 0L3.22 7.28a.75.75 0 011.06-1.06L8 9.94l3.72-3.72a.75.75 0 011.06 0z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                    <div class="custom-select-menu" role="menu">
+                                        <div class="multi-select-item">
+                                            <input type="checkbox" id="lang-js" value="javascript">
+                                            <label for="lang-js">JavaScript</label>
+                                        </div>
+                                        <div class="multi-select-item">
+                                            <input type="checkbox" id="lang-py" value="python">
+                                            <label for="lang-py">Python</label>
+                                        </div>
+                                        <div class="multi-select-item">
+                                            <input type="checkbox" id="lang-java" value="java">
+                                            <label for="lang-java">Java</label>
+                                        </div>
+                                        <div class="multi-select-item">
+                                            <input type="checkbox" id="lang-csharp" value="csharp">
+                                            <label for="lang-csharp">C#</label>
+                                        </div>
+                                        <div class="multi-select-item">
+                                            <input type="checkbox" id="lang-ruby" value="ruby">
+                                            <label for="lang-ruby">Ruby</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="selected-tags" id="selected-languages"></div>
+                                <div class="result-display" id="multi-select-dropdown-result">
+                                    Selected values will appear here
+                                </div>
+                            </div>
+
+                            <div class="dropdown-container">
+                                <h4 class="f5 mb-2">4. Grouped Options Dropdown:</h4>
+                                <div class="custom-select" id="grouped-dropdown">
+                                    <button class="custom-select-toggle" aria-haspopup="true" aria-expanded="false">
+                                        <span class="selected-text">Select a vehicle</span>
+                                        <svg class="octicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                            width="16" height="16">
+                                            <path fill-rule="evenodd"
+                                                d="M12.78 6.22a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06 0L3.22 7.28a.75.75 0 011.06-1.06L8 9.94l3.72-3.72a.75.75 0 011.06 0z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                    <div class="custom-select-menu" role="menu">
+                                        <div class="dropdown-group">Cars</div>
+                                        <button class="custom-select-item" data-value="sedan">Sedan</button>
+                                        <button class="custom-select-item" data-value="suv">SUV</button>
+                                        <button class="custom-select-item" data-value="coupe">Coupe</button>
+
+                                        <div class="dropdown-group">Motorcycles</div>
+                                        <button class="custom-select-item" data-value="cruiser">Cruiser</button>
+                                        <button class="custom-select-item" data-value="sport">Sport</button>
+
+                                        <div class="dropdown-group">Bicycles</div>
+                                        <button class="custom-select-item" data-value="mountain">Mountain</button>
+                                        <button class="custom-select-item" data-value="road">Road</button>
+                                    </div>
+                                </div>
+                                <div class="result-display" id="grouped-dropdown-result">
+                                    Selected value will appear here
+                                </div>
+                            </div>
+
+                            <div class="dropdown-container">
+                                <h4 class="f5 mb-2">5. Cascading Dropdowns:</h4>
+                                <div class="d-flex flex-column flex-md-row">
+                                    <div class="mr-md-3 mb-3 mb-md-0">
+                                        <label for="continent-dropdown" class="d-block mb-1">Continent:</label>
+                                        <select id="continent-dropdown" class="form-select">
+                                            <option value="">Select a continent</option>
+                                            <option value="north-america">North America</option>
+                                            <option value="europe">Europe</option>
+                                            <option value="asia">Asia</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="country-dropdown" class="d-block mb-1">Country:</label>
+                                        <select id="country-dropdown" class="form-select" disabled>
+                                            <option value="">Select a country</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="result-display" id="cascading-dropdown-result">
+                                    Selected values will appear here
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios &amp; Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Basic Dropdown
+                                            Functionality</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify basic dropdown opens on click
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify selection updates the result display
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Custom Styled
+                                            Dropdown</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify custom dropdown styling is applied correctly
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify selection updates both dropdown text and result display
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Searchable
+                                            Dropdown</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify search filters dropdown options correctly
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify selection after search works correctly
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Multi-Select
+                                            Dropdown</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify multiple items can be selected
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify selected items display as tags
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Grouped
+                                            Dropdown</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify group headers display correctly
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify selection from groups works correctly
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 6: Cascading
+                                            Dropdowns</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify second dropdown populates based on first selection
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify changing first dropdown resets second dropdown
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - ©
+                    2025 Practice Test &amp; Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.custom-select').forEach(dropdown => {
+                const toggle = dropdown.querySelector('.custom-select-toggle');
+                const menu = dropdown.querySelector('.custom-select-menu');
+
+                if (toggle) {
+                    toggle.addEventListener('click', function () {
+                        const expanded = this.getAttribute('aria-expanded') === 'true';
+                        this.setAttribute('aria-expanded', !expanded);
+                        menu.style.display = expanded ? 'none' : 'block';
+
+                        document.querySelectorAll('.custom-select-toggle').forEach(otherToggle => {
+                            if (otherToggle !== this) {
+                                otherToggle.setAttribute('aria-expanded', 'false');
+                                otherToggle.closest('.custom-select').querySelector('.custom-select-menu').style.display = 'none';
+                            }
+                        });
+                    });
+                }
+
+                document.addEventListener('click', function (e) {
+                    if (!dropdown.contains(e.target)) {
+                        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+                        if (menu) menu.style.display = 'none';
+                    }
+                });
+            });
+
+            const basicDropdown = document.getElementById('basic-dropdown');
+            const basicDropdownResult = document.getElementById('basic-dropdown-result');
+
+            if (basicDropdown) {
+                basicDropdown.addEventListener('change', function () {
+                    const selectedOption = this.options[this.selectedIndex];
+                    const value = selectedOption.value;
+                    const text = selectedOption.text;
+
+                    if (basicDropdownResult) {
+                        basicDropdownResult.textContent = `Selected: ${text} (value: ${value})`;
+                        basicDropdownResult.className = 'result-display color-bg-success-subtle color-fg-success p-2 rounded-2 mt-2';
+                        basicDropdownResult.style.display = 'block';
+                    } else {
+                        console.error('Result display element not found: basic-dropdown-result');
+                    }
+                });
+            } else {
+                console.error('Basic dropdown element not found: basic-dropdown');
+            }
+
+
+            const styledNativeDropdown = document.getElementById('styled-native-dropdown');
+            if (styledNativeDropdown) {
+                styledNativeDropdown.addEventListener('change', function () {
+                    const selectedOption = this.options[this.selectedIndex];
+                    const resultElement = document.getElementById('styled-native-dropdown-result');
+
+                    if (resultElement) {
+                        resultElement.textContent = `Selected: ${selectedOption.text} (value: ${selectedOption.value})`;
+                        resultElement.className = 'result-display color-bg-success-subtle color-fg-success p-2 rounded-2 mt-2';
+                        resultElement.style.display = 'block';
+                    }
+                });
+            }
+
+            const searchableDropdown = document.getElementById('searchable-dropdown');
+            if (searchableDropdown) {
+                const searchInput = searchableDropdown.querySelector('.searchable-dropdown-input');
+                const searchableItems = searchableDropdown.querySelectorAll('.custom-select-item');
+                const resultElement = document.getElementById('searchable-dropdown-result');
+
+                if (searchInput) {
+                    searchInput.addEventListener('input', function () {
+                        const searchTerm = this.value.toLowerCase();
+
+                        searchableItems.forEach(item => {
+                            const text = item.textContent.toLowerCase();
+                            item.style.display = text.includes(searchTerm) ? 'block' : 'none';
+                        });
+                    });
+                }
+
+                searchableItems.forEach(item => {
+                    item.addEventListener('click', function () {
+                        const value = this.getAttribute('data-value');
+                        const text = this.textContent.trim();
+                        const dropdown = this.closest('.custom-select');
+                        const toggle = dropdown.querySelector('.custom-select-toggle');
+                        const selectedText = toggle.querySelector('.selected-text');
+                        const menu = dropdown.querySelector('.custom-select-menu');
+
+                        selectedText.textContent = text;
+                        toggle.setAttribute('aria-expanded', 'false');
+                        menu.style.display = 'none';
+
+                        if (searchInput) {
+                            searchInput.value = '';
+                        }
+
+                        if (resultElement) {
+                            resultElement.textContent = `Selected: ${text} (value: ${value})`;
+                            resultElement.className = 'result-display color-bg-success-subtle color-fg-success p-2 rounded-2 mt-2';
+                            resultElement.style.display = 'block';
+                        }
+
+                        searchableItems.forEach(item => {
+                            item.style.display = 'block';
+                        });
+                    });
+                });
+            }
+
+            const multiSelectDropdown = document.getElementById('multi-select-dropdown');
+            if (multiSelectDropdown) {
+                const multiSelectItems = multiSelectDropdown.querySelectorAll('.multi-select-item input');
+                const selectedLanguages = document.getElementById('selected-languages');
+                const multiSelectResult = document.getElementById('multi-select-dropdown-result');
+
+                multiSelectItems.forEach(checkbox => {
+                    checkbox.addEventListener('change', function () {
+                        updateMultiSelectDisplay();
+                    });
+                });
+
+                function updateMultiSelectDisplay() {
+                    const selectedValues = [];
+
+                    if (selectedLanguages) {
+                        selectedLanguages.innerHTML = '';
+                    }
+
+                    multiSelectItems.forEach(checkbox => {
+                        if (checkbox.checked) {
+                            const value = checkbox.value;
+                            const text = checkbox.nextElementSibling.textContent.trim();
+                            selectedValues.push({ value, text });
+
+                            if (selectedLanguages) {
+                                const tag = document.createElement('span');
+                                tag.className = 'selected-tag';
+                                tag.innerHTML = `${text}`;
+                                selectedLanguages.appendChild(tag);
+                            }
+                        }
+                    });
+
+                    if (multiSelectResult) {
+                        if (selectedValues.length > 0) {
+                            multiSelectResult.textContent = `Selected: ${selectedValues.map(v => v.text).join(', ')}`;
+                        } else {
+                            multiSelectResult.textContent = 'No languages selected';
+                        }
+                        multiSelectResult.style.display = 'block';
+                    }
+
+                    document.querySelectorAll('.tag-remove').forEach(btn => {
+                        btn.addEventListener('click', function () {
+                            const value = this.getAttribute('data-value');
+                            const checkbox = document.getElementById(`lang-${value}`);
+                            if (checkbox) {
+                                checkbox.checked = false;
+                                updateMultiSelectDisplay();
+                            }
+                        });
+                    });
+                }
+            }
+
+            const groupedDropdown = document.getElementById('grouped-dropdown');
+            if (groupedDropdown) {
+                const groupedItems = groupedDropdown.querySelectorAll('.custom-select-item');
+                const resultElement = document.getElementById('grouped-dropdown-result');
+
+                groupedItems.forEach(item => {
+                    item.addEventListener('click', function () {
+                        const value = this.getAttribute('data-value');
+                        const text = this.textContent.trim();
+                        const dropdown = this.closest('.custom-select');
+                        const toggle = dropdown.querySelector('.custom-select-toggle');
+                        const selectedText = toggle.querySelector('.selected-text');
+                        const menu = dropdown.querySelector('.custom-select-menu');
+
+                        selectedText.textContent = text;
+                        toggle.setAttribute('aria-expanded', 'false');
+                        menu.style.display = 'none';
+
+                        let group = 'Unknown';
+                        let prevElement = this.previousElementSibling;
+                        while (prevElement) {
+                            if (prevElement.classList.contains('dropdown-group')) {
+                                group = prevElement.textContent.trim();
+                                break;
+                            }
+                            prevElement = prevElement.previousElementSibling;
+                        }
+
+                        if (resultElement) {
+                            resultElement.textContent = `Selected: ${text} (value: ${value}) from group: ${group}`;
+                            resultElement.className = 'result-display color-bg-success-subtle color-fg-success p-2 rounded-2 mt-2';
+                            resultElement.style.display = 'block';
+                        }
+                    });
+                });
+            }
+
+            const continentDropdown = document.getElementById('continent-dropdown');
+            const countryDropdown = document.getElementById('country-dropdown');
+            const cascadingResult = document.getElementById('cascading-dropdown-result');
+
+            const countryData = {
+                'north-america': [
+                    { value: 'us', text: 'United States' },
+                    { value: 'ca', text: 'Canada' },
+                    { value: 'mx', text: 'Mexico' }
+                ],
+                'europe': [
+                    { value: 'uk', text: 'United Kingdom' },
+                    { value: 'fr', text: 'France' },
+                    { value: 'de', text: 'Germany' },
+                    { value: 'es', text: 'Spain' }
+                ],
+                'asia': [
+                    { value: 'jp', text: 'Japan' },
+                    { value: 'cn', text: 'China' },
+                    { value: 'in', text: 'India' },
+                    { value: 'kr', text: 'South Korea' }
+                ]
+            };
+
+            if (continentDropdown && countryDropdown) {
+                continentDropdown.addEventListener('change', function () {
+                    const selectedContinent = this.value;
+
+                    countryDropdown.innerHTML = '<option value="">Select a country</option>';
+
+                    if (selectedContinent) {
+                        countryDropdown.disabled = false;
+
+                        const countries = countryData[selectedContinent] || [];
+                        countries.forEach(country => {
+                            const option = document.createElement('option');
+                            option.value = country.value;
+                            option.textContent = country.text;
+                            countryDropdown.appendChild(option);
+                        });
+
+                        if (cascadingResult) {
+                            cascadingResult.textContent = `Selected continent: ${this.options[this.selectedIndex].text}`;
+                            cascadingResult.style.display = 'block';
+                        }
+                    } else {
+                        countryDropdown.disabled = true;
+
+                        if (cascadingResult) {
+                            cascadingResult.textContent = 'No selection made';
+                            cascadingResult.style.display = 'block';
+                        }
+                    }
+                });
+                countryDropdown.addEventListener('change', function () {
+                    if (this.value && cascadingResult) {
+                        const continentText = continentDropdown.options[continentDropdown.selectedIndex].text;
+                        const countryText = this.options[this.selectedIndex].text;
+                        cascadingResult.textContent = `Selected: ${countryText} in ${continentText}`;
+                        cascadingResult.className = 'result-display color-bg-success-subtle color-fg-success p-2 rounded-2 mt-2';
+                        cascadingResult.style.display = 'block';
+                    } else if (cascadingResult) {
+                        const continentText = continentDropdown.options[continentDropdown.selectedIndex].text;
+                        cascadingResult.textContent = `Selected continent: ${continentText}`;
+                        cascadingResult.className = 'result-display color-bg-success-subtle color-fg-success p-2 rounded-2 mt-2';
+                        cascadingResult.style.display = 'block';
+                    }
+                });
+            }
+
+            function checkAllResults() {
+                const resultElements = [
+                    'basic-dropdown-result',
+                    'searchable-dropdown-result',
+                    'multi-select-dropdown-result',
+                    'grouped-dropdown-result',
+                    'cascading-dropdown-result'
+                ];
+
+                resultElements.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element && !element.textContent) {
+                        element.textContent = 'There is no any selection made yet. Please select an option.';
+                        element.style.display = 'block';
+                    }
+                });
+            }
+
+            checkAllResults();
+        });
+    </script>
+</body>
+
+</html>

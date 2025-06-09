@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test &amp; Automation - Checkbox Usage</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet">
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        /* Custom checkbox styles */
+        .custom-checkbox-container {
+            margin-bottom: 16px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.toggle-slider {
+            background-color: #2ea44f;
+        }
+
+        input:checked+.toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        .checkbox-group {
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .indeterminate-checkbox {
+            position: relative;
+        }
+
+        .indeterminate-checkbox::after {
+            content: "-";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .checkbox-tile {
+            display: flex;
+            align-items: center;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-tile:hover {
+            background-color: #f6f8fa;
+        }
+
+        .checkbox-tile.selected {
+            background-color: #ddf4ff;
+            border-color: #54aeff;
+        }
+
+        .checkbox-tile input[type="checkbox"] {
+            margin-right: 12px;
+        }
+
+        .form-validation-message {
+            color: #cf222e;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .form-validation-message.visible {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test &amp; Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#forms-and-inputs" class="color-fg-accent">Forms and
+                        Inputs</a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">Checkbox Usage</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Checkbox Usage</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Checkboxes are form elements that allow users to select multiple options from a set or
+                                toggle a single option on/off.
+                                They are essential for collecting user preferences, settings, and agreements in web
+                                forms.
+                                Testing checkbox functionality is crucial for ensuring proper form validation and data
+                                collection.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Checkboxes:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Allow multiple selections from a group of options</li>
+                                <li class="ml-4">Can be used as standalone toggles for binary options</li>
+                                <li class="ml-4">Support three states: checked, unchecked, and indeterminate</li>
+                                <li class="ml-4">Can be styled and customized for better user experience</li>
+                                <li class="ml-4">Accessible via keyboard navigation and screen readers</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How Checkboxes Work:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">Checkboxes are created using the
+                                    <code>&lt;input type="checkbox"&gt;</code> HTML element.
+                                </li>
+                                <li class="ml-4">Each checkbox has a binary state (checked or unchecked) by default.
+                                </li>
+                                <li class="ml-4">The indeterminate state can be set via JavaScript but not HTML.</li>
+                                <li class="ml-4">When a form is submitted, only checked checkboxes send their values.
+                                </li>
+                                <li class="ml-4">Groups of checkboxes can share the same name attribute to create
+                                    related sets.</li>
+                            </ol>
+                            <h3 class="f4 mb-2">Common Checkbox Implementations:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Standard checkboxes for multiple selections</li>
+                                <li class="ml-4">Toggle switches for on/off settings</li>
+                                <li class="ml-4">Checkbox tiles for visual selection options</li>
+                                <li class="ml-4">"Select all" functionality with parent-child relationships</li>
+                                <li class="ml-4">Required checkboxes for terms and conditions acceptance</li>
+                            </ul>
+                            <p class="color-fg-muted">
+                                Testing checkbox functionality involves verifying selection states, form submission
+                                behavior,
+                                validation rules, and accessibility features. The examples below demonstrate various
+                                checkbox
+                                implementations and common testing scenarios.
+                            </p>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+
+                            <div class="mb-4">
+                                <h4 class="f5 mb-2">1. Basic Checkbox Examples:</h4>
+                                <div class="checkbox-group">
+                                    <div class="form-checkbox mb-2">
+                                        <label>
+                                            <input type="checkbox" id="single-checkbox">
+                                            Single checkbox option
+                                        </label>
+                                    </div>
+
+                                    <div class="form-checkbox mb-2">
+                                        <label>
+                                            <input type="checkbox" id="disabled-checkbox" disabled>
+                                            Disabled checkbox
+                                        </label>
+                                    </div>
+
+                                    <div class="form-checkbox mb-2">
+                                        <label>
+                                            <input type="checkbox" id="checked-disabled-checkbox" checked disabled>
+                                            Checked and disabled checkbox
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <button id="check-state-btn" class="btn btn-sm mr-2">Check State</button>
+                                    <div id="check-state-result" class="color-fg-muted ml-2 d-flex flex-items-center">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4 class="f5 mb-2">2. Checkbox Group with "Select All" Option:</h4>
+                                <div class="checkbox-group">
+                                    <div class="form-checkbox mb-2">
+                                        <label>
+                                            <input type="checkbox" id="select-all">
+                                            <strong>Select All Fruits</strong>
+                                        </label>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="form-checkbox mb-2">
+                                            <label>
+                                                <input type="checkbox" name="fruits" value="apple"
+                                                    class="fruit-checkbox">
+                                                Apple
+                                            </label>
+                                        </div>
+                                        <div class="form-checkbox mb-2">
+                                            <label>
+                                                <input type="checkbox" name="fruits" value="banana"
+                                                    class="fruit-checkbox">
+                                                Banana
+                                            </label>
+                                        </div>
+                                        <div class="form-checkbox mb-2">
+                                            <label>
+                                                <input type="checkbox" name="fruits" value="orange"
+                                                    class="fruit-checkbox">
+                                                Orange
+                                            </label>
+                                        </div>
+                                        <div class="form-checkbox mb-2">
+                                            <label>
+                                                <input type="checkbox" name="fruits" value="grape"
+                                                    class="fruit-checkbox">
+                                                Grape
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <button id="get-selected-fruits" class="btn btn-sm mr-2">Get Selected
+                                        Fruits</button>
+                                    <div id="selected-fruits-result"
+                                        class="color-fg-muted ml-2 d-flex flex-items-center"></div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4 class="f5 mb-2">3. Toggle Switch Style Checkboxes:</h4>
+                                <div class="checkbox-group">
+                                    <div class="d-flex flex-items-center mb-2">
+                                        <label class="toggle-switch mr-2">
+                                            <input type="checkbox" id="dark-mode-toggle">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                        <span>Dark Mode</span>
+                                    </div>
+                                    <div class="d-flex flex-items-center mb-2">
+                                        <label class="toggle-switch mr-2">
+                                            <input type="checkbox" id="notifications-toggle" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                        <span>Enable Notifications</span>
+                                    </div>
+                                    <div class="d-flex flex-items-center">
+                                        <label class="toggle-switch mr-2">
+                                            <input type="checkbox" id="disabled-toggle" disabled>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                        <span>Disabled Toggle</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <button id="get-toggle-states" class="btn btn-sm mr-2">Get Toggle States</button>
+                                    <div id="toggle-states-result" class="color-fg-muted ml-2 d-flex flex-items-center">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4 class="f5 mb-2">4. Indeterminate Checkbox State:</h4>
+                                <div class="checkbox-group">
+                                    <div class="form-checkbox mb-2">
+                                        <label>
+                                            <input type="checkbox" id="parent-checkbox">
+                                            <strong>Parent Category</strong>
+                                        </label>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="form-checkbox mb-2">
+                                            <label>
+                                                <input type="checkbox" name="subcategory" value="sub1"
+                                                    class="child-checkbox">
+                                                Subcategory 1
+                                            </label>
+                                        </div>
+                                        <div class="form-checkbox mb-2">
+                                            <label>
+                                                <input type="checkbox" name="subcategory" value="sub2"
+                                                    class="child-checkbox">
+                                                Subcategory 2
+                                            </label>
+                                        </div>
+                                        <div class="form-checkbox mb-2">
+                                            <label>
+                                                <input type="checkbox" name="subcategory" value="sub3"
+                                                    class="child-checkbox">
+                                                Subcategory 3
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <button id="set-indeterminate" class="btn btn-sm mr-2">Set Indeterminate</button>
+                                    <button id="check-indeterminate" class="btn btn-sm mr-2">Check Indeterminate
+                                        State</button>
+                                    <div id="indeterminate-result" class="color-fg-muted ml-2 d-flex flex-items-center">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4 class="f5 mb-2">5. Checkbox Tiles:</h4>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-tile" id="tile1">
+                                        <input type="checkbox" name="plan" value="basic" id="basic-plan">
+                                        <div>
+                                            <strong>Basic Plan</strong>
+                                            <div class="color-fg-muted">$10/month - 10GB Storage</div>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-tile" id="tile2">
+                                        <input type="checkbox" name="plan" value="pro" id="pro-plan">
+                                        <div>
+                                            <strong>Pro Plan</strong>
+                                            <div class="color-fg-muted">$20/month - 50GB Storage</div>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox-tile" id="tile3">
+                                        <input type="checkbox" name="plan" value="enterprise" id="enterprise-plan">
+                                        <div>
+                                            <strong>Enterprise Plan</strong>
+                                            <div class="color-fg-muted">$50/month - Unlimited Storage</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <button id="get-selected-plans" class="btn btn-sm mr-2">Get Selected Plans</button>
+                                    <div id="selected-plans-result"
+                                        class="color-fg-muted ml-2 d-flex flex-items-center"></div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4 class="f5 mb-2">6. Required Checkbox for Form Submission:</h4>
+                                <form id="terms-form" class="checkbox-group">
+                                    <div class="form-checkbox mb-2">
+                                        <label>
+                                            <input type="checkbox" id="terms-checkbox" required>
+                                            I agree to the Terms and Conditions
+                                        </label>
+                                        <div class="form-validation-message" id="terms-error">
+                                            You must agree to the terms to continue
+                                        </div>
+                                    </div>
+                                    <div class="form-checkbox mb-2">
+                                        <label>
+                                            <input type="checkbox" id="newsletter-checkbox">
+                                            Subscribe to newsletter (optional)
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-sm">Submit Form</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Basic Checkbox
+                                            Functionality</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify checkbox can be checked and unchecked
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test disabled checkbox cannot be interacted with
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Confirm checkbox state is correctly reported
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Select All
+                                            Functionality</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify "Select All" checks all child checkboxes
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test unchecking one child affects parent state
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Confirm selected values are correctly reported
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Toggle Switch
+                                            Behavior</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test toggle switches can be turned on/off
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify disabled toggle cannot be interacted with
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check toggle states are correctly reported
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Indeterminate
+                                            State</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify indeterminate state can be set via JavaScript
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test parent-child relationship with indeterminate state
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check indeterminate state is correctly reported
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Checkbox Tiles</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test clicking tile selects the checkbox
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify visual feedback when tile is selected
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check selected plans are correctly reported
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 6: Required
+                                            Checkbox</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test form submission with unchecked required checkbox
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify error message appears for required checkbox
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test successful form submission with checked required checkbox
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="mt-3">
+                                <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View All Test
+                                    Scenarios →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+                e.preventDefault();
+                const additionalScenarios = document.querySelectorAll('.additional-scenario');
+                additionalScenarios.forEach(scenario => {
+                    scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+                });
+                this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+            });
+
+            const getCheckboxStateBtn = document.getElementById('check-state-btn');
+            if (getCheckboxStateBtn) {
+                getCheckboxStateBtn.addEventListener('click', function () {
+                    const checkbox = document.getElementById('single-checkbox');
+                    const disabledCheckbox = document.getElementById('disabled-checkbox');
+                    const resultDiv = document.getElementById('check-state-result');
+
+                    if (checkbox && disabledCheckbox && resultDiv) {
+                        resultDiv.innerHTML = `
+                            <span class="Label mr-1 ${checkbox.checked ? 'Label--success' : 'Label--secondary'}">
+                                Basic: ${checkbox.checked ? 'Checked' : 'Unchecked'}
+                            </span>
+                            <span class="Label ${disabledCheckbox.checked ? 'Label--success' : 'Label--secondary'}">
+                                Disabled: ${disabledCheckbox.checked ? 'Checked' : 'Unchecked'} (Disabled)
+                            </span>
+                        `;
+                    }
+                });
+            }
+
+            const selectAllCheckbox = document.getElementById('select-all');
+            const itemCheckboxes = document.querySelectorAll('.fruit-checkbox');
+
+            if (selectAllCheckbox) {
+                selectAllCheckbox.addEventListener('change', function () {
+                    const isChecked = this.checked;
+                    itemCheckboxes.forEach(checkbox => {
+                        checkbox.checked = isChecked;
+                    });
+                });
+            }
+
+            if (itemCheckboxes.length > 0) {
+                itemCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', function () {
+                        if (selectAllCheckbox) {
+                            const allChecked = Array.from(itemCheckboxes).every(cb => cb.checked);
+                            const someChecked = Array.from(itemCheckboxes).some(cb => cb.checked);
+
+                            selectAllCheckbox.checked = allChecked;
+                            selectAllCheckbox.indeterminate = someChecked && !allChecked;
+                        }
+                    });
+                });
+            }
+
+            const selectAllFruitsCheckbox = document.getElementById('select-all');
+            const fruitCheckboxes = document.querySelectorAll('.fruit-checkbox');
+
+            if (selectAllFruitsCheckbox && fruitCheckboxes.length > 0) {
+                selectAllFruitsCheckbox.addEventListener('change', function () {
+                    const isChecked = this.checked;
+                    fruitCheckboxes.forEach(checkbox => {
+                        checkbox.checked = isChecked;
+                    });
+                });
+
+                fruitCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', function () {
+                        const allChecked = Array.from(fruitCheckboxes).every(cb => cb.checked);
+                        const someChecked = Array.from(fruitCheckboxes).some(cb => cb.checked);
+
+                        selectAllFruitsCheckbox.checked = allChecked;
+                        selectAllFruitsCheckbox.indeterminate = someChecked && !allChecked;
+                    });
+                });
+            }
+
+            const getSelectedItemsBtn = document.getElementById('get-selected-fruits');
+            if (getSelectedItemsBtn && fruitCheckboxes.length > 0) {
+                getSelectedItemsBtn.addEventListener('click', function () {
+                    const selectedItems = Array.from(fruitCheckboxes)
+                        .filter(cb => cb.checked)
+                        .map(cb => cb.value);
+
+                    const resultDiv = document.getElementById('selected-fruits-result');
+                    if (resultDiv) {
+                        if (selectedItems.length === 0) {
+                            resultDiv.innerHTML = '<span class="Label Label--secondary">No items selected</span>';
+                        } else {
+                            resultDiv.innerHTML = selectedItems.map(item =>
+                                `<span class="Label Label--success mr-1">${item}</span>`
+                            ).join('');
+                        }
+                    }
+                });
+            }
+
+            const getToggleStatesBtn = document.getElementById('get-toggle-states');
+            if (getToggleStatesBtn) {
+                getToggleStatesBtn.addEventListener('click', function () {
+                    const darkMode = document.getElementById('dark-mode-toggle')?.checked || false;
+                    const notifications = document.getElementById('notifications-toggle')?.checked || false;
+                    const disabled = document.getElementById('disabled-toggle')?.checked || false;
+
+                    const resultDiv = document.getElementById('toggle-states-result');
+                    if (resultDiv) {
+                        resultDiv.innerHTML = `
+                            <span class="Label mr-1 ${darkMode ? 'Label--success' : 'Label--secondary'}">
+                                Dark Mode: ${darkMode ? 'On' : 'Off'}
+                            </span>
+                            <span class="Label mr-1 ${notifications ? 'Label--success' : 'Label--secondary'}">
+                                Notifications: ${notifications ? 'On' : 'Off'}
+                            </span>
+                            <span class="Label ${disabled ? 'Label--success' : 'Label--secondary'}">
+                                Disabled: ${disabled ? 'On' : 'Off'} (Disabled)
+                            </span>
+                        `;
+                    }
+                });
+            }
+
+            const parentCheckbox = document.getElementById('parent-checkbox');
+            const childCheckboxes = document.querySelectorAll('.child-checkbox');
+
+            if (parentCheckbox && childCheckboxes.length > 0) {
+                parentCheckbox.addEventListener('change', function () {
+                    const isChecked = this.checked;
+                    childCheckboxes.forEach(checkbox => {
+                        checkbox.checked = isChecked;
+                    });
+                });
+
+                childCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', function () {
+                        const allChecked = Array.from(childCheckboxes).every(cb => cb.checked);
+                        const someChecked = Array.from(childCheckboxes).some(cb => cb.checked);
+
+                        parentCheckbox.checked = allChecked;
+                        parentCheckbox.indeterminate = someChecked && !allChecked;
+                    });
+                });
+            }
+
+            const setIndeterminateBtn = document.getElementById('set-indeterminate');
+            if (setIndeterminateBtn && parentCheckbox && childCheckboxes.length >= 3) {
+                setIndeterminateBtn.addEventListener('click', function () {
+                    parentCheckbox.indeterminate = true;
+                    childCheckboxes[0].checked = true;
+                    childCheckboxes[1].checked = false;
+                    childCheckboxes[2].checked = false;
+                });
+            }
+
+            const checkIndeterminateBtn = document.getElementById('check-indeterminate');
+            if (checkIndeterminateBtn && parentCheckbox && childCheckboxes.length > 0) {
+                checkIndeterminateBtn.addEventListener('click', function () {
+                    const resultDiv = document.getElementById('indeterminate-result');
+                    if (resultDiv) {
+                        resultDiv.innerHTML = `
+                            <p><span class="Label mr-1 ${parentCheckbox.indeterminate ? 'Label--accent' : 'Label--secondary'}">
+                                Parent: ${parentCheckbox.indeterminate ? 'Indeterminate' : (parentCheckbox.checked ? 'Checked' : 'Unchecked')}
+                            </span></p>
+                            ${Array.from(childCheckboxes).map((cb, index) =>
+                            `<p><span class="Label mr-1 ${cb.checked ? 'Label--success' : 'Label--secondary'}">
+                                    Sub ${index + 1}: ${cb.checked ? 'Checked' : 'Unchecked'}
+                                </span></p>`
+                        ).join('')}
+                        `;
+                    }
+                });
+            }
+
+            const checkboxTiles = document.querySelectorAll('.checkbox-tile');
+            if (checkboxTiles.length > 0) {
+                checkboxTiles.forEach(tile => {
+                    tile.addEventListener('click', function (e) {
+                        if (e.target.type !== 'checkbox') {
+                            const checkbox = this.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                this.classList.toggle('selected', checkbox.checked);
+                            }
+                        }
+                    });
+
+                    const checkbox = tile.querySelector('input[type="checkbox"]');
+                    if (checkbox) {
+                        tile.classList.toggle('selected', checkbox.checked);
+
+                        checkbox.addEventListener('change', function () {
+                            tile.classList.toggle('selected', this.checked);
+                        });
+                    }
+                });
+            }
+
+            const getSelectedPlansBtn = document.getElementById('get-selected-plans');
+            if (getSelectedPlansBtn) {
+                getSelectedPlansBtn.addEventListener('click', function () {
+                    const selectedPlans = Array.from(document.querySelectorAll('.checkbox-tile input[type="checkbox"]'))
+                        .filter(cb => cb.checked)
+                        .map(cb => cb.value);
+
+                    const resultDiv = document.getElementById('selected-plans-result');
+                    if (resultDiv) {
+                        if (selectedPlans.length === 0) {
+                            resultDiv.innerHTML = '<span class="Label Label--secondary">No plans selected</span>';
+                        } else {
+                            resultDiv.innerHTML = selectedPlans.map(plan =>
+                                `<span class="Label Label--success mr-1">${plan.charAt(0).toUpperCase() + plan.slice(1)}</span>`
+                            ).join('');
+                        }
+                    }
+                });
+            }
+
+            const termsForm = document.getElementById('terms-form');
+            if (termsForm) {
+                termsForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const termsCheckbox = document.getElementById('terms-checkbox');
+                    const termsError = document.getElementById('terms-error');
+                    const newsletterCheckbox = document.getElementById('newsletter-checkbox');
+
+                    if (termsCheckbox && termsError) {
+                        if (!termsCheckbox.checked) {
+                            termsError.style.display = 'block';
+                            return;
+                        }
+
+                        termsError.style.display = 'none';
+                    }
+
+                    const successBanner = document.createElement('div');
+                    successBanner.className = 'flash flash-success mt-3';
+                    successBanner.innerHTML = `
+                        <svg class="octicon octicon-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                            <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
+                        </svg>
+                        Form submitted successfully! ${newsletterCheckbox.checked ? 'You have subscribed to our newsletter.' : ''}
+                    `;
+                    document.getElementById('terms-form').appendChild(successBanner);
+
+                    setTimeout(() => {
+                        document.getElementById('terms-form').reset();
+                        successBanner.remove();
+                    }, 3000);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
