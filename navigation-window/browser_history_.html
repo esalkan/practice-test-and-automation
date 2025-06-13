@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test &amp; Automation - Browser History</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet">
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .history-entry {
+            padding: 8px;
+            margin-bottom: 8px;
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+        }
+
+        .history-entry:hover {
+            background-color: var(--color-canvas-subtle);
+        }
+
+        .history-controls {
+            margin-bottom: 16px;
+        }
+
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--color-border-muted);
+            border-radius: 6px;
+            padding: 8px;
+        }
+
+        .history-timestamp {
+            font-size: 12px;
+            color: var(--color-fg-muted);
+        }
+
+        .history-url {
+            word-break: break-all;
+        }
+
+        .history-title {
+            font-weight: 600;
+        }
+
+        .history-action-buttons {
+            margin-top: 8px;
+        }
+
+        .history-search-results {
+            margin-top: 16px;
+        }
+
+        .history-state-container {
+            margin-top: 16px;
+            padding: 16px;
+            border: 1px solid var(--color-border-muted);
+            border-radius: 6px;
+        }
+
+        .navigation-log {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid var(--color-border-muted);
+            border-radius: 6px;
+            padding: 8px;
+            margin-top: 8px;
+        }
+
+        .log-entry {
+            padding: 4px 0;
+            border-bottom: 1px solid var(--color-border-muted);
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test &amp; Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#navigation-window" class="color-fg-accent">Navigation
+                        &amp; Window</a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">Browser History</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Browser History</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Browser history is a crucial part of web navigation that allows users to move back and
+                                forth between previously visited pages. Modern web applications can interact with the
+                                browser's history through the History API, enabling developers to create dynamic
+                                single-page applications with proper navigation support.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Browser History:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Navigation between previously visited pages using back and forward
+                                    buttons</li>
+                                <li class="ml-4">Programmatic manipulation of the browser history stack</li>
+                                <li class="ml-4">URL updates without full page reloads (pushState and replaceState)</li>
+                                <li class="ml-4">State management for preserving page context during navigation</li>
+                                <li class="ml-4">History traversal events for detecting navigation changes</li>
+                            </ul>
+                            <h3 class="f4 mb-2">How It Works:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">The browser maintains a history stack of visited URLs and associated
+                                    states.</li>
+                                <li class="ml-4">Each entry in the history stack can contain a state object, title, and
+                                    URL.</li>
+                                <li class="ml-4">The History API allows manipulation of this stack through methods like
+                                    pushState() and replaceState().</li>
+                                <li class="ml-4">Navigation triggers popstate events that applications can listen for to
+                                    update UI.</li>
+                                <li class="ml-4">The browser's back and forward buttons traverse through this history
+                                    stack.</li>
+                            </ol>
+                            <h3 class="f4 mb-2">Common Use Cases:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Single-page applications with client-side routing</li>
+                                <li class="ml-4">Multi-step forms with back/forward navigation</li>
+                                <li class="ml-4">Tab-based interfaces with history support</li>
+                                <li class="ml-4">Maintaining application state during navigation</li>
+                                <li class="ml-4">Creating shareable URLs for specific application states</li>
+                            </ul>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+
+                            <!-- History Navigation Controls -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">History Navigation</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="d-flex flex-column">
+                                        <div class="history-controls d-flex flex-wrap">
+                                            <button id="go-back" class="btn mr-2 mb-2">← Go Back</button>
+                                            <button id="go-forward" class="btn mr-2 mb-2">Go Forward →</button>
+                                            <button id="go-to-index" class="btn mr-2 mb-2">Go to Index -1</button>
+                                            <button id="refresh-page" class="btn mr-2 mb-2">Refresh Page</button>
+                                        </div>
+                                        <div class="navigation-log">
+                                            <div id="navigation-log-content">
+                                                <div class="log-entry">Navigation log will appear here...</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- History State Management -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">History State Management</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="state-name" class="d-block mb-1">State Name:</label>
+                                        <input type="text" id="state-name" class="form-control width-full mb-2"
+                                            placeholder="Enter a name for this state">
+
+                                        <label for="state-value" class="d-block mb-1">State Value:</label>
+                                        <input type="text" id="state-value" class="form-control width-full mb-2"
+                                            placeholder="Enter a value to store">
+
+                                        <div class="d-flex flex-wrap">
+                                            <button id="push-state" class="btn btn-primary mr-2 mb-2">Push
+                                                State</button>
+                                            <button id="replace-state" class="btn mr-2 mb-2">Replace State</button>
+                                            <button id="get-current-state" class="btn mr-2 mb-2">Get Current
+                                                State</button>
+                                        </div>
+                                    </div>
+                                    <div class="history-state-container">
+                                        <h4 class="f5 mb-2">Current History State:</h4>
+                                        <pre id="current-state"
+                                            class="p-2 color-bg-subtle border rounded-2">No state information available</pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- URL Parameters and History -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">URL Parameters and History</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="param-name" class="d-block mb-1">Parameter Name:</label>
+                                        <input type="text" id="param-name" class="form-control width-full mb-2"
+                                            placeholder="e.g., page, filter, sort">
+
+                                        <label for="param-value" class="d-block mb-1">Parameter Value:</label>
+                                        <input type="text" id="param-value" class="form-control width-full mb-2"
+                                            placeholder="e.g., 2, active, asc">
+
+                                        <div class="d-flex flex-wrap">
+                                            <button id="add-param" class="btn btn-primary mr-2 mb-2">Add
+                                                Parameter</button>
+                                            <button id="remove-param" class="btn mr-2 mb-2">Remove Parameter</button>
+                                            <button id="clear-params" class="btn mr-2 mb-2">Clear All
+                                                Parameters</button>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h4 class="f5 mb-2">Current URL:</h4>
+                                        <div id="current-url" class="p-2 color-bg-subtle border rounded-2 history-url">
+                                            Loading...
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h4 class="f5 mb-2">Current Parameters:</h4>
+                                        <div id="current-params" class="p-2 color-bg-subtle border rounded-2">
+                                            No parameters</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Browser History Simulation -->
+                            <div class="Box mb-3">
+                                <div class="Box-header">
+                                    <h3 class="Box-title">Browser History Simulation</h3>
+                                </div>
+                                <div class="Box-body">
+                                    <div class="mb-3">
+                                        <label for="visit-url" class="d-block mb-1">URL to Visit:</label>
+                                        <div class="d-flex">
+                                            <input type="text" id="visit-url" class="form-control flex-auto mr-2"
+                                                placeholder="e.g., /products/123">
+                                            <button id="simulate-visit" class="btn btn-primary">Visit</button>
+                                        </div>
+                                    </div>
+                                    <div class="history-list mb-3">
+                                        <h4 class="f5 mb-2">History Stack (Most Recent First):</h4>
+                                        <div id="history-stack">
+                                            <div class="history-entry">
+                                                <div class="history-title">Current Page</div>
+                                                <div class="history-url">/browser_history_.html</div>
+                                                <div class="history-timestamp">Just now</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="history-action-buttons d-flex flex-wrap">
+                                        <button id="clear-history" class="btn btn-danger mr-2 mb-2">Clear
+                                            History</button>
+                                        <button id="search-history" class="btn mr-2 mb-2">Search History</button>
+                                    </div>
+                                    <div id="history-search-container" class="mt-3" style="display: none;">
+                                        <label for="history-search" class="d-block mb-1">Search History:</label>
+                                        <input type="text" id="history-search" class="form-control width-full mb-2"
+                                            placeholder="Enter search term">
+                                        <div class="history-search-results">
+                                            <h4 class="f5 mb-2">Search Results:</h4>
+                                            <div id="search-results" class="p-2 color-bg-subtle border rounded-2">
+                                                No results
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Basic
+                                            Navigation</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test back button functionality
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test forward button functionality
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify go method with specific index
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: State
+                                            Management</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test pushState functionality
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test replaceState functionality
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify state persistence during navigation
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: URL Parameters</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test adding URL parameters
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test removing URL parameters
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify parameter persistence during navigation
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: History Events</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75                                                    0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test popstate event handling
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify UI updates on history navigation
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test browser refresh behavior with history state
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="mt-3">
+                                <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View All Test
+                                    Scenarios →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function () {
+            updateCurrentUrl();
+            updateCurrentParams();
+
+            // Navigation buttons
+            document.getElementById('go-back').addEventListener('click', function () {
+                window.history.back();
+                logNavigation('Navigated back');
+            });
+
+            document.getElementById('go-forward').addEventListener('click', function () {
+                window.history.forward();
+                logNavigation('Navigated forward');
+            });
+
+            document.getElementById('go-to-index').addEventListener('click', function () {
+                window.history.go(-1);
+                logNavigation('Navigated to index -1');
+            });
+
+            document.getElementById('refresh-page').addEventListener('click', function () {
+                location.reload();
+            });
+
+            // State management
+            document.getElementById('push-state').addEventListener('click', function () {
+                const name = document.getElementById('state-name').value || 'unnamed';
+                const value = document.getElementById('state-value').value || 'no value';
+                const state = { [name]: value, timestamp: new Date().toISOString() };
+                const title = `State: ${name}`;
+                const url = new URL(window.location.href);
+                url.searchParams.set('state', name);
+
+                window.history.pushState(state, title, url);
+                updateCurrentState();
+                updateCurrentUrl();
+                updateCurrentParams();
+                logNavigation(`Pushed state: ${name}=${value}`);
+
+                // Add to history stack UI
+                addToHistoryStack(url.pathname + url.search, name);
+            });
+
+            document.getElementById('replace-state').addEventListener('click', function () {
+                const name = document.getElementById('state-name').value || 'unnamed';
+                const value = document.getElementById('state-value').value || 'no value';
+                const state = { [name]: value, timestamp: new Date().toISOString() };
+                const title = `State: ${name}`;
+                const url = new URL(window.location.href);
+                url.searchParams.set('state', name);
+
+                window.history.replaceState(state, title, url);
+                updateCurrentState();
+                updateCurrentUrl();
+                updateCurrentParams();
+                logNavigation(`Replaced state: ${name}=${value}`);
+
+                // Update last history entry in UI
+                updateLastHistoryEntry(url.pathname + url.search, name);
+            });
+
+            document.getElementById('get-current-state').addEventListener('click', function () {
+                updateCurrentState();
+                logNavigation('Retrieved current state');
+            });
+
+            // URL parameters
+            document.getElementById('add-param').addEventListener('click', function () {
+                const name = document.getElementById('param-name').value;
+                const value = document.getElementById('param-value').value;
+
+                if (name) {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set(name, value);
+                    window.history.pushState(history.state, document.title, url);
+                    updateCurrentUrl();
+                    updateCurrentParams();
+                    logNavigation(`Added parameter: ${name}=${value}`);
+
+                    // Add to history stack UI
+                    addToHistoryStack(url.pathname + url.search, 'Parameter Update');
+                }
+            });
+
+            document.getElementById('remove-param').addEventListener('click', function () {
+                const name = document.getElementById('param-name').value;
+
+                if (name) {
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete(name);
+                    window.history.pushState(history.state, document.title, url);
+                    updateCurrentUrl();
+                    updateCurrentParams();
+                    logNavigation(`Removed parameter: ${name}`);
+
+                    // Add to history stack UI
+                    addToHistoryStack(url.pathname + url.search, 'Parameter Removal');
+                }
+            });
+
+            document.getElementById('clear-params').addEventListener('click', function () {
+                const url = new URL(window.location.href);
+                url.search = '';
+                window.history.pushState(history.state, document.title, url);
+                updateCurrentUrl();
+                updateCurrentParams();
+                logNavigation('Cleared all parameters');
+
+                // Add to history stack UI
+                addToHistoryStack(url.pathname, 'Parameters Cleared');
+            });
+
+            // History simulation
+            document.getElementById('simulate-visit').addEventListener('click', function () {
+                const visitUrl = document.getElementById('visit-url').value;
+
+                if (visitUrl) {
+                    const url = new URL(visitUrl, window.location.origin);
+                    window.history.pushState({ page: visitUrl }, `Visited: ${visitUrl}`, url);
+                    updateCurrentUrl();
+                    updateCurrentParams();
+                    logNavigation(`Simulated visit to: ${visitUrl}`);
+
+                    // Add to history stack UI
+                    addToHistoryStack(url.pathname + url.search, `Visited: ${visitUrl}`);
+                }
+            });
+
+            document.getElementById('clear-history').addEventListener('click', function () {
+                // We can't actually clear browser history programmatically for security reasons
+                // But we can simulate it in our UI
+                document.getElementById('history-stack').innerHTML = `
+                    <div class="history-entry">
+                        <div class="history-title">Current Page</div>
+                        <div class="history-url">${window.location.pathname}</div>
+                        <div class="history-timestamp">Just now</div>
+                    </div>
+                `;
+                logNavigation('History stack cleared (UI only)');
+            });
+
+            document.getElementById('search-history').addEventListener('click', function () {
+                const searchContainer = document.getElementById('history-search-container');
+                searchContainer.style.display = searchContainer.style.display === 'none' ? 'block' : 'none';
+            });
+
+            document.getElementById('history-search').addEventListener('input', function () {
+                const searchTerm = this.value.toLowerCase();
+                const historyEntries = document.querySelectorAll('.history-entry');
+                const results = [];
+
+                historyEntries.forEach(entry => {
+                    const url = entry.querySelector('.history-url').textContent;
+                    const title = entry.querySelector('.history-title').textContent;
+
+                    if (url.toLowerCase().includes(searchTerm) || title.toLowerCase().includes(searchTerm)) {
+                        results.push({ url, title });
+                    }
+                });
+
+                displaySearchResults(results);
+            });
+
+            // Listen for popstate events
+            window.addEventListener('popstate', function (event) {
+                updateCurrentUrl();
+                updateCurrentParams();
+                updateCurrentState();
+                logNavigation('Popstate event triggered');
+            });
+
+            // Initialize current state display
+            updateCurrentState();
+        });
+
+        function updateCurrentUrl() {
+            document.getElementById('current-url').textContent = window.location.href;
+        }
+
+        function updateCurrentParams() {
+            const params = new URLSearchParams(window.location.search);
+            const paramsContainer = document.getElementById('current-params');
+
+            if (params.toString()) {
+                let paramHtml = '';
+                for (const [key, value] of params.entries()) {
+                    paramHtml += `<div><strong>${key}:</strong> ${value}</div>`;
+                }
+                paramsContainer.innerHTML = paramHtml;
+            } else {
+                paramsContainer.textContent = 'No parameters';
+            }
+        }
+
+        function updateCurrentState() {
+            const stateContainer = document.getElementById('current-state');
+            const state = history.state;
+
+            if (state) {
+                stateContainer.textContent = JSON.stringify(state, null, 2);
+            } else {
+                stateContainer.textContent = 'No state information available';
+            }
+        }
+
+        function logNavigation(message) {
+            const logContainer = document.getElementById('navigation-log-content');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `<span class="history-timestamp">${timestamp}</span> - ${message}`;
+
+            logContainer.insertBefore(logEntry, logContainer.firstChild);
+        }
+
+        function addToHistoryStack(url, title) {
+            const historyStack = document.getElementById('history-stack');
+            const timestamp = new Date().toLocaleTimeString();
+
+            const entry = document.createElement('div');
+            entry.className = 'history-entry';
+            entry.innerHTML = `
+                <div class="history-title">${title}</div>
+                <div class="history-url">${url}</div>
+                                <div class="history-timestamp">${timestamp}</div>
+            `;
+            historyStack.insertBefore(entry, historyStack.firstChild);
+        }
+
+        function updateLastHistoryEntry(url, title) {
+            const historyStack = document.getElementById('history-stack');
+            const firstEntry = historyStack.querySelector('.history-entry');
+
+            if (firstEntry) {
+                const timestamp = new Date().toLocaleTimeString();
+                firstEntry.querySelector('.history-title').textContent = title;
+                firstEntry.querySelector('.history-url').textContent = url;
+                firstEntry.querySelector('.history-timestamp').textContent = timestamp;
+            }
+        }
+
+        function displaySearchResults(results) {
+            const resultsContainer = document.getElementById('search-results');
+
+            if (results.length === 0) {
+                resultsContainer.textContent = 'No results';
+                return;
+            }
+
+            let html = '';
+            results.forEach(result => {
+                html += `
+                    <div class="search-result mb-2 p-2 border-bottom">
+                        <div class="history-title">${result.title}</div>
+                        <div class="history-url">${result.url}</div>
+                    </div>
+                `;
+            });
+
+            resultsContainer.innerHTML = html;
+        }
+
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+    </script>
+</body>
+
+</html>

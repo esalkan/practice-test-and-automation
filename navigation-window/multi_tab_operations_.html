@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test &amp; Automation - Multi-tab Operations</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet">
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .tab-content {
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 16px;
+            margin-top: 10px;
+        }
+
+        .tab-indicator {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+            font-size: 12px;
+        }
+
+        .active-tab {
+            background-color: #0366d6;
+            color: white;
+        }
+
+        .inactive-tab {
+            background-color: #e1e4e8;
+            color: #24292e;
+        }
+
+        #tabMessageArea {
+            min-height: 100px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 8px;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+
+        .message {
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+
+        .sent {
+            background-color: #f1f8ff;
+            border-left: 4px solid #0366d6;
+        }
+
+        .received {
+            background-color: #f6f8fa;
+            border-left: 4px solid #6f42c1;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test &amp; Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#navigation-window" class="color-fg-accent">Navigation
+                        and Window Management</a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">Multi-tab Operations</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Multi-tab Operations</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Multi-tab operations involve managing and interacting with multiple browser tabs or
+                                windows simultaneously.
+                                This is a common scenario in modern web applications where users often work across
+                                multiple tabs,
+                                requiring coordination, data sharing, and state management between these separate
+                                browser contexts.
+                            </p>
+                            <h3 class="f4 mb-2">Key Concepts of Multi-tab Operations:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Opening new tabs programmatically with specific content or URLs</li>
+                                <li class="ml-4">Communication between tabs using various browser APIs</li>
+                                <li class="ml-4">Detecting when tabs are opened, closed, or focused</li>
+                                <li class="ml-4">Sharing data between tabs while maintaining state consistency</li>
+                                <li class="ml-4">Handling tab visibility changes and lifecycle events</li>
+                            </ul>
+                            <h3 class="f4 mb-2">Common Implementation Methods:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4"><strong>window.open()</strong> - Opens a new browser window or tab and
+                                    returns a reference to it</li>
+                                <li class="ml-4"><strong>localStorage/sessionStorage</strong> - Allows data sharing
+                                    between tabs from the same origin</li>
+                                <li class="ml-4"><strong>SharedWorkers</strong> - Allows multiple browser contexts to
+                                    share a single worker instance</li>
+                                <li class="ml-4"><strong>Page Visibility</strong> - Detects when a page becomes
+                                    visible or hidden</li>
+                                <li class="ml-4"><strong>window.postMessage()</strong> - Enables secure cross-origin
+                                    communication between windows</li>
+                            </ol>
+                            <h3 class="f4 mb-2">Testing Challenges:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Simulating user interactions across multiple tabs</li>
+                                <li class="ml-4">Verifying data consistency between tabs</li>
+                                <li class="ml-4">Handling popup blockers during automated testing</li>
+                                <li class="ml-4">Testing tab focus and visibility events</li>
+                                <li class="ml-4">Managing browser security restrictions during testing</li>
+                            </ul>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+
+                            <!-- Tab Opening and Management -->
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">Tab Opening and Management:</h4>
+                                <div class="d-flex flex-column">
+                                    <div class="mb-3">
+                                        <button id="openNewTabBtn" class="btn btn-primary mr-2">Open New Tab</button>
+                                        <button id="openPopupBtn" class="btn mr-2">Open Popup Window</button>
+                                        <button id="closeAllTabsBtn" class="btn btn-danger">Close Child Tabs</button>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-checkbox">
+                                            <label>
+                                                <input type="checkbox" id="focusNewTab">
+                                                Focus new tab when opening
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div id="openTabsInfo" class="flash flash-info mb-3" style="display: none;">
+                                        No tabs have been opened yet.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Communication -->
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">Tab Communication (BroadcastChannel):</h4>
+                                <div class="d-flex flex-column">
+                                    <div id="tabMessageArea" class="color-bg-subtle mb-3">
+                                        <div class="message">Open multiple tabs and send messages between them.</div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <input type="text" id="messageInput" class="form-control flex-auto mr-2"
+                                            placeholder="Type a message to send to other tabs">
+                                        <button id="sendMessageBtn" class="btn btn-primary">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Visibility -->
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">Tab Visibility Detection:</h4>
+                                <div class="d-flex flex-column">
+                                    <div class="flash mb-3">
+                                        <span>Current tab status: </span>
+                                        <span id="visibilityStatus" class="text-bold">Visible</span>
+                                    </div>
+                                    <div>
+                                        <p class="note">Switch to another tab and come back to see the visibility change
+                                            detection.</p>
+                                        <div id="visibilityLog" class="color-bg-subtle p-3"
+                                            style="max-height: 100px; overflow-y: auto;">
+                                            <div>Tab is currently visible</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab Storage Synchronization -->
+                            <div class="mb-4 px-5">
+                                <h4 class="f5 mb-2">Tab Storage Synchronization:</h4>
+                                <div class="d-flex flex-column">
+                                    <div class="mb-3">
+                                        <input type="text" id="storageKey" class="form-control mb-2"
+                                            placeholder="Storage key">
+                                        <input type="text" id="storageValue" class="form-control mb-2"
+                                            placeholder="Storage value">
+                                        <div class="d-flex">
+                                            <button id="setStorageBtn" class="btn btn-primary mr-2">Set Value</button>
+                                            <button id="getStorageBtn" class="btn mr-2">Get Value</button>
+                                            <button id="clearStorageBtn" class="btn">Clear Storage</button>
+                                        </div>
+                                    </div>
+                                    <div id="storageResult" class="flash flash-success mb-3" style="display: none;">
+                                    </div>
+                                    <p class="note">Changes made to localStorage in one tab will be visible in other
+                                        tabs. Try opening multiple tabs and updating values.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios &amp; Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Tab Opening and
+                                            Management</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify new tab opens with correct URL
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test popup window dimensions and properties
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify child tabs close correctly
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Tab
+                                            Communication</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test message broadcasting between tabs
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify message receipt in all open tabs
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test message formatting and display
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Tab Visibility</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify visibility state changes when switching tabs
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test visibility log accuracy
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Storage
+                                            Synchronization</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify localStorage updates propagate to other tabs
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test storage clear functionality across tabs
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify storage event listeners trigger correctly
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Edge Cases</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test behavior when popup blockers are enabled
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify behavior with many tabs open simultaneously
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test cross-origin communication restrictions
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="mt-3">
+                                <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View All Test
+                                    Scenarios →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        // View More Scenarios functionality
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+
+        // Store references to opened tabs
+        const openedTabs = [];
+        const openedWindows = [];
+        let tabCounter = 0;
+
+        // BroadcastChannel for tab communication
+        const broadcastChannel = new BroadcastChannel('tab-communication');
+
+        // Tab Opening and Management
+        document.getElementById('openNewTabBtn').addEventListener('click', function () {
+            const shouldFocus = document.getElementById('focusNewTab').checked;
+            const newTab = window.open('../index.html', '_blank');
+
+            if (newTab) {
+                tabCounter++;
+                openedTabs.push(newTab);
+                updateOpenTabsInfo();
+            } else {
+                showPopupBlockedMessage();
+            }
+        });
+
+        document.getElementById('openPopupBtn').addEventListener('click', function () {
+            const width = 600;
+            const height = 400;
+            const left = (window.innerWidth - width) / 2;
+            const top = (window.innerHeight - height) / 2;
+
+            const popup = window.open('../index.html', 'popup',
+                `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+
+            if (popup) {
+                openedWindows.push(popup);
+                updateOpenTabsInfo();
+            } else {
+                showPopupBlockedMessage();
+            }
+        });
+
+        document.getElementById('closeAllTabsBtn').addEventListener('click', function () {
+            // Close all opened tabs
+            openedTabs.forEach(tab => {
+                if (!tab.closed) {
+                    tab.close();
+                }
+            });
+
+            // Close all opened windows
+            openedWindows.forEach(win => {
+                if (!win.closed) {
+                    win.close();
+                }
+            });
+
+            // Clear arrays
+            openedTabs.length = 0;
+            openedWindows.length = 0;
+            updateOpenTabsInfo();
+        });
+
+        function updateOpenTabsInfo() {
+            const infoElement = document.getElementById('openTabsInfo');
+            const openTabCount = openedTabs.filter(tab => !tab.closed).length;
+            const openWindowCount = openedWindows.filter(win => !win.closed).length;
+
+            if (openTabCount > 0 || openWindowCount > 0) {
+                let infoText = '';
+                if (openTabCount > 0) {
+                    infoText += `${openTabCount} tab${openTabCount !== 1 ? 's' : ''} open. `;
+                }
+                if (openWindowCount > 0) {
+                    infoText += `${openWindowCount} popup window${openWindowCount !== 1 ? 's' : ''} open.`;
+                }
+                infoElement.textContent = infoText;
+                infoElement.style.display = 'block';
+            } else {
+                infoElement.textContent = 'No tabs have been opened yet.';
+                infoElement.style.display = 'none';
+            }
+        }
+
+        function showPopupBlockedMessage() {
+            const infoElement = document.getElementById('openTabsInfo');
+            infoElement.textContent = 'Popup was blocked. Please allow popups for this site.';
+            infoElement.style.display = 'block';
+            infoElement.className = 'flash flash-warn mb-3';
+
+            setTimeout(() => {
+                infoElement.className = 'flash flash-info mb-3';
+                updateOpenTabsInfo();
+            }, 3000);
+        }
+
+        // Tab Communication
+        document.getElementById('sendMessageBtn').addEventListener('click', function () {
+            const message = document.getElementById('messageInput').value.trim();
+            if (message) {
+                // Send message through BroadcastChannel
+                broadcastChannel.postMessage({
+                    text: message,
+                    timestamp: new Date().toISOString(),
+                    tabId: window.name || 'Main Tab'
+                });
+
+                // Add message to local display
+                addMessageToDisplay(message, 'sent');
+
+                // Clear input
+                document.getElementById('messageInput').value = '';
+            }
+        });
+
+        // Listen for messages from other tabs
+        broadcastChannel.onmessage = function (event) {
+            addMessageToDisplay(event.data.text, 'received', event.data.tabId);
+        };
+
+        function addMessageToDisplay(text, type, sender = null) {
+            const messageArea = document.getElementById('tabMessageArea');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            if (type === 'sent') {
+                messageDiv.textContent = `You: ${text}`;
+            } else {
+                messageDiv.textContent = `${sender || 'Other tab'}: ${text}`;
+            }
+
+            messageArea.appendChild(messageDiv);
+            messageArea.scrollTop = messageArea.scrollHeight;
+        }
+
+        // Tab Visibility
+        document.addEventListener('visibilitychange', function () {
+            const visibilityStatus = document.getElementById('visibilityStatus');
+            const visibilityLog = document.getElementById('visibilityLog');
+            const logEntry = document.createElement('div');
+            const timestamp = new Date().toLocaleTimeString();
+
+            if (document.hidden) {
+                visibilityStatus.textContent = 'Hidden';
+                logEntry.textContent = `${timestamp}: Tab became hidden`;
+            } else {
+                visibilityStatus.textContent = 'Visible';
+                logEntry.textContent = `${timestamp}: Tab became visible`;
+            }
+
+            visibilityLog.appendChild(logEntry);
+            visibilityLog.scrollTop = visibilityLog.scrollHeight;
+        });
+
+        // Tab Storage Synchronization
+        document.getElementById('setStorageBtn').addEventListener('click', function () {
+            const key = document.getElementById('storageKey').value.trim();
+            const value = document.getElementById('storageValue').value.trim();
+
+            if (key && value) {
+                localStorage.setItem(key, value);
+                showStorageResult(`Value "${value}" stored with key "${key}"`);
+            } else {
+                showStorageResult('Both key and value are required', 'error');
+            }
+        });
+
+        document.getElementById('getStorageBtn').addEventListener('click', function () {
+            const key = document.getElementById('storageKey').value.trim();
+
+            if (key) {
+                const value = localStorage.getItem(key);
+                if (value !== null) {
+                    showStorageResult(`Value for key "${key}": ${value}`);
+                    document.getElementById('storageValue').value = value;
+                } else {
+                    showStorageResult(`No value found for key "${key}"`, 'warn');
+                }
+            } else {
+                showStorageResult('Please enter a key to retrieve', 'error');
+            }
+        });
+
+        document.getElementById('clearStorageBtn').addEventListener('click', function () {
+            localStorage.clear();
+            showStorageResult('Local storage has been cleared');
+            document.getElementById('storageKey').value = '';
+            document.getElementById('storageValue').value = '';
+        });
+
+        function showStorageResult(message, type = 'success') {
+            const resultElement = document.getElementById('storageResult');
+            resultElement.textContent = message;
+            resultElement.className = `flash flash-${type} mb-3`;
+            resultElement.style.display = 'block';
+
+            setTimeout(() => {
+                resultElement.style.display = 'none';
+            }, 3000);
+        }
+
+        // Listen for storage changes from other tabs
+        window.addEventListener('storage', function (event) {
+            if (event.key !== null) {
+                showStorageResult(`Storage updated in another tab: "${event.key}" = "${event.newValue}"`);
+
+                // Update input fields if they match the changed key
+                if (document.getElementById('storageKey').value === event.key) {
+                    document.getElementById('storageValue').value = event.newValue || '';
+                }
+            } else {
+                // storage was cleared
+                showStorageResult('Storage was cleared in another tab');
+                document.getElementById('storageKey').value = '';
+                document.getElementById('storageValue').value = '';
+            }
+        });
+
+        // Initialize
+        updateOpenTabsInfo();
+
+    </script>
+</body>
+
+</html>

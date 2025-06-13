@@ -22,6 +22,36 @@
         footer {
             flex-shrink: 0;
         }
+
+        /* Modal styling */
+        .Overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            /* Dikey ortalama */
+            justify-content: center;
+            /* Yatay ortalama */
+        }
+
+        .Overlay-body--center {
+            max-width: 90%;
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        .Box--overlay {
+            max-height: 90vh;
+            overflow-y: auto;
+            background-color: var(--color-canvas-default);
+            border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 
@@ -29,12 +59,26 @@
     <!-- Header -->
     <header class="color-bg-subtle border-bottom color-border-muted">
         <div class="container-xl p-responsive py-1">
-            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
-            <small>
-                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
-                    examples.
-            </small>
-            </p>
+            <div class="d-flex flex-items-center flex-justify-between">
+                <div>
+                    <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+                    <small>
+                        <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with
+                            our
+                            examples.
+                        </p>
+                    </small>
+                </div>
+                <div>
+                    <a href="#" class="btn btn-sm color-fg-danger d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"
+                            fill="#e25555" style="margin-right: 4px;">
+                            <path
+                                d="M11 10h3V9h-3V8l3.17-1.03-.34-.94L11 7V6c0-.55-.45-1-1-1V4c0-.48-.36-.88-.83-.97L10.2 2H12V1H9.8l-2 2h-.59L5.2 1H3v1h1.8l1.03 1.03C5.36 3.12 5 3.51 5 4v1c-.55 0-1 .45-1 1v1l-2.83-.97-.34.94L4 8v1H1v1h3v1L.83 12.03l.34.94L4 12v1c0 .55.45 1 1 1h1l1-1V8h1v5l1 1h1c.55 0 1-.45 1-1v-1l2.83.97.34-.94L11 11v-1zM9 5H6V4h3v1z" />
+                        </svg>
+                        Report a Bug</a>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -931,6 +975,141 @@
             </div>
 
             <!-- Navigation and Window Management -->
+            <div class="clearfix">
+                <h2 class="h2 color-fg-default" data-t="main-title" id="navigation-window" style="margin-bottom: 4px;">
+                    Navigation and Window Management</h2>
+                <p class="color-fg-muted" style="margin: 2px 0;">Practice testing various navigation patterns, window
+                    operations,
+                    and browser interactions.</p>
+                <hr style="margin: 4px 0;">
+                <div class="card-grid d-flex flex-wrap">
+
+                    <div class="col-12 col-md-6 col-lg-4 py-2">
+                        <div class="Box color-shadow-medium d-flex flex-column">
+                            <div class="Box-body d-flex flex-column">
+                                <h4 class="color-fg-default"><a href="navigation-window/multi_tab_operations_.html"
+                                        class="color-fg-default" data-t="multi-tab-operations-title">Multi-tab
+                                        Operations</a></h4>
+                                <div>
+                                    <hr class="my-2 border-bottom color-border-muted">
+                                </div>
+                                <small>
+                                    <p class="color-fg-muted" data-t="multi-tab-operations-description">Test
+                                        interactions between
+                                        multiple browser tabs. Practice handling tab opening, closing, and communication
+                                        between
+                                        tabs.</p>
+                                </small>
+                                <div class="text-right">
+                                    <a href="navigation-window/multi_tab_operations_.html"
+                                        class="btn btn-sm btn-invisible" data-t="test-me-btn">Test Me</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4 py-2 pl-3">
+                        <div class="Box color-shadow-medium d-flex flex-column">
+                            <div class="Box-body d-flex flex-column">
+                                <h4 class="color-fg-default"><a href="navigation-window/browser_history_.html"
+                                        class="color-fg-default" data-t="browser-history-title">Browser History API</a>
+                                </h4>
+                                <div>
+                                    <hr class="my-2 border-bottom color-border-muted">
+                                </div>
+                                <small>
+                                    <p class="color-fg-muted" data-t="browser-history-description">Test browser history
+                                        manipulation
+                                        using the History API. Practice with state management, navigation, and URL
+                                        changes without
+                                        page reloads.</p>
+                                </small>
+                                <div class="text-right">
+                                    <a href="navigation-window/browser_history_.html" class="btn btn-sm btn-invisible"
+                                        data-t="test-me-btn">Test Me</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Popup Windows
+                    <div class="col-12 col-md-6 col-lg-4 py-2 pl-3">
+                        <div class="Box color-shadow-medium d-flex flex-column">
+                            <div class="Box-body d-flex flex-column">
+                                <h4 class="color-fg-default"><a href="navigation-window/popup_windows_.html"
+                                        class="color-fg-default" data-t="popup-windows-title">Popup Windows</a></h4>
+                                <div>
+                                    <hr class="my-2 border-bottom color-border-muted">
+                                </div>
+                                <small>
+                                    <p class="color-fg-muted" data-t="popup-windows-description">Test popup window
+                                        functionality
+                                        including opening, closing, and communication between parent and popup windows.
+                                        Practice
+                                        handling popup blockers.</p>
+                                </small>
+                                <div class="text-right">
+                                    <a href="navigation-window/popup_windows_.html" class="btn btn-sm btn-invisible"
+                                        data-t="test-me-btn">Test Me</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+
+                    <!-- Url Parameters 
+                    <div class="col-12 col-md-6 col-lg-4 py-2">
+                        <div class="Box color-shadow-medium d-flex flex-column">
+                            <div class="Box-body d-flex flex-column">
+                                <h4 class="color-fg-default"><a href="navigation-window/url_parameters_.html"
+                                        class="color-fg-default" data-t="url-parameters-title">URL Parameters</a></h4>
+                                <div>
+                                    <hr class="my-2 border-bottom color-border-muted">
+                                </div>
+                                <small>
+                                    <p class="color-fg-muted" data-t="url-parameters-description">Test handling of URL
+                                        query
+                                        parameters and hash fragments. Practice parsing, modifying, and utilizing URL
+                                        components for
+                                        dynamic content loading.</p>
+                                </small>
+                                <div class="text-right">
+                                    <a href="navigation-window/url_parameters_.html" class="btn btn-sm btn-invisible"
+                                        data-t="test-me-btn">Test Me</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+
+                    <div class="col-12 col-md-6 col-lg-4 py-2 pl-3">
+                        <div class="Box color-shadow-medium d-flex flex-column">
+                            <div class="Box-body d-flex flex-column">
+                                <h4 class="color-fg-default"><a href="navigation-window/iframe_interactions_.html"
+                                        class="color-fg-default" data-t="iframe-interactions-title">iFrame
+                                        Interactions</a></h4>
+                                <div>
+                                    <hr class="my-2 border-bottom color-border-muted">
+                                </div>
+                                <small>
+                                    <p class="color-fg-muted" data-t="iframe-interactions-description">Test interactions
+                                        with
+                                        embedded iframes. Practice communication between parent page and iframe content,
+                                        handling
+                                        cross-origin restrictions.</p>
+                                </small>
+                                <div class="text-right">
+                                    <a href="navigation-window/iframe_interactions_.html"
+                                        class="btn btn-sm btn-invisible" data-t="test-me-btn">Test Me</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Notifications and Alerts -->
 
         </div>
     </main>
@@ -949,6 +1128,7 @@
                     2025 Practice Test & Automation</small></span>
         </div>
     </footer>
+
 </body>
 
 </html>
