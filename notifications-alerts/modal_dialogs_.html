@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Dialogs - Practice Test & Automation</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet">
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+
+        /* Modal styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid #e1e4e8;
+        }
+
+        .modal-title {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            color: #586069;
+        }
+
+        .modal-body {
+            padding: 16px;
+        }
+
+        .modal-footer {
+            padding: 16px;
+            border-top: 1px solid #e1e4e8;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* Draggable modal */
+        .draggable .modal-header {
+            cursor: move;
+        }
+
+        /* Nested modal */
+        .modal-overlay.nested {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Validation styles */
+        .validation-message {
+            color: #d73a49;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .form-control.is-invalid {
+            border-color: #d73a49;
+        }
+
+        .form-control.is-valid {
+            border-color: #28a745;
+        }
+
+        /* Timer styles */
+        .timer {
+            font-weight: bold;
+            color: #d73a49;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test & Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#notifications-alerts"
+                        class="color-fg-accent">Notifications & Alerts</a></li>
+                <li class="breadcrumb-item" aria-current="page">Modal Dialogs</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Modal Dialogs</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Modal dialogs are popup windows that appear on top of the main content, requiring user
+                                interaction before returning to the main interface. They're commonly used for alerts,
+                                confirmations, forms, and displaying additional information without navigating away from
+                                the current page.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Modal Dialogs:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Temporarily blocks interaction with the main page</li>
+                                <li class="ml-4">Focuses user attention on specific content or actions</li>
+                                <li class="ml-4">Can be closed via buttons, overlay clicks, or keyboard shortcuts</li>
+                                <li class="ml-4">Often includes a semi-transparent overlay to dim the background</li>
+                                <li class="ml-4">May be draggable, resizable, or have animations</li>
+                            </ul>
+                            <h3 class="f4 mb-2">Common Modal Dialog Types:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4"><strong>Alert Modals:</strong> Display important information requiring
+                                    acknowledgment</li>
+                                <li class="ml-4"><strong>Confirmation Modals:</strong> Ask users to confirm or cancel an
+                                    action</li>
+                                <li class="ml-4"><strong>Form Modals:</strong> Collect user input without page
+                                    navigation
+                                </li>
+                                <li class="ml-4"><strong>Content Modals:</strong> Display additional content like images
+                                    or videos</li>
+                                <li class="ml-4"><strong>Progress Modals:</strong> Show loading states or multi-step
+                                    processes</li>
+                            </ol>
+                            <h3 class="f4 mb-2">Accessibility Considerations:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Focus should be trapped within the modal when open</li>
+                                <li class="ml-4">Escape key should close the modal</li>
+                                <li class="ml-4">Modal should have proper ARIA attributes (role="dialog",
+                                    aria-labelledby, etc.)</li>
+                                <li class="ml-4">Focus should return to the triggering element when closed</li>
+                                <li class="ml-4">Content behind the modal should be inert while modal is open</li>
+                            </ul>
+                            <p class="color-fg-muted">
+                                Testing modal dialogs thoroughly ensures they function correctly across different
+                                browsers and devices, maintain proper focus management, and provide a good user
+                                experience without causing accessibility issues.
+                            </p>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+                            <div class="d-flex flex-wrap mb-4">
+                                <button class="btn btn-primary mr-2 mb-2" data-modal="basic-modal">Open Basic
+                                    Modal</button>
+                                <button class="btn btn-danger mr-2 mb-2" data-modal="confirmation-modal">Open
+                                    Confirmation Modal</button>
+                                <button class="btn btn-outline mr-2 mb-2" data-modal="form-modal">Open Form
+                                    Modal</button>
+                            </div>
+
+                            <h3 class="f4 mb-2">Advanced Modal Features:</h3>
+                            <div class="d-flex flex-wrap mb-4">
+                                <button class="btn btn-outline mr-2 mb-2" data-modal="draggable-modal">Draggable
+                                    Modal</button>
+                                <button class="btn btn-outline mr-2 mb-2" data-modal="auto-closing-modal">Auto-closing
+                                    Modal</button>
+                                <button class="btn btn-outline mr-2 mb-2" data-modal="nested-modal-parent">Nested
+                                    Modals</button>
+                            </div>
+
+                            <div id="confirmation-result" class="flash flash-success mb-3" style="display: none;">
+                                Item deleted successfully!
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Basic Modal</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify modal opens when button is clicked
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify modal closes when close button is clicked
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify modal closes when overlay is clicked
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Confirmation
+                                            Modal</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify confirmation message is displayed
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify confirm button triggers correct action
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify cancel button dismisses modal without action
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Form Modal</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify form validation works correctly
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify form submission displays success message
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify form resets after successful submission
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Draggable
+                                            Modal</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify modal can be dragged by its header
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify modal position updates correctly while dragging
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify modal stays within viewport boundaries
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Auto-closing
+                                            Modal</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify countdown timer is displayed
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify modal automatically closes after timeout
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify manual close still works during countdown
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 6: Nested Modal</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify child modal opens on top of parent modal
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify closing child modal returns focus to parent modal
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify closing parent modal also closes child modal
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 7: Accessibility</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify Escape key closes modal
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify focus is trapped within modal
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify focus returns to trigger element when closed
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+
+    <!-- Basic Modal -->
+    <div id="basic-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Basic Modal</h3>
+                <button class="btn-close close-modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>This is a basic modal dialog. It can contain any HTML content.</p>
+                <p>Click the close button, press ESC, or click outside the modal to close it.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn close-modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Action</h3>
+                <button class="btn-close close-modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline close-modal">Cancel</button>
+                <button class="btn btn-danger" id="confirm-delete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Modal -->
+    <div id="form-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Contact Form</h3>
+                <button class="btn-close close-modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="contact-form">
+                    <div class="form-group mb-3">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" class="form-control width-full" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control width-full" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="message">Message</label>
+                        <textarea id="message" class="form-control width-full" rows="4" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline close-modal">Cancel</button>
+                <button class="btn btn-primary" id="submit-form">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Draggable Modal -->
+    <div id="draggable-modal" class="modal-overlay">
+        <div class="modal-content draggable">
+            <div class="modal-header draggable-handle">
+                <h3 class="modal-title">Draggable Modal</h3>
+                <button class="btn-close close-modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>This modal can be dragged around the screen by its header.</p>
+                <p>Click and hold the header, then move your mouse to reposition this dialog.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn close-modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auto-closing Modal -->
+    <div id="auto-closing-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Auto-closing Modal</h3>
+                <button class="btn-close close-modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>This modal will automatically close in <span id="countdown">5</span> seconds.</p>
+                <p>You can still close it manually if you want.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn close-modal">Close Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nested Modal Parent -->
+    <div id="nested-modal-parent" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Parent Modal</h3>
+                <button class="btn-close close-modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>This is the parent modal. You can open a child modal from here.</p>
+                <button class="btn btn-outline" data-modal="nested-modal-child">Open Child Modal</button>
+            </div>
+            <div class="modal-footer">
+                <button class="btn close-modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nested Modal Child -->
+    <div id="nested-modal-child" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Child Modal</h3>
+                <button class="btn-close close-modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>This is a child modal that opens on top of the parent modal.</p>
+                <p>Close this modal to return to the parent modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn close-modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - ©
+                    2025 Practice Test &amp; Automation</small></span>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // View More Scenarios functionality
+            document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+                e.preventDefault();
+                const additionalScenarios = document.querySelectorAll('.additional-scenario');
+                additionalScenarios.forEach(scenario => {
+                    scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+                });
+                this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+            });
+
+            // Modal functionality
+            // Modal open buttons
+            const modalButtons = document.querySelectorAll('[data-modal]');
+            modalButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const modalId = this.getAttribute('data-modal');
+                    openModal(modalId);
+                });
+            });
+
+            // Close buttons
+            const closeButtons = document.querySelectorAll('.close-modal');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const modal = this.closest('.modal-overlay');
+                    closeModal(modal.id);
+                });
+            });
+
+            // Close on overlay click
+            const overlays = document.querySelectorAll('.modal-overlay');
+            overlays.forEach(overlay => {
+                overlay.addEventListener('click', function (e) {
+                    if (e.target === this) {
+                        closeModal(this.id);
+                    }
+                });
+            });
+
+            // Close on ESC key
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    const activeModal = document.querySelector('.modal-overlay.active');
+                    if (activeModal) {
+                        closeModal(activeModal.id);
+                    }
+                }
+            });
+
+            // Confirmation modal functionality
+            const confirmDeleteBtn = document.getElementById('confirm-delete');
+            if (confirmDeleteBtn) {
+                confirmDeleteBtn.addEventListener('click', function () {
+                    closeModal('confirmation-modal');
+                    document.getElementById('confirmation-result').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('confirmation-result').style.display = 'none';
+                    }, 3000);
+                });
+            }
+
+            // Form modal functionality
+            const submitFormBtn = document.getElementById('submit-form');
+            if (submitFormBtn) {
+                submitFormBtn.addEventListener('click', function () {
+                    const form = document.getElementById('contact-form');
+                    if (form.checkValidity()) {
+                        closeModal('form-modal');
+                        alert('Form submitted successfully!');
+                        form.reset();
+                    } else {
+                        form.reportValidity();
+                    }
+                });
+            }
+
+            // Draggable modal functionality
+            const draggableElements = document.querySelectorAll('.draggable');
+            draggableElements.forEach(element => {
+                makeDraggable(element);
+            });
+
+            // Auto-closing modal functionality
+            let countdownInterval;
+            const autoClosingModal = document.getElementById('auto-closing-modal');
+            if (autoClosingModal) {
+                autoClosingModal.addEventListener('modalOpened', function () {
+                    let countdown = 5;
+                    const countdownElement = document.getElementById('countdown');
+
+                    countdownInterval = setInterval(() => {
+                        countdown--;
+                        if (countdownElement) countdownElement.textContent = countdown;
+
+                        if (countdown <= 0) {
+                            clearInterval(countdownInterval);
+                            closeModal('auto-closing-modal');
+                        }
+                    }, 1000);
+                });
+
+                autoClosingModal.addEventListener('modalClosed', function () {
+                    clearInterval(countdownInterval);
+                });
+            }
+        });
+
+        // Modal functions
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                document.body.classList.add('modal-open');
+                modal.classList.add('active');
+
+                // Trigger custom event for specific modal behaviors
+                const event = new CustomEvent('modalOpened');
+                modal.dispatchEvent(event);
+
+                // Set focus to first focusable element
+                const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusableElements.length > 0) {
+                    focusableElements[0].focus();
+                }
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                document.body.classList.remove('modal-open');
+                modal.classList.remove('active');
+
+                // Trigger custom event for specific modal behaviors
+                const event = new CustomEvent('modalClosed');
+                modal.dispatchEvent(event);
+            }
+        }
+
+        // Make an element draggable
+        function makeDraggable(element) {
+            const handle = element.querySelector('.draggable-handle') || element;
+            let isDragging = false;
+            let offsetX, offsetY;
+
+            handle.addEventListener('mousedown', function (e) {
+                isDragging = true;
+                offsetX = e.clientX - element.getBoundingClientRect().left;
+                offsetY = e.clientY - element.getBoundingClientRect().top;
+                handle.style.cursor = 'grabbing';
+
+                // Prevent text selection during drag
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', function (e) {
+                if (!isDragging) return;
+
+                const x = e.clientX - offsetX;
+                const y = e.clientY - offsetY;
+
+                // Keep modal within viewport bounds
+                const maxX = window.innerWidth - element.offsetWidth;
+                const maxY = window.innerHeight - element.offsetHeight;
+
+                const boundedX = Math.max(0, Math.min(x, maxX));
+                const boundedY = Math.max(0, Math.min(y, maxY));
+
+                element.style.left = boundedX + 'px';
+                element.style.top = boundedY + 'px';
+            });
+
+            document.addEventListener('mouseup', function () {
+                if (isDragging) {
+                    isDragging = false;
+                    handle.style.cursor = 'grab';
+                }
+            });
+
+            // Prevent dragging when interacting with form elements
+            element.querySelectorAll('input, textarea, select, button').forEach(formElement => {
+                formElement.addEventListener('mousedown', function (e) {
+                    e.stopPropagation();
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

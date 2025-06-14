@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Notifications Example</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .notification-demo {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test &amp; Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.</p>
+            </small>
+        </div>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#notifications-alerts"
+                        class="color-fg-accent">Notifications and Alerts</a></li>
+                <li class="breadcrumb-item" aria-current="page">Browser Notifications</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Browser Notifications</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Browser notifications allow websites to send messages to users outside of the web page
+                                context.
+                                These notifications appear as pop-up messages on the user's desktop or mobile device,
+                                even when
+                                the browser is minimized or closed (if the browser is running in the background).
+                            </p>
+
+                            <h3 class="f4 mb-2">Key Features of Browser Notifications:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Permission-based system requiring explicit user consent</li>
+                                <li class="ml-4">Can display even when the user is not actively using the website</li>
+                                <li class="ml-4">Support for title, body text, icon, and action buttons</li>
+                                <li class="ml-4">Click events can be handled to navigate users to specific content</li>
+                                <li class="ml-4">Available on both desktop and mobile browsers (with varying support)
+                                </li>
+                            </ul>
+
+                            <h3 class="f4 mb-2">How Browser Notifications Work:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">The website requests notification permission from the user</li>
+                                <li class="ml-4">If granted, the site can create and display notifications</li>
+                                <li class="ml-4">Notifications appear in the operating system's notification area</li>
+                                <li class="ml-4">Users can interact with notifications (click, dismiss, etc.)</li>
+                                <li class="ml-4">Websites can handle these interactions with JavaScript</li>
+                            </ol>
+
+                            <div class="code-example mb-4">
+                                <p class="mb-2">// Basic syntax for requesting permission and showing a notification:
+                                </p>
+                                <pre>
+// Request permission
+Notification.requestPermission().then(permission => {
+  if (permission === 'granted') {
+    // Show notification
+    new Notification('Hello!', {
+      body: 'This is a browser notification',
+      icon: 'path/to/icon.png'
+    });
+  }
+});
+                                </pre>
+                            </div>
+
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+
+                            <div class="notification-demo">
+                                <h4>Basic Notification</h4>
+                                <p>Simple notification with title and message.</p>
+                                <button id="requestPermission" class="btn btn-primary">Request Permission</button>
+                                <button id="showBasicNotification" class="btn btn-outline ml-2" disabled>Show Basic
+                                    Notification</button>
+                            </div>
+
+                            <div class="notification-demo">
+                                <h4>Advanced Notification</h4>
+                                <p>Notification with icon, badge and actions.</p>
+                                <button id="showAdvancedNotification" class="btn btn-outline" disabled>Show Advanced
+                                    Notification</button>
+                            </div>
+
+                            <div class="notification-demo">
+                                <h4>Timed Notification</h4>
+                                <p>Notification that appears after a delay.</p>
+                                <button id="showTimedNotification" class="btn btn-outline" disabled>Show Notification
+                                    After 3s</button>
+                            </div>
+
+                            <div id="notificationResult" class="flash mt-3" style="display: none;">
+                                <span id="resultText"></span>
+                            </div>
+
+                            <div class="flash flash-warn mt-4">
+                                <svg class="octicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16"
+                                    height="16">
+                                    <path fill-rule="evenodd"
+                                        d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z">
+                                    </path>
+                                </svg>
+                                <strong>Note:</strong> Browser notifications require HTTPS in production environments.
+                                Some browsers may block notifications or have settings to disable them entirely.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios &amp; Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Permission
+                                            Handling</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify permission request dialog appears
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test granting notification permission
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test denying notification permission
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Basic
+                                            Notification</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify notification appears with correct title
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test notification body text display
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Advanced
+                                            Features</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify icon displays correctly
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test notification click behavior
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Timing
+                                            Features</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify delayed notification appears after specified time
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test notification persistence
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="mt-3">
+                                <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View All Test
+                                    Scenarios →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        // Check if browser supports notifications
+        function checkNotificationSupport() {
+            if (!('Notification' in window)) {
+                showResult('error', 'This browser does not support notifications');
+                return false;
+            }
+            return true;
+        }
+
+        // Request notification permission
+        document.getElementById('requestPermission').addEventListener('click', function () {
+            if (!checkNotificationSupport()) return;
+
+            Notification.requestPermission().then(function (permission) {
+                if (permission === 'granted') {
+                    showResult('success', 'Notification permission granted!');
+                    enableButtons();
+                } else {
+                    showResult('error', 'Notification permission denied');
+                }
+            });
+        });
+
+        // Enable notification buttons
+        function enableButtons() {
+            document.getElementById('showBasicNotification').disabled = false;
+            document.getElementById('showAdvancedNotification').disabled = false;
+            document.getElementById('showTimedNotification').disabled = false;
+        }
+
+        // Show basic notification
+        document.getElementById('showBasicNotification').addEventListener('click', function () {
+            if (!checkNotificationSupport()) return;
+
+            if (Notification.permission === 'granted') {
+                const notification = new Notification('Basic Notification', {
+                    body: 'This is a simple notification example'
+                });
+
+                notification.onclick = function () {
+                    showResult('success', 'Basic notification clicked!');
+                    window.focus();
+                    this.close();
+                };
+            } else {
+                showResult('warn', 'Please request permission first');
+            }
+        });
+
+        // Show advanced notification
+        document.getElementById('showAdvancedNotification').addEventListener('click', function () {
+            if (!checkNotificationSupport()) return;
+
+            if (Notification.permission === 'granted') {
+                const notification = new Notification('Advanced Notification', {
+                    body: 'This notification has an icon and more features',
+                    icon: '../media-handling/image_sources/notification-icon.png',
+                    badge: '../media-handling/image_sources/badge-icon.png',
+                    tag: 'advanced-notification'
+                });
+
+                notification.onclick = function () {
+                    showResult('success', 'Advanced notification clicked!');
+                    window.focus();
+                    this.close();
+                };
+            } else {
+                showResult('warn', 'Please request permission first');
+            }
+        });
+
+        // Show timed notification
+        document.getElementById('showTimedNotification').addEventListener('click', function () {
+            if (!checkNotificationSupport()) return;
+
+            if (Notification.permission === 'granted') {
+                showResult('info', 'Notification will appear in 3 seconds...');
+
+                setTimeout(function () {
+                    const notification = new Notification('Delayed Notification', {
+                        body: 'This notification appeared after a 3-second delay',
+                        icon: '../media-handling/image_sources/notification-icon.png'
+                    });
+
+                    notification.onclick = function () {
+                        showResult('success', 'Timed notification clicked!');
+                        window.focus();
+                        this.close();
+                    };
+                }, 3000);
+            } else {
+                showResult('warn', 'Please request permission first');
+            }
+        });
+
+        // Show result message
+        function showResult(type, message) {
+            const resultElement = document.getElementById('notificationResult');
+            const resultText = document.getElementById('resultText');
+
+            resultElement.className = 'flash mt-3';
+            if (type === 'success') resultElement.classList.add('flash-success');
+            else if (type === 'error') resultElement.classList.add('flash-error');
+            else if (type === 'warn') resultElement.classList.add('flash-warn');
+            else if (type === 'info') resultElement.classList.add('flash-info');
+
+            resultText.textContent = message;
+            resultElement.style.display = 'block';
+
+            // Hide the message after 5 seconds
+            setTimeout(function () {
+                resultElement.style.display = 'none';
+            }, 5000);
+        }
+
+        // Check initial permission state
+        document.addEventListener('DOMContentLoaded', function () {
+            if (checkNotificationSupport() && Notification.permission === 'granted') {
+                showResult('info', 'Notification permission already granted');
+                enableButtons();
+            }
+        });
+
+        // Toggle additional scenarios
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+    </script>
+</body>
+
+</html>

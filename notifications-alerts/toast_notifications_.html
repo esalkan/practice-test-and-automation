@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test &amp; Automation - Toast Notifications</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet">
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        /* Toast notification styles */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 350px;
+        }
+
+        .toast {
+            margin-top: 10px;
+            padding: 12px 16px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: toast-in 0.3s ease-in-out;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.hide {
+            animation: toast-out 0.3s ease-in-out forwards;
+        }
+
+        .toast-success {
+            background-color: var(--color-success-subtle);
+            border-left: 4px solid var(--color-success-emphasis);
+            color: var(--color-success-fg);
+        }
+
+        .toast-error {
+            background-color: var(--color-danger-subtle);
+            border-left: 4px solid var(--color-danger-emphasis);
+            color: var(--color-danger-fg);
+        }
+
+        .toast-warning {
+            background-color: var(--color-attention-subtle);
+            border-left: 4px solid var(--color-attention-emphasis);
+            color: var(--color-attention-fg);
+        }
+
+        .toast-info {
+            background-color: var(--color-accent-subtle);
+            border-left: 4px solid var(--color-accent-emphasis);
+            color: var(--color-accent-fg);
+        }
+
+        .toast-content {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .toast-close {
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 16px;
+            color: inherit;
+        }
+
+        .toast-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.5);
+            width: 100%;
+        }
+
+        @keyframes toast-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes toast-out {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+
+        .toast-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .toast-controls .form-group {
+            margin-right: 15px;
+        }
+
+        .toast-controls label {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test &amp; Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#notifications-alerts"
+                        class="color-fg-accent">Notifications & Alerts</a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">Toast Notifications</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Toast Notifications</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Toast notifications are non-intrusive messages that appear temporarily on the screen to
+                                provide feedback or information to users. They typically slide in from the edge of the
+                                screen, display briefly, and then disappear automatically without requiring user
+                                interaction. Toast notifications are widely used in modern web and mobile applications
+                                to confirm actions, display status updates, or provide alerts without disrupting the
+                                user experience.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Toast Notifications:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Non-modal and non-blocking - users can continue interacting with the
+                                    application</li>
+                                <li class="ml-4">Temporary display with automatic dismissal after a set duration</li>
+                                <li class="ml-4">Visual categorization (success, error, warning, info) through colors
+                                    and icons</li>
+                                <li class="ml-4">Stacking capability for multiple notifications</li>
+                                <li class="ml-4">Optional interactive elements like action buttons or dismiss controls
+                                </li>
+                            </ul>
+                            <h3 class="f4 mb-2">How They Work:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4">An event triggers the toast notification (user action, system event,
+                                    etc.)</li>
+                                <li class="ml-4">The notification appears with an entrance animation (usually sliding
+                                    in)</li>
+                                <li class="ml-4">The message displays for a predetermined time (typically 3-5 seconds)
+                                </li>
+                                <li class="ml-4">A progress indicator may show the remaining display time</li>
+                                <li class="ml-4">The notification disappears with an exit animation (sliding out or
+                                    fading)</li>
+                            </ol>
+                            <h3 class="f4 mb-2">Common Use Cases:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Confirming successful form submissions or data saves</li>
+                                <li class="ml-4">Notifying about background process completion</li>
+                                <li class="ml-4">Displaying error messages for failed operations</li>
+                                <li class="ml-4">Providing system status updates</li>
+                                <li class="ml-4">Alerting users about new messages or notifications</li>
+                            </ul>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+                            <div class="toast-controls">
+                                <div class="form-group">
+                                    <label for="toast-type">Notification Type:</label>
+                                    <select id="toast-type" class="form-select">
+                                        <option value="success">Success</option>
+                                        <option value="error">Error</option>
+                                        <option value="warning">Warning</option>
+                                        <option value="info">Information</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="toast-duration">Duration (ms):</label>
+                                    <input type="number" id="toast-duration" class="form-control" value="5000"
+                                        min="1000" max="10000" step="500">
+                                </div>
+                                <div class="form-group">
+                                    <label for="toast-message">Custom Message:</label>
+                                    <input type="text" id="toast-message" class="form-control"
+                                        value="This is a sample notification message">
+                                </div>
+                                <div class="form-group">
+                                    <label for="toast-position">Position:</label>
+                                    <select id="toast-position" class="form-select">
+                                        <option value="bottom-right">Bottom Right</option>
+                                        <option value="bottom-left">Bottom Left</option>
+                                        <option value="top-right">Top Right</option>
+                                        <option value="top-left">Top Left</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="toast-progress">Show Progress Bar:</label>
+                                    <input type="checkbox" id="toast-progress" class="form-checkbox" checked>
+                                </div>
+                            </div>
+                            <button id="show-toast" class="btn btn-primary">Show Toast Notification</button>
+                            <button id="show-multiple" class="btn">Show Multiple Toasts</button>
+                            <button id="clear-all" class="btn btn-danger">Clear All Toasts</button>
+
+                            <div class="mt-4">
+                                <h4 class="f4 mb-2">Advanced Features:</h4>
+                                <div class="d-flex flex-wrap">
+                                    <button id="show-action-toast" class="btn btn-outline mr-2 mb-2">Toast with Action
+                                        Button</button>
+                                    <button id="show-persistent-toast" class="btn btn-outline mr-2 mb-2">Persistent
+                                        Toast (No Auto-dismiss)</button>
+                                    <button id="show-animated-toast" class="btn btn-outline mr-2 mb-2">Custom Animation
+                                        Toast</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios &amp; Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Basic Toast
+                                            Functionality</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify toast appears with correct message
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify toast auto-dismisses after specified duration
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test manual dismissal by clicking close button
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Toast Types and
+                                            Styling</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify success toast displays with correct color scheme
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify error toast displays with correct color scheme
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test warning and info toast visual appearance
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Multiple Toast
+                                            Handling</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify multiple toasts stack correctly
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test clear all functionality removes all toasts
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify individual toast dismissal doesn't affect others
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="additional-scenario mb-3" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Toast
+                                            Positioning</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify toast appears in bottom-right position by default
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test toast positioning in all four corners
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify position change applies to new toasts only
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="additional-scenario mb-3" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Progress
+                                            Indicator</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify progress bar decreases smoothly over time
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test enabling/disabling progress bar functionality
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify progress bar completes at the same time as toast dismissal
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="additional-scenario mb-3" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 6: Interactive Toast
+                                            Features</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test action button functionality in toast
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify persistent toast remains until manually dismissed
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test hover pause functionality on toast notifications
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="additional-scenario mb-3" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 7: Animation
+                                            Effects</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify entrance animation plays correctly
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Test exit animation plays correctly
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>Verify custom animation effects work as expected
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <!-- Toast container divs for different positions -->
+    <div id="toast-container-top-right" class="toast-container" style="top: 20px; right: 20px;"></div>
+    <div id="toast-container-top-left" class="toast-container" style="top: 20px; left: 20px;"></div>
+    <div id="toast-container-bottom-right" class="toast-container" style="bottom: 20px; right: 20px;"></div>
+    <div id="toast-container-bottom-left" class="toast-container" style="bottom: 20px; left: 20px;"></div>
+
+    <script>
+        // Toast notification system
+        let toastCounter = 0;
+        const toastTypeIcons = {
+            success: '<svg class="octicon mr-2" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg>',
+            error: '<svg class="octicon mr-2" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path></svg>',
+            warning: '<svg class="octicon mr-2" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z"></path></svg>',
+            info: '<svg class="octicon mr-2" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>'
+        };
+
+        function showToast(options = {}) {
+            const {
+                message = 'This is a notification',
+                type = 'info',
+                duration = 5000,
+                position = 'bottom-right',
+                showProgress = true,
+                persistent = false,
+                actionText = null,
+                actionCallback = null,
+                customAnimation = false
+            } = options;
+
+            toastCounter++;
+            const toastId = `toast-${toastCounter}`;
+
+            // Get the container for the specified position
+            const container = document.getElementById(`toast-container-${position}`);
+
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.id = toastId;
+            toast.className = `toast toast-${type}`;
+            if (customAnimation) {
+                toast.style.animation = 'toast-in 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards';
+            }
+
+            // Create toast content
+            let toastHTML = `
+                        <div class="toast-content">
+                            <div class="toast-header">
+                                ${toastTypeIcons[type] || ''}
+                                <span class="toast-title">${type.charAt(0).toUpperCase() + type.slice(1)}</span>
+                            </div>
+                            <div class="toast-message">${message}</div>
+                            ${actionText ? `<button class="toast-action btn btn-sm mt-2" data-toast-id="${toastId}">${actionText}</button>` : ''}
+                        </div>
+                        <button class="toast-close" aria-label="Close" data-toast-id="${toastId}">&times;</button>
+                    `;
+
+            // Add progress bar if enabled
+            if (showProgress && !persistent) {
+                toastHTML += `<div class="toast-progress"></div>`;
+            }
+
+            toast.innerHTML = toastHTML;
+            container.appendChild(toast);
+
+            // Animate progress bar 
+            let dismissTimeout;
+            if (showProgress && !persistent) {
+                const progressBar = toast.querySelector('.toast-progress');
+                if (progressBar) {
+                    progressBar.style.width = '0';
+
+                    setTimeout(() => {
+                        progressBar.style.transition = `width ${duration}ms linear`;
+                        progressBar.style.width = '100%';
+                    }, 50);
+                }
+            }
+
+            // Set up auto-dismiss
+            if (!persistent) {
+                dismissTimeout = setTimeout(() => {
+                    dismissToast(toastId);
+                }, duration);
+            }
+
+            // Add event listeners
+            const closeButton = toast.querySelector('.toast-close');
+            closeButton.addEventListener('click', function () {
+                dismissToast(this.getAttribute('data-toast-id'));
+            });
+
+            // Add event listener for action button if present
+            const actionButton = toast.querySelector('.toast-action');
+            if (actionButton) {
+                actionButton.addEventListener('click', function () {
+                    if (actionCallback) {
+                        actionCallback();
+                    } else {
+                        alert('Action taken for toast: ' + this.getAttribute('data-toast-id'));
+                    }
+                    dismissToast(this.getAttribute('data-toast-id'));
+                });
+            }
+
+            // Pause timer on hover
+            toast.addEventListener('mouseenter', function () {
+                if (showProgress && !persistent) {
+                    const progressBar = this.querySelector('.toast-progress');
+                    if (progressBar) {
+                        progressBar.style.transition = 'none';
+                    }
+                    clearTimeout(dismissTimeout);
+                }
+            });
+
+            // Resume timer on mouse leave
+            toast.addEventListener('mouseleave', function () {
+                if (showProgress && !persistent && !toast.classList.contains('toast-dismissing')) {
+                    const progressBar = this.querySelector('.toast-progress');
+                    if (progressBar) {
+                        const progressWidth = parseFloat(getComputedStyle(progressBar).width);
+                        const toastWidth = parseFloat(getComputedStyle(toast).width);
+                        const remainingTime = duration * (1 - (progressWidth / toastWidth));
+
+                        progressBar.style.transition = `width ${remainingTime}ms linear`;
+                        progressBar.style.width = '100%';
+
+                        dismissTimeout = setTimeout(() => {
+                            dismissToast(toastId);
+                        }, remainingTime);
+                    }
+                }
+            });
+
+            return toastId;
+        }
+
+        function dismissToast(toastId) {
+            const toast = document.getElementById(toastId);
+            if (!toast) return;
+
+            toast.classList.add('toast-dismissing');
+            toast.style.animation = 'toast-out 0.3s forwards';
+
+            setTimeout(() => {
+                if (toast && toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 300);
+        }
+
+        function clearAllToasts() {
+            document.querySelectorAll('.toast').forEach(toast => {
+                const toastId = toast.id;
+                dismissToast(toastId);
+            });
+        }
+
+        // Event listeners for the demo buttons
+        document.addEventListener('DOMContentLoaded', function () {
+            // Show toast button
+            const showToastBtn = document.getElementById('show-toast');
+            if (showToastBtn) {
+                showToastBtn.addEventListener('click', function () {
+                    const type = document.getElementById('toast-type').value;
+                    const duration = parseInt(document.getElementById('toast-duration').value);
+                    const message = document.getElementById('toast-message').value;
+                    const position = document.getElementById('toast-position').value;
+                    const showProgress = document.getElementById('toast-progress').checked;
+
+                    showToast({
+                        message,
+                        type,
+                        duration,
+                        position,
+                        showProgress
+                    });
+                });
+            }
+
+            // Show multiple toasts button
+            const showMultipleBtn = document.getElementById('show-multiple');
+            if (showMultipleBtn) {
+                showMultipleBtn.addEventListener('click', function () {
+                    const types = ['success', 'error', 'warning', 'info'];
+                    const messages = [
+                        'Operation completed successfully',
+                        'An error occurred during the process',
+                        'This action may have consequences',
+                        'New updates are available'
+                    ];
+
+                    types.forEach((type, index) => {
+                        setTimeout(() => {
+                            showToast({
+                                message: messages[index],
+                                type,
+                                duration: 5000,
+                                position: document.getElementById('toast-position').value
+                            });
+                        }, index * 300);
+                    });
+                });
+            }
+
+            // Clear all toasts button
+            const clearAllBtn = document.getElementById('clear-all');
+            if (clearAllBtn) {
+                clearAllBtn.addEventListener('click', clearAllToasts);
+            }
+
+            // Show action toast button
+            const showActionToastBtn = document.getElementById('show-action-toast');
+            if (showActionToastBtn) {
+                showActionToastBtn.addEventListener('click', function () {
+                    showToast({
+                        message: 'Would you like to undo this action?',
+                        type: 'info',
+                        duration: 5000,
+                        actionText: 'Undo',
+                        actionCallback: function () {
+                            showToast({
+                                message: 'Action has been undone',
+                                type: 'success',
+                                duration: 5000
+                            });
+                        }
+                    });
+                });
+            }
+
+            // Show persistent toast button
+            const showPersistentBtn = document.getElementById('show-persistent');
+            if (showPersistentBtn) {
+                showPersistentBtn.addEventListener('click', function () {
+                    showToast({
+                        message: 'This is a persistent notification that will not auto-dismiss',
+                        type: 'warning',
+                        persistent: true,
+                        showProgress: false
+                    });
+                });
+            }
+
+            // Show custom animation toast button
+            const showCustomAnimBtn = document.getElementById('show-custom-anim');
+            if (showCustomAnimBtn) {
+                showCustomAnimBtn.addEventListener('click', function () {
+                    showToast({
+                        message: 'This toast has a custom animation effect',
+                        type: 'success',
+                        duration: 5000,
+                        customAnimation: true
+                    });
+                });
+            }
+
+            // View more scenarios button
+            const viewMoreBtn = document.getElementById('view-more-scenarios');
+            if (viewMoreBtn) {
+                viewMoreBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const additionalScenarios = document.querySelectorAll('.additional-scenario');
+                    additionalScenarios.forEach(scenario => {
+                        scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+                    });
+                    this.textContent = this.textContent.includes('View All') ? 'Hide Additional Scenarios' : 'View All Test Scenarios →';
+                });
+            }
+        }
+        );
+
+        // Custom CSS for toast notifications
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                .toast-container {
+                    position: fixed;
+                    z-index: 9999;
+                    max-width: 350px;
+                    width: 100%;
+                }
+                
+                .toast {
+                    position: relative;
+                    margin-bottom: 10px;
+                    padding: 15px;
+                    border-radius: 6px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    background-color: #fff;
+                    color: #24292e;
+                    overflow: hidden;
+                    animation: toast-in 0.3s ease-out forwards;
+                    display: flex;
+                    flex-direction: column;
+                }
+                
+                .toast-content {
+                    display: flex;
+                    flex-direction: column;
+                    padding-right: 20px;
+                }
+                
+                .toast-header {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 5px;
+                }
+                
+                .toast-title {
+                    font-weight: 600;
+                }
+                
+                .toast-message {
+                    font-size: 14px;
+                }
+                
+                .toast-close {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    background: none;
+                    border: none;
+                    font-size: 18px;
+                    cursor: pointer;
+                    color: #6a737d;
+                    padding: 0;
+                    width: 20px;
+                    height: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                
+                .toast-progress {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    height: 3px;
+                    width: 0%;
+                    background-color: rgba(0, 0, 0, 0.2);
+                }
+                
+                .toast-success {
+                    background-color: #2da44e;
+                    color: white;
+                }
+                
+                .toast-error {
+                    background-color: #cf222e;
+                    color: white;
+                }
+                
+                .toast-warning {
+                    background-color: #bf8700;
+                    color: white;
+                }
+                
+                .toast-info {
+                    background-color: #0969da;
+                    color: white;
+                }
+                
+                .toast-action {
+                    align-self: flex-start;
+                }
+                
+                @keyframes toast-in {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                
+                @keyframes toast-out {
+                    from {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                }
+                
+                .date-time-container {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                    gap: 10px;
+                    margin-bottom: 10px;
+                }
+                
+                .numeric-input-container {
+                    display: flex;
+                    align-items: center;
+                }
+                
+                .numeric-input-container input {
+                    width: 80px;
+                    text-align: center;
+                    margin: 0 5px;
+                }
+                
+                .color-preview {
+                    display: inline-block;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 3px;
+                    margin-left: 10px;
+                    border: 1px solid #d0d7de;
+                }
+                
+                .file-upload-preview {
+                    max-width: 100%;
+                    max-height: 200px;
+                    margin-top: 10px;
+                    display: none;
+                }
+                
+                .validation-message {
+                    margin-top: 5px;
+                    font-size: 12px;
+                }
+                
+                .validation-message.valid {
+                    color: #2da44e;
+                }
+                
+                .validation-message.invalid {
+                    color: #cf222e;
+                }
+                
+                .custom-range-value {
+                    min-width: 40px;
+                    text-align: right;
+                }
+                
+                .numeric-value-display {
+                    min-width: 30px;
+                }
+            </style>
+        `);
+
+        // Additional JavaScript for interactive elements
+        document.addEventListener('DOMContentLoaded', function () {
+            // Range input value display
+            const rangeInput = document.getElementById('range-input');
+            if (rangeInput) {
+                rangeInput.addEventListener('input', function () {
+                    const displayId = this.getAttribute('data-value-display');
+                    const unit = this.getAttribute('data-unit') || '';
+                    document.getElementById(displayId).textContent = this.value + unit;
+                });
+            }
+
+            // Numeric input increment/decrement
+            const numericInput = document.getElementById('numeric-input');
+            if (numericInput) {
+                document.getElementById('numeric-increment').addEventListener('click', function () {
+                    if (numericInput.value < parseInt(numericInput.max)) {
+                        numericInput.value = parseInt(numericInput.value) + parseInt(numericInput.step);
+                        document.getElementById('numeric-value').textContent = numericInput.value;
+                    }
+                });
+
+                document.getElementById('numeric-decrement').addEventListener('click', function () {
+                    if (numericInput.value > parseInt(numericInput.min)) {
+                        numericInput.value = parseInt(numericInput.value) - parseInt(numericInput.step);
+                        document.getElementById('numeric-value').textContent = numericInput.value;
+                    }
+                });
+
+                numericInput.addEventListener('input', function () {
+                    document.getElementById('numeric-value').textContent = this.value;
+                });
+            }
+
+            // Color input hex display
+            const colorInput = document.getElementById('color-input');
+            if (colorInput) {
+                colorInput.addEventListener('input', function () {
+                    document.getElementById('color-hex').textContent = this.value;
+                    document.querySelector('.color-preview').style.backgroundColor = this.value;
+                });
+            }
+
+            // File input preview
+            const fileInput = document.getElementById('file-input');
+            if (fileInput) {
+                fileInput.addEventListener('change', function () {
+                    const preview = document.getElementById('file-preview');
+                    if (this.files && this.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            preview.src = e.target.result;
+                            preview.style.display = 'block';
+                        };
+                        reader.readAsDataURL(this.files[0]);
+                    } else {
+                        preview.style.display = 'none';
+                    }
+                });
+            }
+
+            // Email and URL validation
+            const validateBtn = document.getElementById('validate-inputs');
+            if (validateBtn) {
+                validateBtn.addEventListener('click', function () {
+                    const emailInput = document.getElementById('email-input');
+                    const urlInput = document.getElementById('url-input');
+                    const emailValidation = document.getElementById('email-validation');
+                    const urlValidation = document.getElementById('url-validation');
+
+                    // Email validation
+                    if (emailInput.value) {
+                        if (emailInput.validity.valid) {
+                            emailValidation.textContent = '✓ Valid email format';
+                            emailValidation.className = 'validation-message valid';
+                        } else {
+                            emailValidation.textContent = '✗ Invalid email format';
+                            emailValidation.className = 'validation-message invalid';
+                        }
+                    } else {
+                        emailValidation.textContent = 'Please enter an email address';
+                        emailValidation.className = 'validation-message';
+                    }
+
+                    // URL validation
+                    if (urlInput.value) {
+                        if (urlInput.validity.valid) {
+                            urlValidation.textContent = '✓ Valid URL format';
+                            urlValidation.className = 'validation-message valid';
+                        } else {
+                            urlValidation.textContent = '✗ Invalid URL format (must include http:// or https://)';
+                            urlValidation.className = 'validation-message invalid';
+                        }
+                    } else {
+                        urlValidation.textContent = 'Please enter a URL';
+                        urlValidation.className = 'validation-message';
+                    }
+                });
+            }
+
+            // Date and time check
+            const checkDateTimeBtn = document.getElementById('check-date-time');
+            if (checkDateTimeBtn) {
+                checkDateTimeBtn.addEventListener('click', function () {
+                    const dateInput = document.getElementById('date-input').value;
+                    const timeInput = document.getElementById('time-input').value;
+                    const dateTimeInput = document.getElementById('datetime-local-input').value;
+                    const resultDiv = document.getElementById('date-time-result');
+
+                    let result = '';
+                    if (dateInput) result += `Selected date: ${dateInput}<br>`;
+                    if (timeInput) result += `Selected time: ${timeInput}<br>`;
+                    if (dateTimeInput) result += `Selected date and time: ${dateTimeInput}<br>`;
+
+                    if (!result) {
+                        result = 'No date or time selected';
+                    }
+
+                    resultDiv.innerHTML = result;
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

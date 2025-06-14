@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test &amp; Automation - Browser Alerts</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet">
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .btn-group {
+            margin-bottom: 10px;
+        }
+
+        .alert-result {
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .alert-success {
+            background-color: #def1d7;
+            color: #1e7e34;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+
+        .code-example {
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 16px;
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 85%;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test &amp; Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#notifications-alerts"
+                        class="color-fg-accent">Notifications and Alerts</a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">Browser Alerts</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Browser Alerts</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Browser alerts are native dialog boxes that interrupt the user's interaction with a
+                                webpage.
+                                They are part of the JavaScript's built-in functionality and come in three main types:
+                                alert, confirm, and prompt. These dialogs are modal, meaning they block interaction with
+                                the rest of the page until they are dismissed.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Browser Alerts:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Modal dialogs that block interaction with the page</li>
+                                <li class="ml-4">Cannot be styled with CSS (browser-controlled appearance)</li>
+                                <li class="ml-4">Three distinct types with different user interaction patterns</li>
+                                <li class="ml-4">Synchronous execution (JavaScript pauses until user responds)</li>
+                                <li class="ml-4">Accessible via keyboard navigation</li>
+                            </ul>
+                            <h3 class="f4 mb-2">Types of Browser Alerts:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4"><strong>Alert</strong>: Simple notification with an OK button. Used to
+                                    display information that requires acknowledgment.</li>
+                                <li class="ml-4"><strong>Confirm</strong>: Question dialog with OK and Cancel buttons.
+                                    Returns boolean value based on user's choice.</li>
+                                <li class="ml-4"><strong>Prompt</strong>: Input dialog with text field, OK and Cancel
+                                    buttons. Returns user input as string or null.</li>
+                            </ol>
+                            <h3 class="f4 mb-2">Common Use Cases:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Displaying critical notifications or warnings</li>
+                                <li class="ml-4">Confirming destructive actions (e.g., delete operations)</li>
+                                <li class="ml-4">Collecting simple user input without form elements</li>
+                                <li class="ml-4">Interrupting user flow for important messages</li>
+                            </ul>
+
+                            <div class="code-example">
+                                <p class="mb-2">// Basic syntax examples:</p>
+                                <p class="mb-1">alert("This is an alert message");</p>
+                                <p class="mb-1">const userConfirmed = confirm("Do you want to proceed?");</p>
+                                <p>const userInput = prompt("Please enter your name:", "Default value");</p>
+                            </div>
+
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+
+                            <div class="btn-group d-flex flex-column flex-md-row mb-3">
+                                <button id="showAlert" class="btn btn-primary mr-md-2 mb-2 mb-md-0">Show Alert</button>
+                                <button id="showConfirm" class="btn btn-primary mr-md-2 mb-2 mb-md-0">Show
+                                    Confirm</button>
+                                <button id="showPrompt" class="btn btn-primary mb-2 mb-md-0">Show Prompt</button>
+                            </div>
+
+                            <div class="btn-group d-flex flex-column flex-md-row">
+                                <button id="showAlertWithTimeout" class="btn btn-outline mr-md-2 mb-2 mb-md-0">Alert
+                                    with Timeout (3s)</button>
+                                <button id="showNestedAlerts" class="btn btn-outline mr-md-2 mb-2 mb-md-0">Nested
+                                    Alerts</button>
+                                <button id="showCustomizedPrompt" class="btn btn-outline mb-2 mb-md-0">Customized
+                                    Prompt</button>
+                            </div>
+
+                            <div id="alertResult" class="alert-result mt-3">
+                                <strong>Result:</strong> <span id="resultText"></span>
+                            </div>
+
+                            <div class="flash flash-warn mt-4">
+                                <svg class="octicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16"
+                                    height="16">
+                                    <path fill-rule="evenodd"
+                                        d="M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z">
+                                    </path>
+                                </svg>
+                                <strong>Note:</strong> Some browsers may block multiple consecutive alerts or have
+                                settings to disable them entirely. If you don't see the alert, check your browser
+                                settings.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios &amp; Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Basic Alert
+                                            Dialog</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify alert displays with correct message
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify page interaction is blocked during alert
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify script execution continues after alert is dismissed
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Confirm Dialog
+                                            Interaction</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify confirm dialog returns true when OK is clicked
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify confirm dialog returns false when Cancel is clicked
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify conditional logic based on confirm result
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Prompt Dialog Data
+                                            Collection</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify prompt returns user input when OK is clicked
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify prompt returns null when Cancel is clicked
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify default value is displayed in prompt input field
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="additional-scenario mb-3" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Timed Alert
+                                            Behavior</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify alert appears after specified timeout
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify page remains interactive until alert appears
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test cancellation of timed alert before it appears
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="additional-scenario mb-3" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Nested Alert
+                                            Sequence</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify alerts appear in correct sequence
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test data flow between sequential alerts
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify all alerts must be dismissed to continue
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="additional-scenario mb-3" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 6: Customized Prompt
+                                            Validation</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test input validation with custom prompt
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify re-prompting on invalid input
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test handling of empty input values
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View All Test
+                                Scenarios →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - ©
+                    2025 Practice Test &amp; Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // View More Scenarios functionality
+            document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+                e.preventDefault();
+                const additionalScenarios = document.querySelectorAll('.additional-scenario');
+                additionalScenarios.forEach(scenario => {
+                    scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+                });
+                this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+            });
+
+            // Result display function
+            function showResult(message, type = 'info') {
+                const resultElement = document.getElementById('alertResult');
+                const resultText = document.getElementById('resultText');
+
+                resultElement.className = 'alert-result';
+                resultElement.classList.add(`alert-${type}`);
+                resultText.textContent = message;
+                resultElement.style.display = 'block';
+            }
+
+            // Basic Alert
+            document.getElementById('showAlert').addEventListener('click', function () {
+                alert("This is a simple alert dialog!");
+                showResult("Alert was displayed and dismissed.", "info");
+            });
+
+            // Confirm Dialog
+            document.getElementById('showConfirm').addEventListener('click', function () {
+                const confirmed = confirm("Do you want to proceed with this action?");
+                if (confirmed) {
+                    showResult("You clicked OK on the confirm dialog.", "success");
+                } else {
+                    showResult("You clicked Cancel on the confirm dialog.", "warning");
+                }
+            });
+
+            // Prompt Dialog
+            document.getElementById('showPrompt').addEventListener('click', function () {
+                const name = prompt("Please enter your name:", "Guest User");
+                if (name !== null) {
+                    showResult(`Hello, ${name}! Thank you for providing your name.`, "success");
+                } else {
+                    showResult("You cancelled the prompt dialog.", "warning");
+                }
+            });
+
+            // Alert with Timeout
+            document.getElementById('showAlertWithTimeout').addEventListener('click', function () {
+                showResult("Alert will appear in 3 seconds...", "info");
+                setTimeout(function () {
+                    alert("This alert appeared after a 3-second delay!");
+                    showResult("Timed alert was displayed and dismissed.", "success");
+                }, 3000);
+            });
+
+            // Nested Alerts
+            document.getElementById('showNestedAlerts').addEventListener('click', function () {
+                alert("This is the first alert!");
+                const response = confirm("Would you like to see another alert?");
+                if (response) {
+                    const name = prompt("What's your name?", "");
+                    if (name !== null && name !== "") {
+                        alert(`Hello, ${name}! This is the final alert.`);
+                        showResult(`Completed nested alert sequence. User name: ${name}`, "success");
+                    } else {
+                        showResult("Nested alert sequence cancelled at name prompt.", "warning");
+                    }
+                } else {
+                    showResult("Nested alert sequence cancelled at confirmation.", "warning");
+                }
+            });
+
+            // Customized Prompt with Validation
+            document.getElementById('showCustomizedPrompt').addEventListener('click', function () {
+                let validInput = false;
+                let age;
+
+                while (!validInput) {
+                    age = prompt("Please enter your age (must be a number between 18-120):", "");
+
+                    if (age === null) {
+                        showResult("Age input cancelled.", "warning");
+                        return;
+                    }
+
+                    age = parseInt(age);
+
+                    if (isNaN(age)) {
+                        alert("Please enter a valid number!");
+                    } else if (age < 18 || age > 120) {
+                        alert("Age must be between 18 and 120!");
+                    } else {
+                        validInput = true;
+                    }
+                }
+
+                showResult(`Thank you! Your age (${age}) has been recorded.`, "success");
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en" class="color-mode-auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test &amp; Automation - Status Indicators</title>
+    <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet">
+    <script
+        src="https://unpkg.com/@primer/view-components@0.0.98/app/assets/javascripts/primer_view_components.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-success {
+            background-color: #2da44e;
+        }
+
+        .status-warning {
+            background-color: #bf8700;
+        }
+
+        .status-error {
+            background-color: #cf222e;
+        }
+
+        .status-info {
+            background-color: #0969da;
+        }
+
+        .status-neutral {
+            background-color: #6e7781;
+        }
+
+        .status-offline {
+            background-color: #6e7781;
+            position: relative;
+        }
+
+        .status-offline::after {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: -1px;
+            width: 14px;
+            height: 2px;
+            background-color: #fff;
+            transform: rotate(-45deg);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .status-badge-success {
+            background-color: rgba(45, 164, 78, 0.15);
+            color: #1a7f37;
+        }
+
+        .status-badge-warning {
+            background-color: rgba(191, 135, 0, 0.15);
+            color: #9a6700;
+        }
+
+        .status-badge-error {
+            background-color: rgba(207, 34, 46, 0.15);
+            color: #cf222e;
+        }
+
+        .status-badge-info {
+            background-color: rgba(9, 105, 218, 0.15);
+            color: #0969da;
+        }
+
+        .status-badge-neutral {
+            background-color: rgba(110, 119, 129, 0.15);
+            color: #57606a;
+        }
+
+        .status-text {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 16px;
+            margin-bottom: 8px;
+        }
+
+        .status-bar-container {
+            width: 100%;
+            height: 8px;
+            background-color: #d0d7de;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .status-bar {
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .status-bar-success {
+            background-color: #2da44e;
+        }
+
+        .status-bar-warning {
+            background-color: #bf8700;
+        }
+
+        .status-bar-error {
+            background-color: #cf222e;
+        }
+
+        .status-bar-info {
+            background-color: #0969da;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .status-item-content {
+            flex: 1;
+        }
+
+        .status-item-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .status-item-subtitle {
+            font-size: 12px;
+            color: #57606a;
+        }
+
+        .status-item-action {
+            margin-left: 8px;
+        }
+
+        .status-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .status-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #0969da;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .custom-status-form {
+            margin-top: 16px;
+            padding: 16px;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+        }
+
+        .status-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .dashboard-item {
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 16px;
+        }
+
+        .dashboard-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-item-title {
+            font-weight: 600;
+        }
+
+        .dashboard-item-value {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 8px 0;
+        }
+
+        .dashboard-item-footer {
+            font-size: 12px;
+            color: #57606a;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-1">
+            <h1 class="f2 color-fg-default">Practice Test &amp; Automation</h1>
+            <small>
+                <p class="color-fg-muted" style="margin: 0px 0;">Improve your test and automation skills with our
+                    examples.
+                </p>
+            </small>
+        </div>
+    </header>
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="color-bg-subtle border-bottom color-border-muted">
+        <div class="container-xl p-responsive py-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html" class="color-fg-accent">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#notifications-alerts"
+                        class="color-fg-accent">Notifications & Alerts</a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">Status Indicators</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container-xl p-responsive py-6">
+            <div class="clearfix">
+                <!-- Left Card (2/3 width) -->
+                <div class="col-12 col-md-8 float-left pr-md-3 mb-3 mb-md-0">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Understanding Status Indicators</h2>
+                        </div>
+                        <div class="Box-body">
+                            <p class="color-fg-muted mb-3" data-t="page-description">
+                                Status indicators are visual elements that communicate the current state of a system,
+                                process, or component to users. They provide immediate feedback about conditions,
+                                progress, or availability, helping users understand what's happening without requiring
+                                detailed explanations. Effective status indicators use consistent visual language
+                                through colors, shapes, animations, and positioning to convey information at a glance.
+                            </p>
+                            <h3 class="f4 mb-2">Key Features of Status Indicators:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">Visual consistency through color coding (green for success, red for
+                                    errors, etc.)</li>
+                                <li class="ml-4">Various formats including dots, badges, text labels, and progress bars
+                                </li>
+                                <li class="ml-4">Real-time updates to reflect changing conditions</li>
+                                <li class="ml-4">Accessibility considerations for color-blind users</li>
+                                <li class="ml-4">Contextual placement near the elements they describe</li>
+                            </ul>
+                            <h3 class="f4 mb-2">Common Types of Status Indicators:</h3>
+                            <ol class="color-fg-muted mb-4">
+                                <li class="ml-4"><strong>Status Dots</strong>: Small colored circles indicating simple
+                                    states (online/offline, active/inactive)</li>
+                                <li class="ml-4"><strong>Status Badges</strong>: Labeled indicators with background
+                                    colors for more detailed status information</li>
+                                <li class="ml-4"><strong>Progress Bars</strong>: Linear indicators showing completion
+                                    percentage of processes</li>
+                                <li class="ml-4"><strong>Loading Spinners</strong>: Animated indicators for processes
+                                    with indeterminate completion times</li>
+                                <li class="ml-4"><strong>Status Text</strong>: Explicit text labels, often combined with
+                                    colors or icons</li>
+                            </ol>
+                            <h3 class="f4 mb-2">Common Use Cases:</h3>
+                            <ul class="color-fg-muted mb-4">
+                                <li class="ml-4">System status dashboards showing service availability</li>
+                                <li class="ml-4">User presence indicators (online, away, offline)</li>
+                                <li class="ml-4">Form field validation feedback</li>
+                                <li class="ml-4">File upload or download progress</li>
+                                <li class="ml-4">Task or process completion status</li>
+                            </ul>
+                            <hr>
+                            <h3 class="f4 mb-2">Test Me Here:</h3>
+
+                            <!-- Basic Status Indicators -->
+                            <div class="mb-4">
+                                <h4 class="mb-2">Basic Status Indicators</h4>
+                                <div class="d-flex flex-wrap mb-3">
+                                    <div class="status-text">
+                                        <span class="status-indicator status-success"></span>
+                                        <span>Online</span>
+                                    </div>
+                                    <div class="status-text">
+                                        <span class="status-indicator status-warning"></span>
+                                        <span>Away</span>
+                                    </div>
+                                    <div class="status-text">
+                                        <span class="status-indicator status-error"></span>
+                                        <span>Busy</span>
+                                    </div>
+                                    <div class="status-text">
+                                        <span class="status-indicator status-offline"></span>
+                                        <span>Offline</span>
+                                    </div>
+                                    <div class="status-text">
+                                        <span class="status-indicator status-info"></span>
+                                        <span>In Meeting</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Status Badges -->
+                            <div class="mb-4">
+                                <h4 class="mb-2">Status Badges</h4>
+                                <div class="d-flex flex-wrap mb-3">
+                                    <span class="status-badge status-badge-success">
+                                        <span class="status-indicator status-success"></span>
+                                        Active
+                                    </span>
+                                    <span class="status-badge status-badge-warning">
+                                        <span class="status-indicator status-warning"></span>
+                                        Pending
+                                    </span>
+                                    <span class="status-badge status-badge-error">
+                                        <span class="status-indicator status-error"></span>
+                                        Failed
+                                    </span>
+                                    <span class="status-badge status-badge-info">
+                                        <span class="status-indicator status-info"></span>
+                                        Processing
+                                    </span>
+                                    <span class="status-badge status-badge-neutral">
+                                        <span class="status-indicator status-neutral"></span>
+                                        Inactive
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Progress Bars -->
+                            <div class="mb-4">
+                                <h4 class="mb-2">Progress Bars</h4>
+                                <div class="mb-2">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Download Progress (75%)</span>
+                                    </div>
+                                    <div class="status-bar-container">
+                                        <div id="progressBar1" class="status-bar status-bar-success" style="width: 75%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Upload Progress (30%)</span>
+                                    </div>
+                                    <div class="status-bar-container">
+                                        <div id="progressBar2" class="status-bar status-bar-info" style="width: 30%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Processing (90%)</span>
+                                    </div>
+                                    <div class="status-bar-container">
+                                        <div id="progressBar3" class="status-bar status-bar-warning" style="width: 90%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Error State (50%)</span>
+                                    </div>
+                                    <div class="status-bar-container">
+                                        <div id="progressBar4" class="status-bar status-bar-error" style="width: 50%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <button id="updateProgressBtn" class="btn btn-sm btn-primary">Update
+                                        Progress</button>
+                                    <button id="resetProgressBtn" class="btn btn-sm">Reset Progress</button>
+                                </div>
+                            </div>
+
+                            <!-- Loading Indicators -->
+                            <div class="mb-4">
+                                <h4 class="mb-2">Loading Indicators</h4>
+                                <div class="d-flex flex-wrap mb-3">
+                                    <div class="status-text mr-4">
+                                        <span class="status-spinner"></span>
+                                        <span>Loading...</span>
+                                    </div>
+                                    <div class="status-text mr-4">
+                                        <span class="status-indicator status-info status-pulse"></span>
+                                        <span>Processing Request</span>
+                                    </div>
+                                    <div class="status-text">
+                                        <span class="status-indicator status-warning status-pulse"></span>
+                                        <span>Waiting for Response</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Status Items -->
+                            <div class="mb-4">
+                                <h4 class="mb-2">Status Items</h4>
+                                <div class="status-item">
+                                    <span class="status-indicator status-success mr-2"></span>
+                                    <div class="status-item-content">
+                                        <div class="status-item-title">Database Connection</div>
+                                        <div class="status-item-subtitle">Connected and operational</div>
+                                    </div>
+                                    <div class="status-item-action">
+                                        <button class="btn btn-sm">Details</button>
+                                    </div>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-indicator status-warning mr-2"></span>
+                                    <div class="status-item-content">
+                                        <div class="status-item-title">API Service</div>
+                                        <div class="status-item-subtitle">Degraded performance</div>
+                                    </div>
+                                    <div class="status-item-action">
+                                        <button class="btn btn-sm">Details</button>
+                                    </div>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-indicator status-error mr-2"></span>
+                                    <div class="status-item-content">
+                                        <div class="status-item-title">Storage Service</div>
+                                        <div class="status-item-subtitle">Outage detected</div>
+                                    </div>
+                                    <div class="status-item-action">
+                                        <button class="btn btn-sm btn-danger">Fix Now</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Status Dashboard -->
+                            <div class="mb-4">
+                                <h4 class="mb-2">Interactive Status Dashboard</h4>
+                                <div class="status-dashboard">
+                                    <div class="dashboard-item">
+                                        <div class="dashboard-item-header">
+                                            <div class="dashboard-item-title">CPU Usage</div>
+                                            <span class="status-indicator status-warning"></span>
+                                        </div>
+                                        <div class="dashboard-item-value">78%</div>
+                                        <div class="status-bar-container">
+                                            <div class="status-bar status-bar-warning" style="width: 78%"></div>
+                                        </div>
+                                        <div class="dashboard-item-footer">Updated 2 mins ago</div>
+                                    </div>
+                                    <div class="dashboard-item">
+                                        <div class="dashboard-item-header">
+                                            <div class="dashboard-item-title">Memory</div>
+                                            <span class="status-indicator status-success"></span>
+                                        </div>
+                                        <div class="dashboard-item-value">42%</div>
+                                        <div class="status-bar-container">
+                                            <div class="status-bar status-bar-success" style="width: 42%"></div>
+                                        </div>
+                                        <div class="dashboard-item-footer">Updated 2 mins ago</div>
+                                    </div>
+                                    <div class="dashboard-item">
+                                        <div class="dashboard-item-header">
+                                            <div class="dashboard-item-title">Disk Space</div>
+                                            <span class="status-indicator status-error"></span>
+                                        </div>
+                                        <div class="dashboard-item-value">92%</div>
+                                        <div class="status-bar-container">
+                                            <div class="status-bar status-bar-error" style="width: 92%"></div>
+                                        </div>
+                                        <div class="dashboard-item-footer">Updated 2 mins ago</div>
+                                    </div>
+                                    <div class="dashboard-item">
+                                        <div class="dashboard-item-header">
+                                            <div class="dashboard-item-title">Network</div>
+                                            <span class="status-indicator status-info"></span>
+                                        </div>
+                                        <div class="dashboard-item-value">35%</div>
+                                        <div class="status-bar-container">
+                                            <div class="status-bar status-bar-info" style="width: 35%"></div>
+                                        </div>
+                                        <div class="dashboard-item-footer">Updated 2 mins ago</div>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-center">
+                                    <button id="refreshDashboardBtn" class="btn btn-sm btn-outline">Refresh
+                                        Dashboard</button>
+                                </div>
+                            </div>
+
+                            <!-- Custom Status Indicator -->
+                            <div class="mb-4">
+                                <h4 class="mb-2">Custom Status Indicator</h4>
+                                <div class="custom-status-form">
+                                    <div class="form-group">
+                                        <label for="statusType">Status Type</label>
+                                        <select id="statusType" class="form-select">
+                                            <option value="success">Success</option>
+                                            <option value="warning">Warning</option>
+                                            <option value="error">Error</option>
+                                            <option value="info">Info</option>
+                                            <option value="neutral">Neutral</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="statusText">Status Text</label>
+                                        <input type="text" id="statusText" class="form-control" value="Custom Status">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="indicatorStyle">Indicator Style</label>
+                                        <select id="indicatorStyle" class="form-select">
+                                            <option value="dot">Dot</option>
+                                            <option value="badge">Badge</option>
+                                            <option value="text">Text Only</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Animation</label>
+                                        <div class="form-checkbox">
+                                            <label>
+                                                <input type="checkbox" id="animationEnabled">
+                                                Enable pulse animation
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <button id="generateStatusBtn" class="btn btn-primary">Generate Status
+                                        Indicator</button>
+                                    <div id="customStatusPreview" class="mt-3 p-3 border rounded-2">
+                                        <h5>Preview:</h5>
+                                        <div id="previewContent" class="mt-2">
+                                            <div class="status-text">
+                                                <span class="status-indicator status-success"></span>
+                                                <span>Custom Status</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card (1/3 width) -->
+                <div class="col-12 col-md-4 float-left">
+                    <div class="Box color-shadow-medium">
+                        <div class="Box-header">
+                            <h2 class="Box-title">Test Scenarios & Test Cases</h2>
+                        </div>
+                        <div class="Box-body">
+                            <ul class="list-style-none" id="all-scenarios">
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 1: Basic Status
+                                            Indicators</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify all status indicators display correctly
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check color contrast for accessibility
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path
+                                                        fill-rule="                                                        d="
+                                                        M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22
+                                                        9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test screen reader compatibility
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 2: Progress Bars</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test progress bar updates
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify reset functionality
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check percentage text updates with bar
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 3: Loading
+                                            Indicators</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify spinner animation works
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test pulse animation
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 4: Status
+                                            Dashboard</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test dashboard refresh functionality
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify status updates correctly
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check timestamp updates
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-3 additional-scenario" style="display: none;">
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="h4 Link--primary no-underline">Scenario 5: Custom Status
+                                            Generator</a>
+                                        <ul class="list-style-none pl-3 color-fg-muted">
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Test all status type combinations
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Verify animation toggle works
+                                            </li>
+                                            <li class="mb-1">
+                                                <svg class="octicon octicon-check mr-1" viewBox="0 0 16 16"
+                                                    version="1.1" width="16" height="16" aria-hidden="true">
+                                                    <path fill-rule="evenodd"
+                                                        d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
+                                                    </path>
+                                                </svg>
+                                                Check custom text updates
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="mt-3">
+                                <a href="#" id="view-more-scenarios" class="btn btn-outline btn-block">View All Test
+                                    Scenarios →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="color-bg-subtle border-top color-border-muted">
+        <div class="container-xl p-responsive py-3 text-center">
+            <span class="color-fg-muted"><small>
+                    <style>
+                        .heart {
+                            color: #e25555;
+                        }
+                    </style>
+                    ℳ𝒶𝒹ℯ 𝓌𝒾𝓉𝒽 <span class="heart">♥</span> 𝒷𝓎
+                </small><small><a href="https://www.codesofmine.com" title="codesofmine">𝒸ℴ𝒹ℯ𝓈ℴ𝒻𝓂𝒾𝓃ℯ</a> - &copy;
+                    2025 Practice Test & Automation</small></span>
+        </div>
+    </footer>
+
+    <script>
+        // Dashboard refresh functionality
+        document.getElementById('refreshDashboardBtn').addEventListener('click', function () {
+            // Show loading state
+            this.classList.add('btn-loading');
+            this.textContent = 'Refreshing...';
+
+            // Simulate loading delay
+            setTimeout(() => {
+                // Update dashboard values with random data
+                const dashboardItems = document.querySelectorAll('.dashboard-item');
+
+                dashboardItems.forEach(item => {
+                    const valueElement = item.querySelector('.dashboard-item-value');
+                    const barElement = item.querySelector('.status-bar');
+                    const statusIndicator = item.querySelector('.status-indicator');
+                    const footerElement = item.querySelector('.dashboard-item-footer');
+
+                    // Generate random percentage
+                    const percentage = Math.floor(Math.random() * 100);
+                    valueElement.textContent = percentage + '%';
+
+                    // Update progress bar width
+                    barElement.style.width = percentage + '%';
+
+                    // Update status indicator based on percentage
+                    statusIndicator.className = 'status-indicator';
+                    barElement.className = 'status-bar';
+
+                    if (percentage < 50) {
+                        statusIndicator.classList.add('status-success');
+                        barElement.classList.add('status-bar-success');
+                    } else if (percentage < 80) {
+                        statusIndicator.classList.add('status-warning');
+                        barElement.classList.add('status-bar-warning');
+                    } else {
+                        statusIndicator.classList.add('status-error');
+                        barElement.classList.add('status-bar-error');
+                    }
+
+                    // Update timestamp
+                    footerElement.textContent = 'Updated just now';
+                });
+
+                // Reset button
+                this.classList.remove('btn-loading');
+                this.textContent = 'Refresh Dashboard';
+
+                // Show success message
+                const successMessage = document.createElement('div');
+                successMessage.className = 'flash flash-success mt-2';
+                successMessage.innerHTML = 'Dashboard refreshed successfully!';
+                this.parentNode.appendChild(successMessage);
+
+                // Remove success message after 3 seconds
+                setTimeout(() => {
+                    successMessage.remove();
+                }, 3000);
+            }, 1000);
+        });
+
+        // Custom status indicator generator
+        document.getElementById('generateStatusBtn').addEventListener('click', function () {
+            const statusType = document.getElementById('statusType').value;
+            const statusText = document.getElementById('statusText').value || 'Custom Status';
+            const indicatorStyle = document.getElementById('indicatorStyle').value;
+            const animationEnabled = document.getElementById('animationEnabled').checked;
+
+            const previewContent = document.getElementById('previewContent');
+
+            // Create status indicator based on selected options
+            let statusHTML = '';
+
+            if (indicatorStyle === 'dot') {
+                statusHTML = `
+                    <div class="status-text">
+                        <span class="status-indicator status-${statusType} ${animationEnabled ? 'status-pulse' : ''}"></span>
+                        <span>${statusText}</span>
+                    </div>
+                `;
+            } else if (indicatorStyle === 'badge') {
+                statusHTML = `
+                    <span class="Label Label--${statusType} ${animationEnabled ? 'status-pulse' : ''}">${statusText}</span>
+                `;
+            } else if (indicatorStyle === 'text') {
+                statusHTML = `
+                    <span class="color-fg-${statusType} ${animationEnabled ? 'status-pulse' : ''}">${statusText}</span>
+                `;
+            }
+
+            previewContent.innerHTML = statusHTML;
+        });
+
+        // Toggle additional scenarios
+        document.getElementById('view-more-scenarios').addEventListener('click', function (e) {
+            e.preventDefault();
+            const additionalScenarios = document.querySelectorAll('.additional-scenario');
+            additionalScenarios.forEach(scenario => {
+                scenario.style.display = scenario.style.display === 'none' ? 'block' : 'none';
+            });
+            this.textContent = this.textContent.includes('View All') ? '← Hide Additional Scenarios' : 'View All Test Scenarios →';
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Progress Bar Functionality
+            const updateProgressBtn = document.getElementById('updateProgressBtn');
+            const resetProgressBtn = document.getElementById('resetProgressBtn');
+            const progressBars = [
+                document.getElementById('progressBar1'),
+                document.getElementById('progressBar2'),
+                document.getElementById('progressBar3'),
+                document.getElementById('progressBar4')
+            ];
+
+            // Update progress button functionality
+            updateProgressBtn.addEventListener('click', function () {
+                progressBars.forEach((bar, index) => {
+                    // Generate random progress between 10% and 100%
+                    const newProgress = Math.floor(Math.random() * 91) + 10;
+
+                    // Update the progress bar width
+                    bar.style.width = newProgress + '%';
+
+                    // Update the text percentage
+                    const percentageText = bar.parentElement.previousElementSibling.querySelector('span:last-child');
+                    percentageText.textContent = newProgress + '%';
+
+                    // Update the label text
+                    const labelText = bar.parentElement.previousElementSibling.querySelector('span:first-child');
+                    const labels = ['Download Progress', 'Upload Progress', 'Processing', 'Error State'];
+                    labelText.textContent = `${labels[index]} (${newProgress}%)`;
+                });
+            });
+
+            // Reset progress button functionality
+            resetProgressBtn.addEventListener('click', function () {
+                progressBars.forEach((bar, index) => {
+                    // Reset to initial values
+                    const initialValues = [75, 30, 90, 50];
+
+                    // Update the progress bar width
+                    bar.style.width = initialValues[index] + '%';
+
+                    // Update the text percentage
+                    const percentageText = bar.parentElement.previousElementSibling.querySelector('span:last-child');
+                    percentageText.textContent = initialValues[index] + '%';
+
+                    // Update the label text
+                    const labelText = bar.parentElement.previousElementSibling.querySelector('span:first-child');
+                    const labels = ['Download Progress', 'Upload Progress', 'Processing', 'Error State'];
+                    labelText.textContent = `${labels[index]} (${initialValues[index]}%)`;
+                });
+            });
+
+            // Dashboard refresh button functionality
+            const refreshDashboardBtn = document.getElementById('refreshDashboardBtn');
+            if (refreshDashboardBtn) {
+                refreshDashboardBtn.addEventListener('click', function () {
+                    const dashboardItems = document.querySelectorAll('.dashboard-item');
+
+                    dashboardItems.forEach(item => {
+                        // Generate random value between 10% and 100%
+                        const newValue = Math.floor(Math.random() * 91) + 10;
+
+                        // Update the value display
+                        const valueDisplay = item.querySelector('.dashboard-item-value');
+                        valueDisplay.textContent = newValue + '%';
+
+                        // Update the progress bar
+                        const progressBar = item.querySelector('.status-bar');
+                        progressBar.style.width = newValue + '%';
+
+                        // Update the status indicator based on value
+                        const statusIndicator = item.querySelector('.status-indicator');
+                        statusIndicator.className = 'status-indicator';
+
+                        if (newValue < 40) {
+                            statusIndicator.classList.add('status-success');
+                            progressBar.className = 'status-bar status-bar-success';
+                        } else if (newValue < 70) {
+                            statusIndicator.classList.add('status-info');
+                            progressBar.className = 'status-bar status-bar-info';
+                        } else if (newValue < 90) {
+                            statusIndicator.classList.add('status-warning');
+                            progressBar.className = 'status-bar status-bar-warning';
+                        } else {
+                            statusIndicator.classList.add('status-error');
+                            progressBar.className = 'status-bar status-bar-error';
+                        }
+
+                        // Update the timestamp
+                        const footer = item.querySelector('.dashboard-item-footer');
+                        footer.textContent = 'Updated just now';
+                    });
+                });
+            }
+
+            // Custom Status Indicator Generator
+            const generateStatusBtn = document.getElementById('generateStatusBtn');
+            if (generateStatusBtn) {
+                generateStatusBtn.addEventListener('click', function () {
+                    const statusType = document.getElementById('statusType').value;
+                    const statusText = document.getElementById('statusText').value;
+                    const indicatorStyle = document.getElementById('indicatorStyle').value;
+                    const animationEnabled = document.getElementById('animationEnabled').checked;
+
+                    const previewContent = document.getElementById('previewContent');
+
+                    let html = '';
+
+                    if (indicatorStyle === 'dot') {
+                        html = `
+                            <div class="status-text">
+                                <span class="status-indicator status-${statusType} ${animationEnabled ? 'status-pulse' : ''}"></span>
+                                <span>${statusText}</span>
+                            </div>
+                        `;
+                    } else if (indicatorStyle === 'badge') {
+                        html = `
+                            <span class="status-badge status-badge-${statusType}">
+                                <span class="status-indicator status-${statusType} ${animationEnabled ? 'status-pulse' : ''}"></span>
+                                ${statusText}
+                            </span>
+                        `;
+                    } else {
+                        html = `
+                            <div class="status-text">
+                                <span>${statusText}</span>
+                            </div>
+                        `;
+                    }
+
+                    previewContent.innerHTML = html;
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
